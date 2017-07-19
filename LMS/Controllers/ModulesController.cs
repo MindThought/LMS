@@ -36,6 +36,11 @@ namespace LMS.Controllers
             return View(module);
         }
 
+        public ActionResult GetDocument(string path)
+        {
+            return File(path, "application/pdf", Server.UrlEncode(path));
+        }
+
         // GET: Modules/Create
         public ActionResult Create()
         {
