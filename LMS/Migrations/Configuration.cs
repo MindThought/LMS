@@ -34,7 +34,7 @@ namespace LMS.Migrations
                 );
             context.Modules.AddOrUpdate(
                 m => m.Name,
-                new Models.Module { Name = "C#", Course = context.Courses.Find(1) , StartDate = new DateTime(2017, 4, 19), Description = "Grundläggande C#", EndDate = new DateTime(2017, 5, 4) }
+                new Models.Module { Name = "C#", CourseId = 1 , StartDate = new DateTime(2017, 4, 19), Description = "Grundläggande C#", EndDate = new DateTime(2017, 5, 4) }
                 );
             context.Activities.AddOrUpdate(
                 a => a.Name,
@@ -81,6 +81,8 @@ namespace LMS.Migrations
 
             var studentUser = userManager.FindByName("student@lexicon.se");
             userManager.AddToRole(studentUser.Id, "Student");
+
+            context.SaveChanges();
         }
     }
 }
