@@ -187,6 +187,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpecialBehaviour\CustomAuthorize.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

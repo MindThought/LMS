@@ -1,4 +1,5 @@
 ﻿using LMS.Models;
+using LMS.SpecialBehaviour;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -6,6 +7,7 @@ using System.Web.Mvc;
 
 namespace LMS.Controllers
 {
+    [CustomAuthorize(Roles = "Teacher" )]
     public class CoursesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -16,7 +18,16 @@ namespace LMS.Controllers
             return View(db.Courses.ToList());
         }
 
+        // GET: Search Courses
+        [ActionName("submit")]
+        public ActionResult Index(string search)
+        {
+            var result = db.Courses.Where(c => c.Name.Contains(search));
+            return View(result.ToList());
+        }
+
         // GET: Courses/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
