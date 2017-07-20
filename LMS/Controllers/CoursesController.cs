@@ -1,5 +1,6 @@
 ﻿using LMS.Models;
 using LMS.SpecialBehaviour;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -12,17 +13,13 @@ namespace LMS.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Courses
-        public ActionResult Index()
+        public ActionResult Index(string SearchText)
         {
-            return View(db.Courses.ToList());
-        }
-
-        // GET: Search Courses
-        [ActionName("submit")]
-        public ActionResult Index(string search)
-        {
-            var result = db.Courses.Where(c => c.Name.Contains(search));
+            if (String.IsNullOrWhiteSpace(SearchText))
+            {
+                return View(db.Courses.ToList());
+            }
+            var result = db.Courses.Where(c => c.Name.Contains(SearchText));
             return View(result.ToList());
         }
 
