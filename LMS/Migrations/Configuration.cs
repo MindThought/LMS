@@ -14,7 +14,7 @@ namespace LMS.Migrations
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(LMS.Models.ApplicationDbContext context)
+        protected override void Seed(ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -30,17 +30,21 @@ namespace LMS.Migrations
             //
             context.Courses.AddOrUpdate(
                 c => c.Name,
-                new Models.Course { Name = ".Net2017", StartDate = new DateTime(2017,4,18), Description = ".NET för de med tidigare IT-erfarenhet"}
+                new Course { Name = ".Net2017", StartDate = new DateTime(2017,4,18), Description = ".NET för de med tidigare IT-erfarenhet"}
                 );
             context.Modules.AddOrUpdate(
                 m => m.Name,
-                new Models.Module { Name = "C#", Course = context.Courses.Find(1) , StartDate = new DateTime(2017, 4, 19), Description = "Grundläggande C#", EndDate = new DateTime(2017, 5, 4) }
+                new Module { Name = "C#", CourseId = 1 , StartDate = new DateTime(2017, 4, 19), Description = "Grundläggande C#", EndDate = new DateTime(2017, 5, 4) }
                 );
             context.Activities.AddOrUpdate(
                 a => a.Name,
-                new Models.Activity { Name = "C# Basics", Module = context.Modules.Find(1), Type = Models.ActivityType.ELearning, StartTime = new DateTime(2017, 4, 19, 8, 0, 0), EndTime = new DateTime(2017, 04, 19, 12, 0, 0), Description = "The basics of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>" }
+                new Activity { Name = "C# Basics", Module = context.Modules.Find(1), Type = Models.ActivityType.ELearning, StartTime = new DateTime(2017, 4, 19, 8, 0, 0), EndTime = new DateTime(2017, 04, 19, 12, 0, 0), Description = "The basics of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>" }
                 );
 
+
+            ////////////////////////
+            // User Seeding below //
+            ////////////////////////
             var roleStore = new RoleStore<IdentityRole>(context);
             var roleManager = new RoleManager<IdentityRole>(roleStore);
 
@@ -69,7 +73,7 @@ namespace LMS.Migrations
                     var result = userManager.Create(user, "foobar");
                     if (!result.Succeeded)
                     {
-                        throw new System.Exception(string.Join("\n", result.Errors));
+                        throw new Exception(string.Join("\n", result.Errors));
                     }
                 }
             }
@@ -81,6 +85,8 @@ namespace LMS.Migrations
 
             var studentUser = userManager.FindByName("student@lexicon.se");
             userManager.AddToRole(studentUser.Id, "Student");
+
+            context.SaveChanges();
         }
     }
 }
