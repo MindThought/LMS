@@ -33,3 +33,7 @@ textarea {
     display: none;
     border: 1px solid transparent;
 }
+.header-image {
+    margin: 15px 0 15px 0;
+    height: auto;
+}
