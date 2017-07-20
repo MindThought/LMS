@@ -23,14 +23,6 @@ namespace LMS.Controllers
             return View(result.ToList());
         }
 
-        // GET: Search Courses
-        [ActionName("submit")]
-        public ActionResult Index(string search)
-        {
-            var result = db.Courses.Where(c => c.Name.Contains(search));
-            return View(result.ToList());
-        }
-
         // GET: Courses/Details/5
         [Authorize]
         public ActionResult Details(int? id)

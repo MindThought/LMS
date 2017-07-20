@@ -38,7 +38,7 @@ namespace LMS.Migrations
                 {
                     Name = ".Net2017",
                     StartDate = new DateTime(2017, 4, 18),
-                    Description = ".NET för de med tidigare IT-erfarenhet"
+                    Description = ".NET fï¿½r de med tidigare IT-erfarenhet"
                 });
             context.Modules.AddOrUpdate(
                 m => m.Name,
@@ -47,7 +47,7 @@ namespace LMS.Migrations
                     Name = "C#",
                     CourseId = 1,
                     StartDate = new DateTime(2017, 4, 19),
-                    Description = "Grundläggande C#",
+                    Description = "Grundlï¿½ggande C#",
                     EndDate = new DateTime(2017, 5, 4)
                 });
             context.Activities.AddOrUpdate(
