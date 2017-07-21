@@ -27,3 +27,7 @@ textarea {
     margin: 15px 0 15px 0;
     height: auto;
 }
+
+.wide-text {
+    max-width: 1000px; 
+}

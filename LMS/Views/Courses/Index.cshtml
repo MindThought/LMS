@@ -10,11 +10,13 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
+<hr />
+
 <form class="form-inline">
     <div class="form-group">
         @Html.Label("SearchText", "Sök", new { @class = "sr-only"} )
         @*<label for="searchText" class="sr-only">Text Search: </label>*@
-        @Html.TextBox("SearchText", null ,new { @class = "form-control", placeholder ="Sök" })
+        @Html.TextBox("SearchText", null ,new { @class = "form-control wide-text", placeholder ="Sök" })
         @*<input type="text" class="form-control" id="searchText" placeholder="Sök" />*@
     </div>
     <div class="checkbox">
