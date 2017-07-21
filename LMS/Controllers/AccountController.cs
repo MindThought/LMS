@@ -136,7 +136,7 @@ namespace LMS.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        [AllowAnonymous] // <= will be changed to: [Authorize(Roles = "Teacher")]
         public ActionResult Register()
         {
             return View();
@@ -145,13 +145,13 @@ namespace LMS.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        [AllowAnonymous] // <= will be changed to: [Authorize(Roles = "Teacher")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
