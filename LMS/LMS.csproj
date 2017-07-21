@@ -251,6 +251,8 @@
     <Content Include="Views\Courses\Details.cshtml" />
     <Content Include="Views\Courses\Edit.cshtml" />
     <Content Include="Views\Courses\Index.cshtml" />
+    <Content Include="Views\Courses\CourseStudents.cshtml" />
+    <Content Include="Views\Courses\CourseModules.cshtml" />
     <Content Include="Views\Account\ExitAccount.cshtml" />
     <Content Include="Views\Account\NonExistingAccount.cshtml" />
     <Content Include="Views\Account\AccountDeleted.cshtml" />
