@@ -10,6 +10,7 @@ namespace LMS.Models
     public class ApplicationUser : IdentityUser
     {
         public virtual Course Course { get; set; }
+        public int? CourseId { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
