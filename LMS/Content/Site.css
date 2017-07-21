@@ -23,6 +23,14 @@ textarea {
     max-width: 280px;
 }
 
+.header-image {
+    margin: 15px 0 15px 0;
+    height: auto;
+}
+
+.wide-text {
+    max-width: 1000px; 
+}
 #Scheme {
     display: none;
     border-color: black;
