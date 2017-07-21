@@ -42,6 +42,36 @@ namespace LMS.Controllers
             return View(course);
         }
 
+        public ActionResult CourseStudents(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Course course = db.Courses.Find(id);
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+
+            return PartialView(course.Students);
+        }
+        [HttpGet]
+        public ActionResult CourseModules(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Course course = db.Courses.Find(id);
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+
+            return PartialView(course.Modules);
+        }
+
         // GET: Courses/Create
         public ActionResult Create()
         {
