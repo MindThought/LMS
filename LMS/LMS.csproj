@@ -255,6 +255,8 @@
     <Content Include="Views\Account\NonExistingAccount.cshtml" />
     <Content Include="Views\Account\AccountDeleted.cshtml" />
     <Content Include="Views\Account\Failure.cshtml" />
+    <Content Include="Views\Courses\CourseStudents.cshtml" />
+    <Content Include="Views\Courses\CourseModules.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

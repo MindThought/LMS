@@ -27,3 +27,13 @@ textarea {
     margin: 15px 0 15px 0;
     height: auto;
 }
+#Scheme {
+    display: none;
+    border-color: black;
+    border: 1px solid transparent;
+}
+
+#studentList {
+    display: none;
+    border: 1px solid transparent;
+}
