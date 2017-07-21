@@ -36,5 +36,10 @@ namespace LMS.Models
         {
             return new ApplicationDbContext();
         }
+
+        public static ApplicationDbContext Delete()
+        {
+            return new ApplicationDbContext();
+        }
     }
 }
