@@ -9,31 +9,43 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
 <form class="form-inline">
     <div class="form-group">
-        <label for="text">Text Search: </label>
-        <input type="text" class="form-control" id="text"/>
+        @Html.Label("SearchText", "Sök", new { @class = "sr-only"} )
+        @*<label for="searchText" class="sr-only">Text Search: </label>*@
+        @Html.TextBox("SearchText", null ,new { @class = "form-control", placeholder ="Sök" })
+        @*<input type="text" class="form-control" id="searchText" placeholder="Sök" />*@
     </div>
     <div class="checkbox">
         <input type="checkbox">
-        <label>Include non-active courses</label>
+        <label>Inkludera alla kurser</label>
     </div>
-    <button type="submit" class="btn btn-default">Search</button>
+    <button type="submit" class="btn btn-default">Sök</button>
 </form>
 
 <hr />
 
 <div class="row">
 
-@foreach (var item in Model) {
-    <div class="col-xs-12 col-sm-6 col-md-4">
-        <div class="row"><b>Namn: </b>@Html.DisplayFor(modelItem => item.Name)</div>
-        <div class="row"><b>Beskrivning: </b>@Html.DisplayFor(modelItem => item.Description)</div>
-        <div class="row"><b>Start Datum: </b>@Html.DisplayFor(modelItem => item.StartDate)</div>
-         @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-         @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-         @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-    </div>
+@foreach (var item in Model)
+{
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="row">
+                <b>Namn:</b>
+                @Html.RouteLink( @Html.DisplayFor(modelItem => item.Name).ToString() , 
+                new RouteValueDictionary(new {controller = "Courses", action = "Details", id = item.Id }))
+            </div>
+            
+            @*<div class="row"><b>Namn: </b>@Html.DisplayFor(modelItem => item.Name)</div>*@
+            <div class="row"><b>Beskrivning: </b>@Html.DisplayFor(modelItem => item.Description)</div>
+            @*<div class="row"><b>Start Datum: </b>@Html.DisplayFor(modelItem => item.StartDate)</div>*@
+            <div class="row"><b>Start Datum: </b>@item.StartDate.ToString("d")</div>
+            <div class="row"><b>Moduler: </b>@Html.DisplayFor(modelItem => item.Modules.Count)</div>
+             @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+             @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+             @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </div>
 }
 
 </div>
