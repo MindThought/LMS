@@ -138,8 +138,17 @@ namespace LMS.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous] // <= will be changed to: [Authorize(Roles = "Teacher")]
-        public ActionResult Register()
+        public ActionResult Register(string id)
         {
+            switch (id)
+            {
+                case "0":
+                    ViewBag.RegisterTeacher = true;
+                    break;
+                case "1":
+                    ViewBag.RegisterStudent = true;
+                    break;
+            }
             return View();
         }
 
@@ -152,23 +161,30 @@ namespace LMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                //var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+                if (model.courseID == "0")
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
+                    var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+                    var result = await UserManager.CreateAsync(user, model.Password);
+                    if (result.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    AddErrors(result);
                 }
-                AddErrors(result);
+                else if (model.courseID == "1")
+                {
+                    var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, CourseId = 1 };
+                    var result = await UserManager.CreateAsync(user, model.Password);
+                    if (result.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    AddErrors(result);
+                }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -191,7 +207,7 @@ namespace LMS.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByEmailAsync(model.Email);
-                if (user == null) // || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                if (user == null)// || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("NonExistingAccount");
@@ -241,7 +257,7 @@ namespace LMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
+                var user = await UserManager.FindByEmailAsync(model.Email); // FindByNameAsync changed to FindByEmailAsync
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
@@ -287,7 +303,7 @@ namespace LMS.Controllers
             {
                 return View(model);
             }
-            var user = await UserManager.FindByNameAsync(model.Email);
+            var user = await UserManager.FindByEmailAsync(model.Email); // FindByNameAsync changed to FindByEmailAsync
             if (user == null)
             {
                 // Don't reveal that the user does not exist

@@ -22,3 +22,22 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.header-image {
+    margin: 15px 0 15px 0;
+    height: auto;
+}
+
+.wide-text {
+    max-width: 1000px; 
+}
+#Scheme {
+    display: none;
+    border-color: black;
+    border: 1px solid transparent;
+}
+
+#studentList {
+    display: none;
+    border: 1px solid transparent;
+}

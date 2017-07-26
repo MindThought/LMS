@@ -28,18 +28,39 @@ namespace LMS.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+            ////////////////////////////////
+            //Course and courseComponents //
+            ////////////////////////////////
             context.Courses.AddOrUpdate(
                 c => c.Name,
-                new Course { Name = ".Net2017", StartDate = new DateTime(2017,4,18), Description = ".NET för de med tidigare IT-erfarenhet"}
-                );
+                new Course
+                {
+                    Name = ".Net2017",
+                    StartDate = new DateTime(2017, 4, 18),
+                    Description = ".NET fï¿½r de med tidigare IT-erfarenhet"
+                });
             context.Modules.AddOrUpdate(
                 m => m.Name,
-                new Module { Name = "C#", CourseId = 1 , StartDate = new DateTime(2017, 4, 19), Description = "Grundläggande C#", EndDate = new DateTime(2017, 5, 4) }
-                );
+                new Module
+                {
+                    Name = "C#",
+                    CourseId = 1,
+                    StartDate = new DateTime(2017, 4, 19),
+                    Description = "Grundlï¿½ggande C#",
+                    EndDate = new DateTime(2017, 5, 4)
+                });
             context.Activities.AddOrUpdate(
                 a => a.Name,
-                new Activity { Name = "C# Basics", Module = context.Modules.Find(1), Type = Models.ActivityType.ELearning, StartTime = new DateTime(2017, 4, 19, 8, 0, 0), EndTime = new DateTime(2017, 04, 19, 12, 0, 0), Description = "The basics of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>" }
-                );
+                new Activity
+                {
+                    Name = "C# Basics",
+                    Module = context.Modules.Find(1),
+                    Type = Models.ActivityType.ELearning,
+                    StartTime = new DateTime(2017, 4, 19, 8, 0, 0),
+                    EndTime = new DateTime(2017, 04, 19, 12, 0, 0),
+                    Description = "The basics of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
+                });
 
 
             ////////////////////////
@@ -64,12 +85,27 @@ namespace LMS.Migrations
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
 
-            var emails = new[] { "john@lexicon.se", "dimitris@lexicon.se", "student@lexicon.se" };
-            foreach (var email in emails)
+            var teacherEmails = new[] { "john@lexicon.se", "dimitris@lexicon.se", "oscar@lexicon.se" };
+            foreach (var email in teacherEmails)
             {
                 if (!context.Users.Any(u => u.UserName == email))
                 {
                     var user = new ApplicationUser { UserName = email, Email = email };
+                    var result = userManager.Create(user, "foobar");
+                    if (!result.Succeeded)
+                    {
+                        throw new Exception(string.Join("\n", result.Errors));
+                    }
+                }
+            }
+
+            var studentEmails = new[] { "student0@lexicon.se", "student1@lexicon.se", "student2@lexicon.se", "student3@lexicon.se",
+                                 "student4@lexicon.se", "student5@lexicon.se", "student6@lexicon.se", "student7@lexicon.se" };
+            foreach (var email in studentEmails)
+            {
+                if (!context.Users.Any(u => u.UserName == email))
+                {
+                    var user = new ApplicationUser { UserName = email, Email = email, CourseId = context.Courses.Where(c => c.Name == ".Net2017").FirstOrDefault().Id };
                     var result = userManager.Create(user, "foobar");
                     if (!result.Succeeded)
                     {
@@ -85,7 +121,7 @@ namespace LMS.Migrations
 
             var studentUser = userManager.FindByName("student@lexicon.se");
             userManager.AddToRole(studentUser.Id, "Student");
-
+            
             context.SaveChanges();
         }
     }
