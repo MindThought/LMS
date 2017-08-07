@@ -251,14 +251,12 @@
     <Content Include="Views\Courses\Details.cshtml" />
     <Content Include="Views\Courses\Edit.cshtml" />
     <Content Include="Views\Courses\Index.cshtml" />
-    <Content Include="Views\Courses\CourseStudents.cshtml" />
     <Content Include="Views\Courses\CourseModules.cshtml" />
     <Content Include="Views\Account\ExitAccount.cshtml" />
     <Content Include="Views\Account\NonExistingAccount.cshtml" />
     <Content Include="Views\Account\AccountDeleted.cshtml" />
     <Content Include="Views\Account\Failure.cshtml" />
     <Content Include="Views\Courses\CourseStudents.cshtml" />
-    <Content Include="Views\Courses\CourseModules.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -272,8 +270,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708070823242_init.resx">
-      <DependentUpon>201708070823242_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201707221949558_Init.resx">
+      <DependentUpon>201707221949558_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

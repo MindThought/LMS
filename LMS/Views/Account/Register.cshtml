@@ -38,9 +38,9 @@
     <div class="form-group">
         @if (ViewBag.RegisterTeacher == true)
         {<input type="hidden" value="0" name="courseID">}
-        @if (ViewBag.RegisterStudent != null)
-        {<input type="hidden" value="@ViewBag.RegisterStudent" name="courseID">}
-        @Html.ValueFor(m => m.courseID);    @* courseID gets "0" for a teacher and courseID for a student *@
+        @if (ViewBag.RegisterStudent == true)
+        {<input type="hidden" value="@ViewBag.CourseId" name="courseID">}
+        @Html.ValueFor(m => m.courseID);    @* courseID gets "0" for a teacher and (1) for a student *@
     </div>
 
         <div class="form-group">
