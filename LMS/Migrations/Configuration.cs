@@ -29,38 +29,58 @@ namespace LMS.Migrations
             //    );
             //
 
-            ////////////////////////////////
-            //Course and courseComponents //
-            ////////////////////////////////
+            /////////////////////////////////
+            // Course and courseComponents //
+            /////////////////////////////////
             context.Courses.AddOrUpdate(
                 c => c.Name,
                 new Course
                 {
                     Name = ".Net2017",
                     StartDate = new DateTime(2017, 4, 18),
-                    Description = ".NET f�r de med tidigare IT-erfarenhet"
+                    Description = ".NET för de med tidigare IT-erfarenhet"
                 });
+
             context.Modules.AddOrUpdate(
                 m => m.Name,
                 new Module
                 {
                     Name = "C#",
-                    CourseId = 1,
+                    Course = context.Courses.Where(c => c.Name == ".Net2017").FirstOrDefault(),
                     StartDate = new DateTime(2017, 4, 19),
-                    Description = "Grundl�ggande C#",
+                    Description = "Grundläggande C#",
                     EndDate = new DateTime(2017, 5, 4)
+                },
+                new Module
+                {
+                    Name = "JQuery",
+                    Course = context.Courses.Where(c => c.Name == ".Net2017").FirstOrDefault(),
+                    StartDate = new DateTime(2017, 5, 5),
+                    Description = "Grundläggande JQuery",
+                    EndDate = new DateTime(2017, 5, 30)
                 });
+
             context.Activities.AddOrUpdate(
                 a => a.Name,
                 new Activity
                 {
                     Name = "C# Basics",
-                    Module = context.Modules.Find(1),
+                    Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
                     Type = Models.ActivityType.ELearning,
                     StartTime = new DateTime(2017, 4, 19, 8, 0, 0),
                     EndTime = new DateTime(2017, 04, 19, 12, 0, 0),
                     Description = "The basics of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
-                });
+                },
+                new Activity
+                {
+                    Name = "C# Intermediate",
+                    Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
+                    Type = Models.ActivityType.ELearning,
+                    StartTime = new DateTime(2017, 4, 19, 13, 0, 0),
+                    EndTime = new DateTime(2017, 04, 19, 20, 0, 0),
+                    Description = "The intermediates of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
+                }
+                );
 
 
             ////////////////////////
