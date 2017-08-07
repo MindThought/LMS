@@ -145,8 +145,8 @@ namespace LMS.Controllers
                 case "0":
                     ViewBag.RegisterTeacher = true;
                     break;
-                case "1":
-                    ViewBag.RegisterStudent = true;
+                default:
+                    ViewBag.RegisterStudent = id;
                     break;
             }
             return View();
@@ -173,9 +173,9 @@ namespace LMS.Controllers
                     }
                     AddErrors(result);
                 }
-                else if (model.courseID == "1")
+                else
                 {
-                    var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, CourseId = 1 };
+                    var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, CourseId = Int32.Parse(model.courseID) };
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
