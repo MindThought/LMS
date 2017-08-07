@@ -113,15 +113,19 @@ namespace LMS.Migrations
                     }
                 }
             }
-            var johnUser = userManager.FindByName("john@lexicon.se");
-            userManager.AddToRole(johnUser.Id, "Teacher");
 
-            var dimitrisUser = userManager.FindByName("dimitris@lexicon.se");
-            userManager.AddToRole(dimitrisUser.Id, "Teacher");
+            foreach (var email in teacherEmails)
+            {
+                var teacherUser = userManager.FindByName(email);
+                userManager.AddToRole(teacherUser.Id, "Teacher");
+            }
 
-            var studentUser = userManager.FindByName("student@lexicon.se");
-            userManager.AddToRole(studentUser.Id, "Student");
-            
+            foreach (var email in studentEmails)
+            {
+                var studentUser = userManager.FindByName(email);
+                userManager.AddToRole(studentUser.Id, "Student");
+            }
+
             context.SaveChanges();
         }
     }
