@@ -41,3 +41,7 @@ textarea {
     display: none;
     border: 1px solid transparent;
 }
+
+a {
+    color: #8eff96;
+}

@@ -26,7 +26,7 @@
                 <ul class="nav navbar-nav">
                     @if (User.IsInRole("Teacher"))
                     {
-                        //TODO Link to create Teacher
+                        //TODO Link to Teacher management
                         <li>@Html.ActionLink("Kursöversikt","Index","Courses")</li>
                     }
                     @if (User.IsInRole("Student"))
