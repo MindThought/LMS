@@ -175,9 +175,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201707221949558_Init.cs" />
-    <Compile Include="Migrations\201707221949558_Init.Designer.cs">
-      <DependentUpon>201707221949558_Init.cs</DependentUpon>
+    <Compile Include="Migrations\201708070823242_init.cs" />
+    <Compile Include="Migrations\201708070823242_init.Designer.cs">
+      <DependentUpon>201708070823242_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -251,14 +251,12 @@
     <Content Include="Views\Courses\Details.cshtml" />
     <Content Include="Views\Courses\Edit.cshtml" />
     <Content Include="Views\Courses\Index.cshtml" />
-    <Content Include="Views\Courses\CourseStudents.cshtml" />
     <Content Include="Views\Courses\CourseModules.cshtml" />
     <Content Include="Views\Account\ExitAccount.cshtml" />
     <Content Include="Views\Account\NonExistingAccount.cshtml" />
     <Content Include="Views\Account\AccountDeleted.cshtml" />
     <Content Include="Views\Account\Failure.cshtml" />
     <Content Include="Views\Courses\CourseStudents.cshtml" />
-    <Content Include="Views\Courses\CourseModules.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

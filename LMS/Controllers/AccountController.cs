@@ -145,8 +145,8 @@ namespace LMS.Controllers
                 case "0":
                     ViewBag.RegisterTeacher = true;
                     break;
-                case "1":
-                    ViewBag.RegisterStudent = true;
+                default:
+                    ViewBag.RegisterStudent = id;
                     break;
             }
             return View();
@@ -173,14 +173,14 @@ namespace LMS.Controllers
                     }
                     AddErrors(result);
                 }
-                else if (model.courseID == "1")
+                else
                 {
                     var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, CourseId = 1 };
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Details", "Courses",new { id = model.courseID });
                     }
                     AddErrors(result);
                 }
