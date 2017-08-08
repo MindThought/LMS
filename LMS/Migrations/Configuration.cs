@@ -36,29 +36,67 @@ namespace LMS.Migrations
                 c => c.Name,
                 new Course
                 {
+                    Id = 1,
                     Name = ".Net2017",
                     StartDate = new DateTime(2017, 4, 18),
                     Description = ".NET för de med tidigare IT-erfarenhet"
-                });
+                }
+                ,
+                new Course
+                {
+                    Id = 2,
+                    Name = "JAVA",
+                    StartDate = new DateTime(2017, 6, 18),
+                    Description = "JAVA för de med tidigare IT-erfarenhet"
+                },
+                new Course
+                {
+                    Id = 3,
+                    Name = "Projektledning",
+                    StartDate = new DateTime(2017, 8, 18),
+                    Description = "Projektledning"
+                }
+                );
+
+            context.SaveChanges();
 
             context.Modules.AddOrUpdate(
                 m => m.Name,
                 new Module
                 {
                     Name = "C#",
-                    Course = context.Courses.Where(c => c.Name == ".Net2017").FirstOrDefault(),
+                    CourseId = context.Courses.Where(c => c.Name == ".Net2017").FirstOrDefault().Id,
                     StartDate = new DateTime(2017, 4, 19),
                     Description = "Grundläggande C#",
                     EndDate = new DateTime(2017, 5, 4)
-                },
+                }
+                ,
                 new Module
                 {
                     Name = "JQuery",
-                    Course = context.Courses.Where(c => c.Name == ".Net2017").FirstOrDefault(),
+                    CourseId = context.Courses.Where(c => c.Name == ".Net2017").FirstOrDefault().Id,
                     StartDate = new DateTime(2017, 5, 5),
                     Description = "Grundläggande JQuery",
                     EndDate = new DateTime(2017, 5, 30)
-                });
+                }
+                ,
+                new Module
+                {
+                    Name = "JAVA",
+                    Course = context.Courses.Where(c => c.Name == "JAVA").FirstOrDefault(),
+                    StartDate = new DateTime(2017, 6, 20),
+                    Description = "Grundläggande JQuery",
+                    EndDate = new DateTime(2017, 6, 30)
+                },
+                new Module
+                {
+                    Name = "Projektledning",
+                    Course = context.Courses.Where(c => c.Name == "Projektledning").FirstOrDefault(),
+                    StartDate = new DateTime(2017, 9, 5),
+                    Description = "Grundläggande JQuery",
+                    EndDate = new DateTime(2017, 9, 30)
+                }
+                );
 
             context.Activities.AddOrUpdate(
                 a => a.Name,
@@ -82,7 +120,7 @@ namespace LMS.Migrations
                 }
                 );
 
-
+            context.SaveChanges();
             ////////////////////////
             // User Seeding below //
             ////////////////////////

@@ -1,6 +1,8 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-family: "Whitney SSm A","Whitney SSm B",arial,sans-serif;
+    font-size: 14px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -16,12 +18,12 @@
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
+    /* Set width on the form input elements since they're 100% wide by default */
+    input,
+    select,
+    textarea {
+        max-width: 280px;
+    }
 
 .header-image {
     margin: 15px 0 15px 0;
@@ -31,6 +33,12 @@ textarea {
 .wide-text {
     max-width: 1000px; 
 }
+
+ul.navbar-nav {
+    margin: 28px 0 28px 0;
+    height: auto;
+}
+
 #Scheme {
     display: none;
     border-color: black;
@@ -40,4 +48,8 @@ textarea {
 #studentList {
     display: none;
     border: 1px solid transparent;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #8eff96;
 }

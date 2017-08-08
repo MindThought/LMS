@@ -19,6 +19,6 @@ namespace LMS.Models
         [Required]
         public int CourseId { get; set; }
         public virtual List<Activity> Activities { get; set; }
-        //public virtual Document Documents { get; set; } TODO
+        //TODO public virtual Document Documents { get; set; } 
     }
 }

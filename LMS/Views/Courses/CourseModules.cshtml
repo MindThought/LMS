@@ -7,19 +7,21 @@
 }
 
 <table class="table">
-    <tr>
+    <tr class="row">
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Description)
         </th>
-        <th></th>
+        <th>
+            @*@Html.ActionLink("Create New", "Create")*@ @*TODO Make it create a new module in current course*@
+        </th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td >
+    <tr class="row">
+        <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
