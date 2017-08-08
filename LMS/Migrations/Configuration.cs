@@ -58,20 +58,23 @@ namespace LMS.Migrations
                 }
                 );
 
+            context.SaveChanges();
+
             context.Modules.AddOrUpdate(
                 m => m.Name,
                 new Module
                 {
                     Name = "C#",
-                    Course = context.Courses.Where(c => c.Name == ".Net2017").FirstOrDefault(),
+                    CourseId = context.Courses.Where(c => c.Name == ".Net2017").FirstOrDefault().Id,
                     StartDate = new DateTime(2017, 4, 19),
                     Description = "Grundläggande C#",
                     EndDate = new DateTime(2017, 5, 4)
-                },
+                }
+                ,
                 new Module
                 {
                     Name = "JQuery",
-                    Course = context.Courses.Where(c => c.Name == ".Net2017").FirstOrDefault(),
+                    CourseId = context.Courses.Where(c => c.Name == ".Net2017").FirstOrDefault().Id,
                     StartDate = new DateTime(2017, 5, 5),
                     Description = "Grundläggande JQuery",
                     EndDate = new DateTime(2017, 5, 30)
@@ -117,7 +120,7 @@ namespace LMS.Migrations
                 }
                 );
 
-
+            context.SaveChanges();
             ////////////////////////
             // User Seeding below //
             ////////////////////////
