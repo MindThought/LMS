@@ -175,9 +175,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+<<<<<<< master
     <Compile Include="Migrations\201708071147353_init.cs" />
     <Compile Include="Migrations\201708071147353_init.Designer.cs">
       <DependentUpon>201708071147353_init.cs</DependentUpon>
+=======
+    <Compile Include="Migrations\201708071017161_init.cs" />
+    <Compile Include="Migrations\201708071017161_init.Designer.cs">
+      <DependentUpon>201708071017161_init.cs</DependentUpon>
+>>>>>>> Login plus id to courseId
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -274,8 +280,13 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< master
     <EmbeddedResource Include="Migrations\201708071147353_init.resx">
       <DependentUpon>201708071147353_init.cs</DependentUpon>
+=======
+    <EmbeddedResource Include="Migrations\201708071017161_init.resx">
+      <DependentUpon>201708071017161_init.cs</DependentUpon>
+>>>>>>> Login plus id to courseId
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -35,8 +35,8 @@
             Temporary solution for development of "Create account for student or teacher and end account"
         </p>
         <p>
-            <a class="btn btn-default" href="@Url.Action("Register", "Account", new {id="0"})">Register a new Teacher</a> @*id="0" sent to switch in /AccountController/Register*@
-            <a class="btn btn-default" href="@Url.Action("Register", "Account", new {id="1"})">Register a new Student</a> @*id="1" sent to switch in /AccountController/Register*@
+            <a class="btn btn-default" href="@Url.Action("Register", "Account", new {course_id="0"})">Register a new Teacher</a> @*id="0" sent to switch in /AccountController/Register*@
+            <a class="btn btn-default" href="@Url.Action("Register", "Account", new {course_id="1"})">Register a new Student</a> @*id="1" sent to switch in /AccountController/Register*@
             <a class="btn btn-default" href="@Url.Action("ExitAccount", "Account")">Exit account</a>
         </p>
     </div>
