@@ -155,7 +155,7 @@ namespace LMS.Controllers
                     ViewBag.RegisterTeacher = true;
                     break;
                 default:
-                    ViewBag.RegisterStudentForCourse = id;
+                    ViewBag.RegisterStudentForCourse = course_id;
                     break;
             }
             return View();
