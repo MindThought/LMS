@@ -33,7 +33,7 @@
         $('#courseModulesButton').click(function () {
             $('#Scheme').toggle(500, function () {
                 $("#Scheme").load('@Url.Action("CourseModules","Courses",new { id = Model.Id})');
-                document.getElementById("Scheme").style.border = "inset";
+                //document.getElementById("Scheme").style.border = "inset";
 
             });
 

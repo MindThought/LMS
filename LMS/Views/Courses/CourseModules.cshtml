@@ -6,43 +6,24 @@
     <p>@Html.ActionLink("Create New", "Create", "Module", new { CourseId = ViewBag.CourseId }, null)</p>
 }
 
-<table class="table">
-    <tr class="row">
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @*@Html.ActionLink("Create New", "Create")*@ @*TODO Make it create a new module in current course*@
-        </th>
-    </tr>
+<div class="row">
 
-@foreach (var item in Model) {
-    <tr class="row">
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @if (User.IsInRole("Teacher"))
-            {
-                @Html.ActionLink("Edit", "Edit", "Module", new { id = item.Id }, null) 
-                <span>|</span>
-            }
-
-            @Html.ActionLink("Details", "Details","Module", new { id=item.Id },null)
-
-            @if (User.IsInRole("Teacher"))
-            {
-                <span>|</span>
-                @Html.ActionLink("Delete", "Delete", "Module", new { id = item.Id },null)
-            }
-        </td>
-    </tr>
+@foreach (var item in Model)
+{
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="row">
+                <b>Namn:</b>
+                @Html.RouteLink( @Html.DisplayFor(modelItem => item.Name).ToString() , 
+                new RouteValueDictionary(new {controller = "Module", action = "Details", id = item.Id }))
+            </div>
+            
+            <div class="row"><b>Beskrivning: </b>@Html.DisplayFor(modelItem => item.Description)</div>
+            <div class="row"><b>Start Datum: </b>@item.StartDate.ToString("d")</div>
+            <div class="row"><b>Slut Datum: </b>@item.EndDate.ToString("d")</div>
+            <div class="row"><b>Aktiviteter: </b>@Html.DisplayFor(modelItem => item.Activities.Count)</div>
+             @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+             @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+             @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </div>
 }
-
-</table>
+</div>
