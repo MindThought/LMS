@@ -175,7 +175,7 @@ namespace LMS.Controllers
                 }
                 else
                 {
-                    var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, CourseId = int.Parse(model.courseID) };
+                    var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, CourseId = int.Parse(model.courseID)};
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
