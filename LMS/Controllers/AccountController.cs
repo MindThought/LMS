@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LMS.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.SqlClient;
 
 namespace LMS.Controllers
 {
@@ -80,6 +81,25 @@ namespace LMS.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+
+                    var user = await UserManager.FindByEmailAsync(model.Email);
+                    int? courseId = user.CourseId;
+                    if (courseId == null)
+                    { Url.Action("Kursöversikt", "Index", "Courses"); }
+                    else
+                    { Url.Action("Details", "Courses", new { id = courseId }); }
+
+
+
+                    //if (User.IsInRole("Teacher"))
+                    //{ Url.Action("Kursöversikt", "Index", "Courses"); }
+
+                    //if (User.IsInRole("Student"))
+                    //{
+                    //    var user = await UserManager.FindByEmailAsync(model.Email);
+                    //    int? courseId = user.CourseId;
+                    //    { Url.Action("Details", "Courses", new { id = courseId }); }
+                    //}
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -138,15 +158,15 @@ namespace LMS.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous] // <= will be changed to: [Authorize(Roles = "Teacher")]
-        public ActionResult Register(string id)
+        public ActionResult Register(string course_id)
         {
-            switch (id)
+            switch (course_id)
             {
                 case "0":
                     ViewBag.RegisterTeacher = true;
                     break;
                 default:
-                    ViewBag.RegisterStudent = id;
+                    ViewBag.RegisterStudentForCourse = course_id;
                     break;
             }
             return View();
@@ -155,14 +175,14 @@ namespace LMS.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous] // <= will be changed to: [Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Teacher")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
                 //var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
-                if (model.courseID == "0")
+                if (model.courseID == null)
                 {
                     var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
                     var result = await UserManager.CreateAsync(user, model.Password);
