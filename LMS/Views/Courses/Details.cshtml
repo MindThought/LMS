@@ -22,7 +22,7 @@
     <button class="btn btn-default col-md-2">Course literature</button>
     @if (User.IsInRole("Teacher"))
     {
-        <a class="btn btn-default col-md-offset-1 col-md-2" href="@Url.Action("Register", "Account", new { id = Model.Id })">Register a new Student</a> @*id="1" sent to switch in /AccountController/Register*@
+        <a class="btn btn-default col-md-offset-1 col-md-2" href="@Url.Action("Register", "Account", new { course_id = Model.Id })">Register a new Student</a> @*id="1" sent to switch in /AccountController/Register*@
     }
 </div>
 
