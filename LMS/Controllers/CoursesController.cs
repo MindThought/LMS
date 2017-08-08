@@ -38,7 +38,7 @@ namespace LMS.Controllers
             }
             return View(course);
         }
-
+        [Authorize]
         public ActionResult CourseStudents(int? id)
         {
             if (id == null)
@@ -54,6 +54,7 @@ namespace LMS.Controllers
             return PartialView(course.Students);
         }
         [HttpGet]
+        [Authorize]
         public ActionResult CourseModules(int? id)
         {
             if (id == null)
@@ -61,6 +62,7 @@ namespace LMS.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Course course = db.Courses.Find(id);
+            ViewBag.CourseId = id;
             if (course == null)
             {
                 return HttpNotFound();

@@ -7,9 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LMS.Models;
+using LMS.SpecialBehaviour;
 
 namespace LMS.Controllers
 {
+    [CustomAuthorize(Roles = "Teacher")]
     public class ModuleController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -36,6 +38,7 @@ namespace LMS.Controllers
         }
 
         // GET: Module/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -51,8 +54,9 @@ namespace LMS.Controllers
         }
 
         // GET: Module/Create
-        public ActionResult Create()
+        public ActionResult Create(int? CourseId)
         {
+            ViewBag.CourseId = CourseId;
             return View();
         }
 
@@ -61,13 +65,14 @@ namespace LMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate,EndDate")] Module module)
+        public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate,EndDate,CourseId")] Module module)
         {
             if (ModelState.IsValid)
             {
+                module.Course = db.Courses.Find(module.CourseId);
                 db.Modules.Add(module);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details","Courses",new {id = module.CourseId });
             }
 
             return View(module);
@@ -93,13 +98,13 @@ namespace LMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate,EndDate")] Module module)
+        public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate,EndDate,CourseId")] Module module)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(module).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Courses", new { id = module.CourseId });
             }
             return View(module);
         }
@@ -127,7 +132,7 @@ namespace LMS.Controllers
             Module module = db.Modules.Find(id);
             db.Modules.Remove(module);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details","Courses",new { id = module.CourseId });
         }
 
         protected override void Dispose(bool disposing)

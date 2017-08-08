@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Details";
+    ViewBag.CourseId = Model.Id;
 }
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 
@@ -19,7 +20,10 @@
 <br />
 <div class="row">
     <button class="btn btn-default col-md-2">Course literature</button>
-    <a class="btn btn-default col-md-offset-1 col-md-2" href="@Url.Action("Register", "Account", new {id=Model.Id})">Register a new Student</a> @*id="1" sent to switch in /AccountController/Register*@
+    @if (User.IsInRole("Teacher"))
+    {
+        <a class="btn btn-default col-md-offset-1 col-md-2" href="@Url.Action("Register", "Account", new { id = Model.Id })">Register a new Student</a> @*id="1" sent to switch in /AccountController/Register*@
+    }
 </div>
 
 <div id="studentList"></div>
