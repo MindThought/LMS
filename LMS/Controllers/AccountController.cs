@@ -81,26 +81,15 @@ namespace LMS.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-
                     var user = await UserManager.FindByEmailAsync(model.Email);
                     int? courseId = user.CourseId;
                     if (courseId == null)
-                    { Url.Action("Kursöversikt", "Index", "Courses"); }
-                    else
-                    { Url.Action("Details", "Courses", new { id = courseId }); }
+                    { return RedirectToAction("Index", "Courses"); }
 
+                    //{ Url.Action("Details", "Courses", new { id = courseId }); }
+                    //return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Details", "Courses", new { id = courseId });
 
-
-                    //if (User.IsInRole("Teacher"))
-                    //{ Url.Action("Kursöversikt", "Index", "Courses"); }
-
-                    //if (User.IsInRole("Student"))
-                    //{
-                    //    var user = await UserManager.FindByEmailAsync(model.Email);
-                    //    int? courseId = user.CourseId;
-                    //    { Url.Action("Details", "Courses", new { id = courseId }); }
-                    //}
-                    return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -166,7 +155,7 @@ namespace LMS.Controllers
                     ViewBag.RegisterTeacher = true;
                     break;
                 default:
-                    ViewBag.RegisterStudentForCourse = course_id;
+                    ViewBag.RegisterStudentForCourse = id;
                     break;
             }
             return View();
@@ -189,18 +178,20 @@ namespace LMS.Controllers
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToAction("Index", "Home");
+                        //return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Courses");
                     }
                     AddErrors(result);
                 }
                 else
                 {
-                    var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, CourseId = int.Parse(model.courseID)};
+                    var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, CourseId = int.Parse(model.courseID) };
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToAction("Details", "Courses",new { id = model.courseID });
+                        //return RedirectToAction("Details", "Courses",new { id = model.courseID });
+                        return RedirectToAction("Index", "Courses", new { id = model.courseID });
                     }
                     AddErrors(result);
                 }
