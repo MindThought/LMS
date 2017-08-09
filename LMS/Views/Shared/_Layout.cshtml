@@ -32,6 +32,11 @@
                     }
                     @if (User.IsInRole("Student"))
                     {
+                        @*@{ 
+                            string path = "Details/";
+                            path += User.Identity.GetUserId();
+                        }*@
+                        //<li>@Html.ActionLink("Min Kurs", path,"Courses")</li>
                         //TODO Link to own Course
                         //TODO Link to work
                     }
