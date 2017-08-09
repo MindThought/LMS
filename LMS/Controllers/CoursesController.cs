@@ -27,11 +27,20 @@ namespace LMS.Controllers
         [Authorize]
         public ActionResult Details(int? id)
         {
+            Course course = null;
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (User.IsInRole("Student"))
+                {
+                    id = (int)db.Users.Where(s => s.UserName == User.Identity.Name).FirstOrDefault().CourseId;
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
             }
-            Course course = db.Courses.Find(id);
+            course = db.Courses.Find(id);
             if (course == null)
             {
                 return HttpNotFound();

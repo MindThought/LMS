@@ -29,15 +29,11 @@
                     {
                         //TODO Link to Teacher management
                         <li>@Html.ActionLink("Kursöversikt","Index","Courses")</li>
+                        <li><a href="@Url.Action("Register", "Account", new {course_id="0"})">Register a new Teacher</a></li>
                     }
                     @if (User.IsInRole("Student"))
                     {
-                        @*@{ 
-                            string path = "Details/";
-                            path += User.Identity.GetUserId();
-                        }*@
-                        //<li>@Html.ActionLink("Min Kurs", path,"Courses")</li>
-                        //TODO Link to own Course
+                        <li>@Html.ActionLink("Min Kurs", "Details","Courses")</li>
                         //TODO Link to work
                     }
                 </ul>
