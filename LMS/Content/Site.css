@@ -1,8 +1,16 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 0px;
     padding-bottom: 20px;
     font-family: "Whitney SSm A","Whitney SSm B",arial,sans-serif;
     font-size: 14px;
+}
+@media (min-width: 981px) 
+{ 
+    body { 
+        padding-top: 110px; 
+
+    } 
+
 }
 
 /* Set padding to keep content from hitting the edges */

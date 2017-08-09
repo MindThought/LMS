@@ -50,8 +50,8 @@ namespace LMS.Controllers
             {
                 return HttpNotFound();
             }
-
-            return PartialView(course.Students);
+            var output = course.Students.OrderBy(s => s.UserName);
+            return PartialView(output);
         }
         [HttpGet]
         [Authorize]
