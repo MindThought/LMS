@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<LMS.Models.Module>
 
 
-<h3>Moduler:</h3>
-
-@if (User.IsInRole("Teacher"))
-{
-    <p>@Html.ActionLink("Skapa ny modul", "Create", "Module", new { CourseId = ViewBag.CourseId }, null)</p>
-}
+<h3>Moduler:</h3> 
+ 
+@if (User.IsInRole("Teacher")) 
+{ 
+    <p>@Html.ActionLink("Skapa ny modul", "Create", "Module", new { CourseId = ViewBag.CourseId }, null)</p> 
+} 
 
 <div class="row">
 
@@ -23,11 +23,11 @@
             <div class="row"><b>Start Datum: </b>@item.StartDate.ToString("d")</div>
             <div class="row"><b>Slut Datum: </b>@item.EndDate.ToString("d")</div>
             <div class="row"><b>Aktiviteter: </b>@Html.DisplayFor(modelItem => item.Activities.Count)</div>
-            @if (User.IsInRole("Teacher"))
-            {
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <span>|</span>
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id }) 
-            }
+            @if (User.IsInRole("Teacher")) 
+            { 
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <span>|</span> 
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })  
+            } 
         </div>
 }
 </div>
