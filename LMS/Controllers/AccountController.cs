@@ -177,7 +177,7 @@ namespace LMS.Controllers
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         //return RedirectToAction("Index", "Home");
                         return RedirectToAction("Index", "Courses");
                     }
@@ -189,7 +189,7 @@ namespace LMS.Controllers
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         //return RedirectToAction("Details", "Courses",new { id = model.courseID });
                         return RedirectToAction("Index", "Courses", new { id = model.courseID });
                     }
