@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<LMS.Models.Module>
 
 
-<h3>Moduler:</h3>
-
-@if (User.IsInRole("Teacher"))
-{
-    <p>@Html.ActionLink("Skapa ny modul", "Create", "Module", new { CourseId = ViewBag.CourseId }, null)</p>
-}
+<h3>Moduler:</h3> 
+ 
+@if (User.IsInRole("Teacher")) 
+{ 
+    <p>@Html.ActionLink("Skapa ny modul", "Create", "Module", new { CourseId = ViewBag.CourseId }, null)</p> 
+} 
 
 <div class="row">
 
