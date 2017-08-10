@@ -98,6 +98,8 @@ namespace LMS.Migrations
                 }
                 );
 
+            context.SaveChanges();
+
             context.Activities.AddOrUpdate(
                 a => a.Name,
                 new Activity
