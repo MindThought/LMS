@@ -4,6 +4,8 @@
     ViewBag.Title = "Details";
 }
 
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+
 <h2>@Model.Name</h2>
 
 <div>
@@ -69,6 +71,27 @@
         }
     </div>
 </div>
+<div class="row">
+    <button class="btn btn-default col-md-2" id="courseModulesButton">Schema</button>
+</div>
+
+<div id="schedule"></div>
+@*@{
+    <a href="@Url.Action("ModuleSchedule","Module",new { id = Model.Id})">content</a>
+    Html.RenderPartial("ModuleSchedule", new { id = Model.Id}); 
+}*@
+<script>
+    $(document).ready(function () {
+        $('#courseModulesButton').click(function () {
+            $('#schedule').toggle(500, function () {
+                $("#schedule").load('@Url.Action("ModuleSchedule","Module",new { id = Model.Id})');
+                //document.getElementById("Scheme").style.border = "inset";
+
+            });
+
+        });
+    })
+</script>
 <p>
     @if (User.IsInRole("Teacher"))
     {

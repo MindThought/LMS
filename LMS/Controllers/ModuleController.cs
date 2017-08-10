@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using LMS.Models;
+using LMS.SpecialBehaviour;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using LMS.Models;
 using LMS.SpecialBehaviour;
@@ -36,6 +35,22 @@ namespace LMS.Controllers
             }
             ViewBag.Id = id;
             return View(course.Modules);
+        }
+
+        public ActionResult ModuleSchedule(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Module module = db.Modules.Find(id);
+            if (module == null)
+            {
+                return HttpNotFound();
+            }
+            var activities = module.Activities.OrderBy(a => a.StartTime).ToList();
+
+            return View(activities);
         }
 
         // GET: Module/Details/5
