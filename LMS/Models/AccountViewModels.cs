@@ -64,7 +64,7 @@ namespace LMS.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        //[Required] Temporary not required TBD
         [Display(Name = "Name")]
         public string UserName { get; set; }
 
@@ -94,10 +94,10 @@ namespace LMS.Models
         [EmailAddress]
         public string Email { get; set; }
 
-        //[Required]
-        //[DataType(DataType.Password)]
-        //[Display(Name = "Password")]
-        //public string Password { get; set; }
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
     }
 
     public class ResetPasswordViewModel
