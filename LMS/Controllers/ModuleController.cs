@@ -7,8 +7,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using LMS.Models;
-using LMS.SpecialBehaviour;
 using System.IO;
 
 namespace LMS.Controllers
