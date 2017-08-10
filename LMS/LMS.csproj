@@ -198,8 +198,17 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery-3.1.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Scripts\jquery.schedule.css" />
+    <Content Include="Scripts\jquery.schedule.js" />
+    <Content Include="Scripts\jquery.schedule.min.css" />
+    <Content Include="Scripts\jquery.schedule.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -260,6 +269,7 @@
     <Content Include="Views\Module\Create.cshtml" />
     <Content Include="Views\Account\NotAllowedToDeleteOwnAccount.cshtml" />
     <Content Include="Views\Account\SpecifiedPasswordNotMatchLoggedInUser.cshtml" />
+    <Content Include="Views\Module\ModuleSchedule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
