@@ -168,7 +168,7 @@ namespace LMS.Controllers
                 //var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
                 if (model.courseID == null)
                 {
-                    var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+                    var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
@@ -180,7 +180,7 @@ namespace LMS.Controllers
                 }
                 else
                 {
-                    var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, CourseId = int.Parse(model.courseID) };
+                    var user = new ApplicationUser { UserName = model.Email, Email = model.Email, CourseId = int.Parse(model.courseID) };
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
@@ -197,7 +197,7 @@ namespace LMS.Controllers
 
         //
         // GET: /Account/ExitAccount
-        [AllowAnonymous] // <= will be changed to: [Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Teacher")]
         public ActionResult ExitAccount()
         {
             return View();
@@ -206,21 +206,29 @@ namespace LMS.Controllers
         //
         // POST: /Account/ExitAccount
         [HttpPost]
-        [AllowAnonymous] // <= will be changed to: [Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Teacher")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExitAccount(ExitAccountViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByEmailAsync(model.Email);
-                if (user == null)// || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                var userToDelete = await UserManager.FindByEmailAsync(model.Email);
+                if (userToDelete == null)// || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("NonExistingAccount");
                 }
-                var result = UserManager.Delete(user);
-                if (result.Succeeded) { return View("AccountDeleted"); }
-                else { return View("Failure"); }
+                //string userDeleting = System.Environment.UserName;
+                var userDeleting = User.Identity.GetUserName();
+
+                if (userDeleting != model.Email)
+                {
+                    var result = UserManager.Delete(userToDelete);
+                    if (result.Succeeded) { return View("AccountDeleted"); }
+                    else { return View("Failure"); }
+                }
+                else { return View("NotAllowedToDeleteOwnAccount"); }
+
             }
             return View(model);
         }
@@ -487,6 +495,7 @@ namespace LMS.Controllers
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
+        private ApplicationUserManager userDeleting;
 
         private IAuthenticationManager AuthenticationManager
         {
