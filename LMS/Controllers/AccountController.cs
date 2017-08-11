@@ -12,6 +12,7 @@ namespace LMS.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        static string Course_id;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -141,18 +142,10 @@ namespace LMS.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous] // <= will be changed to: [Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Register(string course_id)
         {
-            switch (course_id)
-            {
-                case "0":
-                    ViewBag.RegisterTeacher = true;
-                    break;
-                default:
-                    ViewBag.RegisterStudentForCourse = course_id;
-                    break;
-            }
+            Course_id = course_id;
             return View();
         }
 
@@ -165,28 +158,23 @@ namespace LMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
-                if (model.courseID == null)
+                if (Course_id == null)
                 {
                     var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
-                        //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        //return RedirectToAction("Index", "Home");
                         return RedirectToAction("Index", "Courses");
                     }
                     AddErrors(result);
                 }
                 else
                 {
-                    var user = new ApplicationUser { UserName = model.Email, Email = model.Email, CourseId = int.Parse(model.courseID) };
+                    var user = new ApplicationUser { UserName = model.Email, Email = model.Email, CourseId = int.Parse(Course_id)};
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
-                        //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        //return RedirectToAction("Details", "Courses",new { id = model.courseID });
-                        return RedirectToAction("Index", "Courses", new { id = model.courseID });
+                        return RedirectToAction("Index", "Courses", new { id = Course_id });
                     }
                     AddErrors(result);
                 }
