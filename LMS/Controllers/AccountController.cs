@@ -218,8 +218,15 @@ namespace LMS.Controllers
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("NonExistingAccount");
                 }
-                //string userDeleting = System.Environment.UserName;
+
                 var userDeleting = User.Identity.GetUserName();
+
+                var user = await UserManager.FindAsync(userDeleting, model.Password);
+
+                if (user == null)
+                {
+                    return View("SpecifiedPasswordNotMatchLoggedInUser");
+                }
 
                 if (userDeleting != model.Email)
                 {
@@ -496,6 +503,7 @@ namespace LMS.Controllers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
         private ApplicationUserManager userDeleting;
+        private object passwdVerResult;
 
         private IAuthenticationManager AuthenticationManager
         {
