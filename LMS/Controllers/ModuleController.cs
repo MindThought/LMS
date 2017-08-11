@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using LMS.Models;
 using LMS.SpecialBehaviour;
+using System.IO;
 
 namespace LMS.Controllers
 {
@@ -51,59 +52,37 @@ namespace LMS.Controllers
                 return HttpNotFound();
             }
 
-            var monday = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + 1);
-
-            var aktivitetFM = new List<string>();
-            var aktivitetEM = new List<string>();
             var weekDays = new List<DayOfWeek>();
             var dates = new List<string>();
- 
+            var activities = module.Activities.OrderBy(a => a.StartTime).ToList();
+            var ActivitySessions = new List<Activity>();
+            var activityTime = new List<int>();
 
-            for (int i = 0; i < module.Activities.Count; i++)
+            for (int i = 0; i < activities.Count; i++)
             {
-
-                if (module.Activities[i].StartTime.Hour < 12)
+                activityTime.Add(Math.Abs(activities[i].EndTime.Day - activities[i].StartTime.Day));
+                activityTime[i] += 1;
+ 
+                if (!dates.Contains(activities[i].StartTime.ToString("yyyy-MM-dd")))
                 {
-                    aktivitetFM.Add(module.Activities[i].Name);
-                }
-                else
-                {
-                    aktivitetEM.Add(module.Activities[i].Name);
-                }
-
-                if (module.Activities[i].EndTime.Hour < 12)
-                {
-                    aktivitetFM.Add(module.Activities[i].Name);
-                }
-                else
-                {
-                    aktivitetEM.Add(module.Activities[i].Name);
+                    dates.Add(activities[i].StartTime.ToString("yyyy-MM-dd"));
+                    weekDays.Add(activities[i].StartTime.DayOfWeek);
                 }
 
-                if (!dates.Contains(module.Activities[i].StartTime.ToString("yyyy-MM-dd")))
+                for (int v = 0; v < activityTime[i]; v++)
                 {
-                    dates.Add(module.Activities[i].StartTime.ToString("yyyy-MM-dd"));
-                    weekDays.Add(module.Activities[i].StartTime.DayOfWeek);
+                    ActivitySessions.Add(activities[i]);
+                    if (!dates.Contains((activities[i].StartTime.AddDays(v)).ToString("yyyy-MM-dd")))
+                    {
+                        dates.Add((activities[i].StartTime.AddDays(v)).ToString("yyyy-MM-dd"));
+                        weekDays.Add((activities[i].StartTime.AddDays(v)).DayOfWeek);
+                    }
                 }
-                //if (module.Activities.Where(a => a.StartTime.ToString("yyyy-MM-dd") == module.Activities[i].StartTime.ToString("yyyy-MM-dd")).ToList().Count > 2)
-                //{
-                //    weekDays.Add(module.Activities[i].StartTime.DayOfWeek);
-                //    IsSameDay = true;
-                //}
-                //for (int v = 0; v < module.Activities.Count; v++)
-                //{
-                //    if (startTimeFM[v].ToString("yyyy-MM-dd") == startTimeEM[v].ToString("yyyy-MM-dd"))
-                //    {
-                //        weekDays.Add(module.Activities[i].StartTime.DayOfWeek);
-                //        IsSameDay = true;
-                //        break;
-                //    }
-                //}
+
             }
-
-            ViewBag.Activities = dates;
-            ViewBag.aktivitetFM = aktivitetFM;
-            ViewBag.aktivitetEM = aktivitetEM;
+            ViewBag.ActivityTime = activityTime;
+            ViewBag.ActivitySessions = ActivitySessions;
+            ViewBag.Dates = dates;
             ViewBag.WeekDays = weekDays;
 
             return View(module);
