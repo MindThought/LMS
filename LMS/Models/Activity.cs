@@ -8,7 +8,6 @@ namespace LMS.Models
     public class Activity
     {
         public int Id { get; set; }
-        
         public virtual Module Module { get; set; }
         [Required]
         public int ModuleId { get; set; }

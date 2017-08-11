@@ -3,7 +3,7 @@ namespace LMS.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Init : DbMigration
+    public partial class asjfkiaweor : DbMigration
     {
         public override void Up()
         {
@@ -12,31 +12,31 @@ namespace LMS.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
+                        ModuleId = c.Int(nullable: false),
                         Type = c.Int(nullable: false),
                         Name = c.String(),
                         Description = c.String(),
                         StartTime = c.DateTime(nullable: false),
                         EndTime = c.DateTime(nullable: false),
-                        Module_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Modules", t => t.Module_Id)
-                .Index(t => t.Module_Id);
+                .ForeignKey("dbo.Modules", t => t.ModuleId, cascadeDelete: true)
+                .Index(t => t.ModuleId);
             
             CreateTable(
                 "dbo.Modules",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
+                        Name = c.String(maxLength: 60),
                         Description = c.String(),
                         StartDate = c.DateTime(nullable: false),
                         EndDate = c.DateTime(nullable: false),
-                        Course_Id = c.Int(),
+                        CourseId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Courses", t => t.Course_Id)
-                .Index(t => t.Course_Id);
+                .ForeignKey("dbo.Courses", t => t.CourseId, cascadeDelete: true)
+                .Index(t => t.CourseId);
             
             CreateTable(
                 "dbo.Courses",
@@ -54,6 +54,7 @@ namespace LMS.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
+                        CourseId = c.Int(),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
@@ -65,12 +66,11 @@ namespace LMS.Migrations
                         LockoutEnabled = c.Boolean(nullable: false),
                         AccessFailedCount = c.Int(nullable: false),
                         UserName = c.String(nullable: false, maxLength: 256),
-                        Course_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Courses", t => t.Course_Id)
-                .Index(t => t.UserName, unique: true, name: "UserNameIndex")
-                .Index(t => t.Course_Id);
+                .ForeignKey("dbo.Courses", t => t.CourseId)
+                .Index(t => t.CourseId)
+                .Index(t => t.UserName, unique: true, name: "UserNameIndex");
             
             CreateTable(
                 "dbo.AspNetUserClaims",
@@ -127,19 +127,19 @@ namespace LMS.Migrations
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.AspNetUsers", "Course_Id", "dbo.Courses");
+            DropForeignKey("dbo.AspNetUsers", "CourseId", "dbo.Courses");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Modules", "Course_Id", "dbo.Courses");
-            DropForeignKey("dbo.Activities", "Module_Id", "dbo.Modules");
+            DropForeignKey("dbo.Modules", "CourseId", "dbo.Courses");
+            DropForeignKey("dbo.Activities", "ModuleId", "dbo.Modules");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
-            DropIndex("dbo.AspNetUsers", new[] { "Course_Id" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.Modules", new[] { "Course_Id" });
-            DropIndex("dbo.Activities", new[] { "Module_Id" });
+            DropIndex("dbo.AspNetUsers", new[] { "CourseId" });
+            DropIndex("dbo.Modules", new[] { "CourseId" });
+            DropIndex("dbo.Activities", new[] { "ModuleId" });
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
