@@ -490,6 +490,7 @@ namespace LMS.Controllers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
         private ApplicationUserManager userDeleting;
+        private object passwdVerResult;
 
         private IAuthenticationManager AuthenticationManager
         {
