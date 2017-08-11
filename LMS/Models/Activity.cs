@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace LMS.Models
 {
@@ -7,7 +8,9 @@ namespace LMS.Models
     public class Activity
     {
         public int Id { get; set; }
-        public Module Module { get; set; }
+        public virtual Module Module { get; set; }
+        [Required]
+        public int ModuleId { get; set; }
         public ActivityType Type { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

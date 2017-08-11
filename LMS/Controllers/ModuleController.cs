@@ -50,6 +50,62 @@ namespace LMS.Controllers
             {
                 return HttpNotFound();
             }
+
+            var monday = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + 1);
+
+            var aktivitetFM = new List<string>();
+            var aktivitetEM = new List<string>();
+            var weekDays = new List<DayOfWeek>();
+            var dates = new List<string>();
+ 
+
+            for (int i = 0; i < module.Activities.Count; i++)
+            {
+
+                if (module.Activities[i].StartTime.Hour < 12)
+                {
+                    aktivitetFM.Add(module.Activities[i].Name);
+                }
+                else
+                {
+                    aktivitetEM.Add(module.Activities[i].Name);
+                }
+
+                if (module.Activities[i].EndTime.Hour < 12)
+                {
+                    aktivitetFM.Add(module.Activities[i].Name);
+                }
+                else
+                {
+                    aktivitetEM.Add(module.Activities[i].Name);
+                }
+
+                if (!dates.Contains(module.Activities[i].StartTime.ToString("yyyy-MM-dd")))
+                {
+                    dates.Add(module.Activities[i].StartTime.ToString("yyyy-MM-dd"));
+                    weekDays.Add(module.Activities[i].StartTime.DayOfWeek);
+                }
+                //if (module.Activities.Where(a => a.StartTime.ToString("yyyy-MM-dd") == module.Activities[i].StartTime.ToString("yyyy-MM-dd")).ToList().Count > 2)
+                //{
+                //    weekDays.Add(module.Activities[i].StartTime.DayOfWeek);
+                //    IsSameDay = true;
+                //}
+                //for (int v = 0; v < module.Activities.Count; v++)
+                //{
+                //    if (startTimeFM[v].ToString("yyyy-MM-dd") == startTimeEM[v].ToString("yyyy-MM-dd"))
+                //    {
+                //        weekDays.Add(module.Activities[i].StartTime.DayOfWeek);
+                //        IsSameDay = true;
+                //        break;
+                //    }
+                //}
+            }
+
+            ViewBag.Activities = dates;
+            ViewBag.aktivitetFM = aktivitetFM;
+            ViewBag.aktivitetEM = aktivitetEM;
+            ViewBag.WeekDays = weekDays;
+
             return View(module);
         }
 
