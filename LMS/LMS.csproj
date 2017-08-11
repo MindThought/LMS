@@ -262,6 +262,7 @@
     <Content Include="Views\Module\Edit.cshtml" />
     <Content Include="Views\Module\Create.cshtml" />
     <Content Include="Views\Account\NotAllowedToDeleteOwnAccount.cshtml" />
+    <Content Include="Views\Account\SpecifiedPasswordNotMatchLoggedInUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
