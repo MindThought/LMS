@@ -22,38 +22,32 @@
             </tr>
         </thead>
         <tbody>
-            @for (int i = 0; i < ViewBag.Activities.Count; i++)
+            @{ var v = 0;}
+            @for (int i = 0; i < ViewBag.Dates.Count; i++)
             {
                 <tr >
-                    <td class="text-center">@ViewBag.Activities[i]</td>
-                    @if (i < ViewBag.WeekDays.Count)
+                    
+                    @if (i <= ViewBag.Dates.Count)
                     {
+                        <td class="text-center">@ViewBag.Dates[i]</td>
                         <td class="text-center">@ViewBag.WeekDays[i]</td>
                     }
                     else
                     {
                         <td class="text-center"></td>
                     }
-                    @if (i < ViewBag.aktivitetFM.Count &&)
+                    <td class="text-center">@ViewBag.ActivitySessions[i].Name</td>
+                    @if (ViewBag.ActivitySessions.Count > i + 1)
                     {
-                        <td class="text-center">
-                            <a href="@Url.Action("Details", "Activities", new { id = Model.Id })">@ViewBag.aktivitetFM[i]</a>
-                        </td>
+                        v = i + 1;
+                        <td class="text-center">@ViewBag.ActivitySessions[v].Name</td>
+                        
                     }
                     else
                     {
                         <td class="text-center"></td>
                     }
-                    @if (i < ViewBag.aktivitetEM.Count)
-                    {
-                        <td class="text-center">
-                            <a href="@Url.Action("Details", "Activities", new { ModuleId = Model.Id })">@ViewBag.aktivitetEM[i]</a>
-                        </td>
-                    }
-                    else
-                    {
-                        <td class="text-center"></td>
-                    }
+                    
                 </tr>
             }
         </tbody>
