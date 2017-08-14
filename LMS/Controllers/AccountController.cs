@@ -12,7 +12,7 @@ namespace LMS.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        static string Course_id;
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -140,12 +140,11 @@ namespace LMS.Controllers
             }
         }
 
-        //
         // GET: /Account/Register
         [Authorize(Roles = "Teacher")]
-        public ActionResult Register(string course_id)
+        public ActionResult Register(string courseID)
         {
-            Course_id = course_id;
+            ViewBag.CourseID = courseID;
             return View();
         }
 
@@ -158,7 +157,7 @@ namespace LMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Course_id == null)
+                if (model.courseID == null)
                 {
                     var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                     var result = await UserManager.CreateAsync(user, model.Password);
@@ -170,17 +169,17 @@ namespace LMS.Controllers
                 }
                 else
                 {
-                    var user = new ApplicationUser { UserName = model.Email, Email = model.Email, CourseId = int.Parse(Course_id)};
+                    var user = new ApplicationUser { UserName = model.Email, Email = model.Email, CourseId = int.Parse(model.courseID) };
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index", "Courses", new { id = Course_id });
+                        return RedirectToAction("Index", "Courses", new { id = model.courseID });
                     }
                     AddErrors(result);
                 }
             }
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return RedirectToAction("Register", "Account", new { courseID = model.courseID });
         }
 
         //
@@ -491,7 +490,6 @@ namespace LMS.Controllers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
         private ApplicationUserManager userDeleting;
-        private object passwdVerResult;
 
         private IAuthenticationManager AuthenticationManager
         {
