@@ -169,7 +169,7 @@ namespace LMS.Controllers
                 }
                 else
                 {
-                    var user = new ApplicationUser { UserName = model.Email, Email = model.Email, CourseId = int.Parse(Course_id)};
+                    var user = new ApplicationUser { UserName = model.Email, Email = model.Email, CourseId = int.Parse(model.courseID) };
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
@@ -490,7 +490,6 @@ namespace LMS.Controllers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
         private ApplicationUserManager userDeleting;
-        private object passwdVerResult;
 
         private IAuthenticationManager AuthenticationManager
         {
