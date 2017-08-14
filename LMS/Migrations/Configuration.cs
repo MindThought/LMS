@@ -55,6 +55,34 @@ namespace LMS.Migrations
                     Name = "Projektledning",
                     StartDate = new DateTime(2017, 8, 18),
                     Description = "Projektledning"
+                },
+                new Course
+                {
+                    Id = 4,
+                    Name = ".NET-utbildning NB17",
+                    StartDate = new DateTime(2017, 4, 18),
+                    Description = "Systemutvecklare .NET för dem som har tidigare erfarenhet av programering"
+                },
+                new Course
+                {
+                    Id = 5,
+                    Name = ".NET-utbildning NB18",
+                    StartDate = new DateTime(2017, 10, 18),
+                    Description = "Systemutvecklare .NET för dem som har tidigare erfarenhet av C++ programering"
+                },
+                new Course
+                {
+                    Id = 6,
+                    Name = ".NET-utbildning NB20",
+                    StartDate = new DateTime(2018, 01, 18),
+                    Description = "Systemutvecklare .NET för dem som har tidigare erfarenhet av Delfi programering"
+                },
+                new Course
+                {
+                    Id = 7,
+                    Name = ".NET-utbildning NB66",
+                    StartDate = new DateTime(2018, 03, 18),
+                    Description = "Systemutvecklare .NET för dem som har ingen erfarenhet av programering"
                 }
                 );
 
@@ -88,6 +116,69 @@ namespace LMS.Migrations
                     Description = "Grundläggande JQuery",
                     EndDate = new DateTime(2017, 6, 30)
                 },
+
+
+
+
+                new Module
+                {
+                    Name = "C#",
+                    Course = context.Courses.Where(c => c.Name == ".NET-utbildning NB17").FirstOrDefault(),
+                    StartDate = new DateTime(2017, 4, 18),
+                    Description = "E-learning, forelesningar och övningsuppgifter: Grund, OOP, Generics och LINQ",
+                    EndDate = new DateTime(2017, 5, 16)
+                },
+                new Module
+                {
+                    Name = "Webb",
+                    Course = context.Courses.Where(c => c.Name == ".NET-utbildning NB17").FirstOrDefault(),
+                    StartDate = new DateTime(2017, 5, 17),
+                    Description = "E-learning, forelesningar och övningsuppgifter: HTML, CSS, JS, BOOTSTRAP och GIT",
+                    EndDate = new DateTime(2017, 5, 31)
+                },
+                new Module
+                {
+                    Name = "MVC",
+                    Course = context.Courses.Where(c => c.Name == ".NET-utbildning NB17").FirstOrDefault(),
+                    StartDate = new DateTime(2017, 6, 1),
+                    Description = "E-learning, forelesningar och övningsuppgifter: MVC, ASP.NET",
+                    EndDate = new DateTime(2017, 6, 15)
+                },
+                new Module
+                {
+                    Name = "Databas",
+                    Course = context.Courses.Where(c => c.Name == ".NET-utbildning NB17").FirstOrDefault(),
+                    StartDate = new DateTime(2017, 6, 16),
+                    Description = "E-learning, föreläsningar och övningsuppgifter: SQLBolt",
+                    EndDate = new DateTime(2017, 6, 22)
+                },
+                new Module
+                {
+                    Name = "ApplikationsUtvekling",
+                    Course = context.Courses.Where(c => c.Name == ".NET-utbildning NB17").FirstOrDefault(),
+                    StartDate = new DateTime(2017, 6, 26),
+                    Description = "E-learning, föreläsningar och övningsuppgifter: JS-Ramverk, Client vs. Server, UX och Identity",
+                    EndDate = new DateTime(2017, 6, 30)
+                },
+                new Module
+                {
+                    Name = "Testning",
+                    Course = context.Courses.Where(c => c.Name == ".NET-utbildning NB17").FirstOrDefault(),
+                    StartDate = new DateTime(2017, 7, 3),
+                    Description = "E-learning, föreläsningar och övningsuppgifter: Grundläggande Testning",
+                    EndDate = new DateTime(2017, 7, 7)
+                },
+                new Module
+                {
+                    Name = "MVC fördjpning",
+                    Course = context.Courses.Where(c => c.Name == ".NET-utbildning NB17").FirstOrDefault(),
+                    StartDate = new DateTime(2017, 7, 21),
+                    Description = "E-learning, föreläsningar och övningsuppgifter: MVC, SKRUM, Projektplanering, " +
+                                  "Planering sprint (1-3), Sprint review och Slutredovisning (OBS! vv 30&31 Sommarstängt)",
+                    EndDate = new DateTime(2017, 8, 25)
+                },
+
+
                 new Module
                 {
                     Name = "Projektledning",
