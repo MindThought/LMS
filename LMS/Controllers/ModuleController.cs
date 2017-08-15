@@ -358,9 +358,9 @@ namespace LMS.Controllers
 					}
 					periodes.Add(period0);
 				}
-				if (days > 2)
+				if (days > 1)
 				{
-					for (int i = 1; i < item.EndTime.Day - item.StartTime.Day; i++)
+					for (int i = 1; i <= days; i++)
 					{
 						startHour = 8;
 						startMinute = 30;
@@ -369,7 +369,7 @@ namespace LMS.Controllers
 						Period period = new Period
 						{
 							ModuleId = item.Id,
-							Day = i,
+							Day = item.StartTime.Day - start.Day + i,
 							Name = item.Name,
 							StartHour = startHour,
 							StartMinute = startMinute,
@@ -382,7 +382,7 @@ namespace LMS.Controllers
 						}
 					}
 				}
-				if (days > 1)
+				if (days > 0)
 				{
 					startHour = 8;
 					startMinute = 30;
@@ -400,7 +400,7 @@ namespace LMS.Controllers
 					Period periodN = new Period
 					{
 						ModuleId = item.Id,
-						Day = item.StartTime.Day - start.Day,
+						Day = item.EndTime.Day - start.Day,
 						Name = item.Name,
 						StartHour = startHour,
 						StartMinute = startMinute,
