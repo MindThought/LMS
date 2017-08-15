@@ -37,21 +37,22 @@ namespace LMS.Controllers
 			return View(course.Modules);
 		}
 
-        public ActionResult ModuleSchedule(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Module module = db.Modules.Find(id);
-            if (module == null)
-            {
-                return HttpNotFound();
-            }
-            var activities = module.Activities.OrderBy(a => a.StartTime).ToList();
+		public ActionResult Schedule(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Module module = db.Modules.Find(id);
+			if (module == null)
+			{
+				return HttpNotFound();
+			}
+			var currentTime = DateTime.Now;
+			var activities = module.Activities.OrderBy(a => a.StartTime).ToList();
 
-            return View(activities);
-        }
+			return PartialView(activities);
+		}
 
         // GET: Module/Details/5
         [Authorize]
