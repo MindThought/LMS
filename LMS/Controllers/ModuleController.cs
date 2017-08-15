@@ -127,46 +127,28 @@ namespace LMS.Controllers
                     {
                         if (StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].StartTime.ToString("yyyy-MM-dd")).Count >= 2)
                         {
-                            if (time > 4)
+
+
+                            for (int v = 0; v < 3; v++)
                             {
-                                for (int v = 0; v < 3; v++)
-                                {
-                                    ActivitySessions.Add(StartActivities[i]);
-                                }
+                                ActivitySessions.Add(StartActivities[i]);
                             }
-                            else
-                            {
-                                for (int v = 0; v < time; v++)
-                                {
-                                    ActivitySessions.Add(StartActivities[i]);
-                                }
-                            }
+
                         }
                         else
                         {
-                            if (time > 4)
+                            ActivitySessions.Add(null);
+                            for (int v = 0; v < 3; v++)
                             {
-                                ActivitySessions.Add(null);
-                                for (int v = 0; v < 4; v++)
-                                {
-                                    ActivitySessions.Add(StartActivities[i]);
+                                ActivitySessions.Add(StartActivities[i]);
 
-                                }
                             }
-                            else
-                            {
-                                ActivitySessions.Add(null);
-                                for (int v = 0; v < time; v++)
-                                {
-                                    ActivitySessions.Add(StartActivities[i]);
 
-                                }
-                            }
                         }
                     }
                     else if (StartActivities[i].StartTime.Hour <= 12 && StartActivities[i].EndTime.Hour > 12)
                     {
-                        for (int v = 0; v < time; v++)
+                        for (int v = 0; v < 4; v++)
                         {
                             ActivitySessions.Add(StartActivities[i]);
 
@@ -176,13 +158,32 @@ namespace LMS.Controllers
 
                     else if (StartActivities[i].StartTime.Hour > 12 && StartActivities[i].EndTime.Hour <= 12)
                     {
-                        if (StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].StartTime.ToString("yyyy-MM-dd")).Count >= 2)
+                        var activityOnSameDay = StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].StartTime.ToString("yyyy-MM-dd"));
+                        var activityOnSameDayStart = StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].StartTime.ToString("yyyy-MM-dd")).LastOrDefault();
+                        var activityOnSameDayEnd = StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].EndTime.ToString("yyyy-MM-dd")).LastOrDefault();
+                        if (activityOnSameDayStart?.StartTime.Hour >= 8 && activityOnSameDay.Count >= 2)
                         {
-                            ActivitySessions.Add(StartActivities[i]);
+                            for (int v = 0; v < 2; v++)
+                            {
+                                ActivitySessions.Add(StartActivities[i]);
+
+                            }
+                            ActivitySessions.Add(null);
                         }
+                        else if (activityOnSameDayEnd?.StartTime.Hour >= 12 && activityOnSameDay.Count >= 2)
+                        {
+                            ActivitySessions.Add(null);
+                            for (int v = 0; v < 2; v++)
+                            {
+                                ActivitySessions.Add(StartActivities[i]);
+
+                            }
+                        }
+
                         else
                         {
-                            for (int v = 0; v < 3; v++)
+                            ActivitySessions.Add(null);
+                            for (int v = 0; v < 2; v++)
                             {
                                 ActivitySessions.Add(StartActivities[i]);
 
