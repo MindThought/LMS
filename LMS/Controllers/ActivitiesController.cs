@@ -47,13 +47,15 @@ namespace LMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Type,Name,Description,StartTime,EndTime")] Activity activity)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Type,Name,Description,StartTime,EndTime")] Activity activity, int ModuleId)
         {
             if (ModelState.IsValid)
             {
                 db.Activities.Add(activity);
+                activity.Module = db.Modules.Find(ModuleId);
+                activity.ModuleId = db.Modules.Find(ModuleId).Id;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details","Module",new {id = ModuleId});
             }
 
             return View(activity);

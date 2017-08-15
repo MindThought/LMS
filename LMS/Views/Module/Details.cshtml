@@ -38,7 +38,9 @@
 
                     @if (i < ViewBag.FM.Count && @ViewBag.FM[i] != null)
                     {
-                        <td class="text-center">@ViewBag.FM[i].Name</td>
+                        <td class="text-center">
+                            <a href="@Url.Action("Details", "Activities", new { id = ViewBag.FM[i].Id })">@ViewBag.FM[i].Name</a> 
+                        </td>
                     }
                     else
                     {
@@ -47,7 +49,9 @@
 
                     @if (i < ViewBag.EM.Count && @ViewBag.EM[i] != null)
                     {
-                        <td class="text-center">@ViewBag.EM[i].Name</td>
+                        <td class="text-center">
+                            <a href="@Url.Action("Details", "Activities", new { id = @ViewBag.EM[i].Id })">@ViewBag.EM[i].Name</a>  
+                        </td>
                     }
                     else
                     {
