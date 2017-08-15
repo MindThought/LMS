@@ -1,5 +1,6 @@
 namespace LMS.Migrations
 {
+    using LMS.Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
