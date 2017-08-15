@@ -4,9 +4,7 @@
     ViewBag.Title = Model.Name + " - Detaljvy";
     ViewBag.CourseId = Model.Id;
 }
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-
-
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
 <h2>@Html.DisplayFor(model => model.Name)</h2>
 
 <br />
@@ -31,7 +29,7 @@
     $(document).ready(function () {
         $('#courseModulesButton').click(function () {
             $('#Scheme').toggle(500, function () {
-                $("#Scheme").load('@Url.Action("CourseModules","Courses",new { id = Model.Id})');
+                $("#Scheme").load("@Url.Action("CourseModules","Courses",new { id = Model.Id})");
                 //document.getElementById("Scheme").style.border = "inset";
 
             });
