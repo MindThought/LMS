@@ -1,0 +1,33 @@
+﻿@model IEnumerable<LMS.Models.Activity>
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/jquery.schedule.js"></script>
+<link href="~/Scripts/jquery.schedule.css" rel="stylesheet" />
+
+<h3>Schema</h3>
+
+<div id="schedule" class="row"></div>
+
+<script>
+	$("#schedule").jqs({
+		mode: "read",
+		data: [
+			{
+				"day": 0,
+				"periods": [
+	 				["08:30", "12:00"]
+					,
+					["11:00", "11:30"]
+				]
+			}
+			,
+			{
+				"day": 1,
+				"periods": [
+					["08:30", "12:00"],
+					["13:00", "17:00"]
+				]
+			}
+		]
+	});
+</script>
