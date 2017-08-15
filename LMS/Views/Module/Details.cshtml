@@ -27,6 +27,7 @@
             {
                 <tr >
                     
+
                     @if (i <= ViewBag.Dates.Count)
                     {
                         <td class="text-center">@ViewBag.Dates[i]</td>
@@ -36,23 +37,27 @@
                     {
                         <td class="text-center"></td>
                     }
-                    <td class="text-center">@ViewBag.ActivitySessions[i].Name</td>
-                    @if (ViewBag.ActivitySessions.Count > i + 1)
+
+                    @if (i < ViewBag.FM.Count && @ViewBag.FM[i] != null)
                     {
-                        v = i + 1;
-                        <td class="text-center">@ViewBag.ActivitySessions[v].Name</td>
-                        
+                        <td class="text-center">@ViewBag.FM[i].Name</td>
                     }
                     else
                     {
                         <td class="text-center"></td>
                     }
-                    
+
+                    @if (i < ViewBag.EM.Count && @ViewBag.EM[i] != null)
+                    {
+                        <td class="text-center">@ViewBag.EM[i].Name</td>
+                    }
+                    else
+                    {
+                        <td class="text-center"></td>
+                    }
                 </tr>
             }
-        </tbody>
-    </table>
-    <div class="row">
+        </tbody></table><div class="row">
         <a class="btn btn-default col-md-3" href="@Url.Action("Create", "Activities", new { ModuleId = Model.Id })">Skapa en ny aktivitet för denna modul</a> <!--Ändra namn för route value om det behövs-->
     </div>
     <dl class="dl-horizontal">
