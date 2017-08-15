@@ -75,7 +75,7 @@
     <button class="btn btn-default col-md-2" id="courseModulesButton">Schema</button>
 </div>
 
-<div id="schedule"></div>
+<div id="schedule" class="row"></div>
 @*@{
     <a href="@Url.Action("ModuleSchedule","Module",new { id = Model.Id})">content</a>
     Html.RenderPartial("ModuleSchedule", new { id = Model.Id}); 
@@ -84,9 +84,7 @@
     $(document).ready(function () {
         $('#courseModulesButton').click(function () {
             $('#schedule').toggle(500, function () {
-                $("#schedule").load('@Url.Action("ModuleSchedule","Module",new { id = Model.Id})');
-                //document.getElementById("Scheme").style.border = "inset";
-
+                $("#schedule").load('@Url.Action("Schedule","Module",new { id = Model.Id})');
             });
 
         });
