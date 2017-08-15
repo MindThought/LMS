@@ -1,33 +1,33 @@
 namespace LMS.Migrations
 {
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
-    using Models;
-    using System;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
+	using Microsoft.AspNet.Identity;
+	using Microsoft.AspNet.Identity.EntityFramework;
+	using Models;
+	using System;
+	using System.Data.Entity.Migrations;
+	using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<LMS.Models.ApplicationDbContext>
-    {
-        public Configuration()
-        {
-            AutomaticMigrationsEnabled = false;
-        }
+	internal sealed class Configuration : DbMigrationsConfiguration<LMS.Models.ApplicationDbContext>
+	{
+		public Configuration()
+		{
+			AutomaticMigrationsEnabled = false;
+		}
 
-        protected override void Seed(ApplicationDbContext context)
-        {
-            //  This method will be called after migrating to the latest version.
+		protected override void Seed(ApplicationDbContext context)
+		{
+			//  This method will be called after migrating to the latest version.
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+			//  You can use the DbSet<T>.AddOrUpdate() helper extension method 
+			//  to avoid creating duplicate seed data. E.g.
+			//
+			//    context.People.AddOrUpdate(
+			//      p => p.FullName,
+			//      new Person { FullName = "Andrew Peters" },
+			//      new Person { FullName = "Brice Lambson" },
+			//      new Person { FullName = "Rowan Miller" }
+			//    );
+			//
 
             /////////////////////////////////
             // Course and courseComponents //
@@ -86,7 +86,7 @@ namespace LMS.Migrations
                 }
                 );
 
-            context.SaveChanges();
+			context.SaveChanges();
 
             context.Modules.AddOrUpdate(
                 m => m.Name,
@@ -189,7 +189,7 @@ namespace LMS.Migrations
                 }
                 );
 
-            context.SaveChanges();
+			context.SaveChanges();
 
             context.Activities.AddOrUpdate(
                 a => a.Name,
@@ -240,71 +240,71 @@ namespace LMS.Migrations
                 }
                 );
 
-            context.SaveChanges();
-            ////////////////////////
-            // User Seeding below //
-            ////////////////////////
-            var roleStore = new RoleStore<IdentityRole>(context);
-            var roleManager = new RoleManager<IdentityRole>(roleStore);
+			context.SaveChanges();
+			////////////////////////
+			// User Seeding below //
+			////////////////////////
+			var roleStore = new RoleStore<IdentityRole>(context);
+			var roleManager = new RoleManager<IdentityRole>(roleStore);
 
-            var roleNames = new[] { "Teacher", "Student" };
-            foreach (var roleName in roleNames)
-            {
-                if (!context.Roles.Any(r => r.Name == roleName))
-                {
-                    var role = new IdentityRole { Name = roleName };
-                    var result = roleManager.Create(role);
-                    if (!result.Succeeded)
-                    {
-                        throw new Exception(string.Join("\n", result.Errors));
-                    }
-                }
-            }
-            var userStore = new UserStore<ApplicationUser>(context);
-            var userManager = new UserManager<ApplicationUser>(userStore);
+			var roleNames = new[] { "Teacher", "Student" };
+			foreach (var roleName in roleNames)
+			{
+				if (!context.Roles.Any(r => r.Name == roleName))
+				{
+					var role = new IdentityRole { Name = roleName };
+					var result = roleManager.Create(role);
+					if (!result.Succeeded)
+					{
+						throw new Exception(string.Join("\n", result.Errors));
+					}
+				}
+			}
+			var userStore = new UserStore<ApplicationUser>(context);
+			var userManager = new UserManager<ApplicationUser>(userStore);
 
-            var teacherEmails = new[] { "john@lexicon.se", "dimitris@lexicon.se", "oscar@lexicon.se" };
-            foreach (var email in teacherEmails)
-            {
-                if (!context.Users.Any(u => u.UserName == email))
-                {
-                    var user = new ApplicationUser { UserName = email, Email = email };
-                    var result = userManager.Create(user, "foobar");
-                    if (!result.Succeeded)
-                    {
-                        throw new Exception(string.Join("\n", result.Errors));
-                    }
-                }
-            }
+			var teacherEmails = new[] { "john@lexicon.se", "dimitris@lexicon.se", "oscar@lexicon.se" };
+			foreach (var email in teacherEmails)
+			{
+				if (!context.Users.Any(u => u.UserName == email))
+				{
+					var user = new ApplicationUser { UserName = email, Email = email };
+					var result = userManager.Create(user, "foobar");
+					if (!result.Succeeded)
+					{
+						throw new Exception(string.Join("\n", result.Errors));
+					}
+				}
+			}
 
-            var studentEmails = new[] { "student0@lexicon.se", "student1@lexicon.se", "student2@lexicon.se", "student3@lexicon.se",
-                                 "student4@lexicon.se", "student5@lexicon.se", "student6@lexicon.se", "student7@lexicon.se" };
-            foreach (var email in studentEmails)
-            {
-                if (!context.Users.Any(u => u.UserName == email))
-                {
-                    var user = new ApplicationUser { UserName = email, Email = email, CourseId = context.Courses.Where(c => c.Name == ".Net2017").FirstOrDefault().Id };
-                    var result = userManager.Create(user, "foobar");
-                    if (!result.Succeeded)
-                    {
-                        throw new Exception(string.Join("\n", result.Errors));
-                    }
-                }
-            }
+			var studentEmails = new[] { "student0@lexicon.se", "student1@lexicon.se", "student2@lexicon.se", "student3@lexicon.se",
+								 "student4@lexicon.se", "student5@lexicon.se", "student6@lexicon.se", "student7@lexicon.se" };
+			foreach (var email in studentEmails)
+			{
+				if (!context.Users.Any(u => u.UserName == email))
+				{
+					var user = new ApplicationUser { UserName = email, Email = email, CourseId = context.Courses.Where(c => c.Name == ".Net2017").FirstOrDefault().Id };
+					var result = userManager.Create(user, "foobar");
+					if (!result.Succeeded)
+					{
+						throw new Exception(string.Join("\n", result.Errors));
+					}
+				}
+			}
 
-            foreach (var email in teacherEmails)
-            {
-                var teacherUser = userManager.FindByName(email);
-                userManager.AddToRole(teacherUser.Id, "Teacher");
-            }
+			foreach (var email in teacherEmails)
+			{
+				var teacherUser = userManager.FindByName(email);
+				userManager.AddToRole(teacherUser.Id, "Teacher");
+			}
 
-            foreach (var email in studentEmails)
-            {
-                var studentUser = userManager.FindByName(email);
-                userManager.AddToRole(studentUser.Id, "Student");
-            }
+			foreach (var email in studentEmails)
+			{
+				var studentUser = userManager.FindByName(email);
+				userManager.AddToRole(studentUser.Id, "Student");
+			}
 
-            context.SaveChanges();
-        }
-    }
+			context.SaveChanges();
+		}
+	}
 }
