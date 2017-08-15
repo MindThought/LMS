@@ -270,6 +270,7 @@
     <Content Include="Views\Account\NotAllowedToDeleteOwnAccount.cshtml" />
     <Content Include="Views\Account\SpecifiedPasswordNotMatchLoggedInUser.cshtml" />
     <Content Include="Views\Module\ModuleSchedule.cshtml" />
+    <Content Include="Views\Module\Schedule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

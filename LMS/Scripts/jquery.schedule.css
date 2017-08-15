@@ -5,7 +5,7 @@
  */
 .jqs {
   position: relative;
-  padding: 40px 20px 20px 60px;
+  padding: 20px 20px 20px 60px;
   /*overflow-y: scroll;*/
   font-family: system, -apple-system, Roboto, Helvetica Neue, Arial, Helvetica, Geneva, sans-serif;
   box-sizing: border-box;
@@ -15,7 +15,7 @@
   z-index: 10;
   width: 100%;
   margin-bottom: 20px;
-  margin-top: 0;
+  margin-top: 20px;
   border-collapse: collapse;
   border-spacing: 0;
   box-sizing: content-box;
@@ -24,13 +24,13 @@
   padding: 0;
 }
 .jqs .jqs-table td {
-  width: 14.28571%;
+  width: 20%;
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
 }
 .jqs .jqs-grid {
   position: absolute;
-  top: 155px;
+  top: 95px;
   left: 60px;
   right: 20px;
   box-sizing: content-box;
@@ -70,7 +70,7 @@
   display: flex;
 }
 .jqs .jqs-grid .jqs-grid-head .jqs-grid-day {
-  width: 14.28571%;
+  width: 20%;
   text-align: center;
   font-size: 12px;
 }
