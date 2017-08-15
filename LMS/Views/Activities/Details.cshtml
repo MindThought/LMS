@@ -54,12 +54,13 @@
 </div>
 <p>
     @Html.ActionLink("Back to List", "Details", "Module", new { id = Model.ModuleId }, null)
+
     @if (User.IsInRole("Teacher"))
     {
         <span>|</span>
-        Html.ActionLink("Edit", "Edit", new { id = Model.Id });
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id });
         <span>|</span>
-        Html.ActionLink("Delete", "Delete", new { id = Model.ModuleId });
+        @Html.ActionLink("Delete", "Delete", new { id = Model.ModuleId });
     }
 
 </p>

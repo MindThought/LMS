@@ -8,14 +8,17 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LMS.Models;
+using LMS.SpecialBehaviour;
 
 namespace LMS.Controllers
 {
+    [CustomAuthorize(Roles = "Teacher")]
     public class ActivitiesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Activities
+        [Authorize]
         public async Task<ActionResult> Index()
         {
             return View(await db.Activities.ToListAsync());
@@ -37,6 +40,7 @@ namespace LMS.Controllers
         }
 
         // GET: Activities/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -47,6 +51,7 @@ namespace LMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<ActionResult> Create([Bind(Include = "Id,Type,Name,Description,StartTime,EndTime")] Activity activity, int ModuleId)
         {
             if (ModelState.IsValid)
@@ -62,6 +67,7 @@ namespace LMS.Controllers
         }
 
         // GET: Activities/Edit/5
+        [Authorize]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,6 +87,7 @@ namespace LMS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<ActionResult> Edit([Bind(Include = "Id,Type,Name,Description,StartTime,EndTime")] Activity activity)
         {
             if (ModelState.IsValid)
@@ -93,6 +100,7 @@ namespace LMS.Controllers
         }
 
         // GET: Activities/Delete/5
+        [Authorize]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -110,6 +118,7 @@ namespace LMS.Controllers
         // POST: Activities/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Activity activity = await db.Activities.FindAsync(id);
