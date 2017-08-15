@@ -1,0 +1,100 @@
+﻿
+body {
+    padding-top: 150px;
+    padding-bottom: 0px;
+    padding-left: 100px;
+    padding-right: 100px;
+    margin: 4px 2px;
+}
+
+.login {
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: aqua;
+    /*margin: 15px 0 15px 0;*/
+}
+
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 76px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 26px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.login-title {
+    font-family: "caslonno224ef-blackregular"; /*,arial,sans-serif;*/
+    /*background-color: #ff6a00;*/
+    border: none;
+    color: darkblue;
+    padding-left: 0px;
+    padding-right: 15px;
+    /*text-align:start;*/
+    text-decoration: none;
+    /*display: inline-block;*/
+    font-size: 46px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.row1 {
+    margin-left: 0px;
+    margin-right: 0px;
+    font-size: 10px;
+}
+
+.use-account {
+    font-family: "caslonno224ef-blackregular"; /*,arial,sans-serif;*/
+    color: rebeccapurple;
+    font-size: 26px;
+}
+.req{
+        color: red;
+}
+/*
+@media (min-width: 981px) 
+{ 
+    body { 
+        padding-top: 110px; 
+
+    } 
+
+}*/
+
+/* Set padding to keep content from hitting the edges 
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+ Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+     Set width on the form input elements since they're 100% wide by default 
+    input,
+    select,
+    textarea {
+        max-width: 280px;
+    }
+
+.header-image {
+    margin: 15px 0 15px 0;
+    height: auto;
+}
+
+.wide-text {
+    max-width: 1000px; 
+}
+
+
+
+*/
