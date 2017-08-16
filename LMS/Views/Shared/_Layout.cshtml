@@ -19,8 +19,7 @@
                 </button>
                 <a href="http://www.lexicon.se/">
                     <img src="~/Images/logo-lexicon.gif" class="header-image" />
-                </a>
-                @*@Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+                </a>            
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -29,12 +28,11 @@
                     {
                         //TODO Link to Teacher management
                         <li>@Html.ActionLink("Kursöversikt","Index","Courses")</li>
-                        <li><a href="@Url.Action("Register", "Account", new {course_id="0"})">Register a new Teacher</a></li>
-                        <li><a href="@Url.Action("ExitAccount", "Account")">Exit account</a></li>
-                            }
-                            @if (User.IsInRole("Student"))
-                            {
-<li>@Html.ActionLink("Min Kurs", "Details","Courses")</li>
+                        <li><a href="@Url.Action("Register", "Account", new {course_id="0"})">Registrera en ny lärare</a></li>
+                    }
+                    @if (User.IsInRole("Student"))
+                    {
+                        <li>@Html.ActionLink("Min Kurs", "Details","Courses")</li>
                         //TODO Link to work
                     }
                 </ul>

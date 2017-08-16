@@ -14,11 +14,11 @@
 			hour: 24,
 			data: [],
 			days: [
-				"Monday",
-				"Tuesday",
-				"Wednesday",
-				"Thursday",
-				"Friday"
+				"Måndag",
+				"Tisdag",
+				"Onsdag",
+				"Torsdag",
+				"Fredag"
 			],
 			invalidPeriod: "Invalid period.",
 			invalidPosition: "Invalid position.",

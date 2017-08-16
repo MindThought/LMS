@@ -88,8 +88,8 @@
 }
 .jqs .jqs-period .jqs-period-placeholder {
   position: absolute;
-  top: 2px;
-  bottom: 2px;
+  top: 1px;
+  bottom: 1px;
   left: 2px;
   right: 2px;
   padding: 3px;
