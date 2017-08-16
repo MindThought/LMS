@@ -12,9 +12,12 @@ namespace LMS.Models
         [Required]
         public int ModuleId { get; set; }
         public ActivityType Type { get; set; }
+        [Required]
         public string Name { get; set; }
         public string Description { get; set; }
+        [Required]
         public DateTime StartTime { get; set; }
+        [Required]
         public DateTime EndTime { get; set; }
         //public virtual List<Document> Documents { get; set; } TODO
     }
