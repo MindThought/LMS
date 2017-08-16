@@ -14,17 +14,17 @@ body {
     /*margin: 15px 0 15px 0;*/
 }
 
-.button {
+.btnlex {
     background-color: #4CAF50;
-    border: none;
+    /*border: none;*/
     color: white;
-    padding: 15px 76px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 26px;
-    margin: 4px 2px;
-    cursor: pointer;
+    padding: 5px 124px;
+    text-align: right;
+    /*text-decoration: none;*/
+    /*display: inline-block;*/
+    /*font-size: 22px;*/
+    /*margin: 4px 2px;*/
+    /*cursor: pointer;*/
 }
 
 .login-title {
@@ -53,8 +53,9 @@ body {
     color: rebeccapurple;
     font-size: 26px;
 }
-.req{
-        color: red;
+
+.req {
+    color: red;
 }
 /*
 @media (min-width: 981px) 
