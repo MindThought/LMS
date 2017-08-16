@@ -53,6 +53,7 @@ namespace LMS.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
+        //[Authorize(Roles = "Teacher,Student")]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -63,6 +64,7 @@ namespace LMS.Controllers
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
+        //[Authorize(Roles = "Teacher,Student")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
@@ -99,7 +101,7 @@ namespace LMS.Controllers
 
         //
         // GET: /Account/VerifyCode
-        [AllowAnonymous]
+        [Authorize(Roles = "Teacher,Student")]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
         {
             // Require that the user has already logged in via username/password or external login
@@ -113,7 +115,7 @@ namespace LMS.Controllers
         //
         // POST: /Account/VerifyCode
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Teacher,Student")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
         {
@@ -159,7 +161,7 @@ namespace LMS.Controllers
             {
                 if (model.courseID == null)
                 {
-                    var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                    var user = new ApplicationUser { UserName = model.Email, Email = model.Email};
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
@@ -229,7 +231,7 @@ namespace LMS.Controllers
 
         //
         // GET: /Account/NonExistingAccount
-        [AllowAnonymous]
+        [Authorize(Roles = "Teacher")]
         public ActionResult NonExistingAccount()
         {
             return View();
@@ -237,7 +239,7 @@ namespace LMS.Controllers
 
         //
         // GET: /Account/ConfirmEmail
-        [AllowAnonymous]
+        [Authorize(Roles = "Teacher")]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
             if (userId == null || code == null)
@@ -250,7 +252,7 @@ namespace LMS.Controllers
 
         //
         // GET: /Account/ForgotPassword
-        [AllowAnonymous]
+        [Authorize(Roles = "Teacher,Student")]
         public ActionResult ForgotPassword()
         {
             return View();
@@ -259,7 +261,7 @@ namespace LMS.Controllers
         //
         // POST: /Account/ForgotPassword
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Teacher,Student")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
@@ -286,7 +288,7 @@ namespace LMS.Controllers
 
         //
         // GET: /Account/ForgotPasswordConfirmation
-        [AllowAnonymous]
+        [Authorize(Roles = "Teacher,Student")]
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();
@@ -303,7 +305,7 @@ namespace LMS.Controllers
         //
         // POST: /Account/ResetPassword
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Teacher")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
@@ -328,7 +330,7 @@ namespace LMS.Controllers
 
         //
         // GET: /Account/ResetPasswordConfirmation
-        [AllowAnonymous]
+        [Authorize(Roles = "Teacher")]
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
@@ -337,7 +339,7 @@ namespace LMS.Controllers
         //
         // POST: /Account/ExternalLogin
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Teacher,Student")]
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
