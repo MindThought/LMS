@@ -7,7 +7,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using System.IO;
 
 namespace LMS.Controllers
 {
@@ -217,207 +216,207 @@ namespace LMS.Controllers
 			return PartialView(periodes);
 		}
 
-        // GET: Module/Details/5
-        [Authorize]
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Module module = db.Modules.Find(id);
-            if (module == null)
-            {
-                return HttpNotFound();
-            }
+		// GET: Module/Details/5
+		[Authorize]
+		public ActionResult Details(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Module module = db.Modules.Find(id);
+			if (module == null)
+			{
+				return HttpNotFound();
+			}
 
-            var weekDays = new List<DayOfWeek>();
-            var dates = new List<string>();
-            var StartActivities = module.Activities.OrderBy(a => a.StartTime).ToList();
-            var ActivitySessions = new List<Activity>();
-            var FM = new List<Activity>();
-            var EM = new List<Activity>();
+			var weekDays = new List<DayOfWeek>();
+			var dates = new List<string>();
+			var StartActivities = module.Activities.OrderBy(a => a.StartTime).ToList();
+			var ActivitySessions = new List<Activity>();
+			var FM = new List<Activity>();
+			var EM = new List<Activity>();
 
-            for (int i = 0; i < StartActivities.Count; i++)
-            {
-                var time = (StartActivities[i].EndTime - StartActivities[i].StartTime).Days * 2;
-                if (time == 0)
-                {
-                    if (StartActivities[i].StartTime.Hour <= 12 && StartActivities[i].EndTime.Hour > 12)
-                    {
-                        ActivitySessions.Add(StartActivities[i]);
-                        ActivitySessions.Add(StartActivities[i]);
-                    }
-                    else if (StartActivities[i].StartTime.Hour <= 12)
-                    {
-                        if (StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].StartTime.ToString("yyyy-MM-dd")).Count >= 2)
-                        {
-                            ActivitySessions.Add(StartActivities[i]);
-                        }
-                        else
-                        {
-                            ActivitySessions.Add(StartActivities[i]);
-                            ActivitySessions.Add(null);
-                        }
-                    }
-                    else
-                    {
-                        if (StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].StartTime.ToString("yyyy-MM-dd")).Count >= 2)
-                        {
-                            ActivitySessions.Add(StartActivities[i]);
-                        }
-                        else
-                        {
-                            ActivitySessions.Add(null);
-                            ActivitySessions.Add(StartActivities[i]);
-                        }
-                    }
-                }
-                else
-                {
-                    time += 1;
-                    if (StartActivities[i].StartTime.Hour <= 12 && StartActivities[i].EndTime.Hour <= 12)
-                    {
-                        if (StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].StartTime.ToString("yyyy-MM-dd")).Count >= 2)
-                        {
-                            for (int v = 0; v < time; v++)
-                            {
-                                ActivitySessions.Add(StartActivities[i]);
-                            }
-                        }
-                        else
-                        {
-                            if (time >= 4)
-                            {
-                                for (int v = 0; v < 3; v++)
-                                {
-                                    ActivitySessions.Add(StartActivities[i]);
+			for (int i = 0; i < StartActivities.Count; i++)
+			{
+				var time = (StartActivities[i].EndTime - StartActivities[i].StartTime).Days * 2;
+				if (time == 0)
+				{
+					if (StartActivities[i].StartTime.Hour <= 12 && StartActivities[i].EndTime.Hour > 12)
+					{
+						ActivitySessions.Add(StartActivities[i]);
+						ActivitySessions.Add(StartActivities[i]);
+					}
+					else if (StartActivities[i].StartTime.Hour <= 12)
+					{
+						if (StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].StartTime.ToString("yyyy-MM-dd")).Count >= 2)
+						{
+							ActivitySessions.Add(StartActivities[i]);
+						}
+						else
+						{
+							ActivitySessions.Add(StartActivities[i]);
+							ActivitySessions.Add(null);
+						}
+					}
+					else
+					{
+						if (StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].StartTime.ToString("yyyy-MM-dd")).Count >= 2)
+						{
+							ActivitySessions.Add(StartActivities[i]);
+						}
+						else
+						{
+							ActivitySessions.Add(null);
+							ActivitySessions.Add(StartActivities[i]);
+						}
+					}
+				}
+				else
+				{
+					time += 1;
+					if (StartActivities[i].StartTime.Hour <= 12 && StartActivities[i].EndTime.Hour <= 12)
+					{
+						if (StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].StartTime.ToString("yyyy-MM-dd")).Count >= 2)
+						{
+							for (int v = 0; v < time; v++)
+							{
+								ActivitySessions.Add(StartActivities[i]);
+							}
+						}
+						else
+						{
+							if (time >= 4)
+							{
+								for (int v = 0; v < 3; v++)
+								{
+									ActivitySessions.Add(StartActivities[i]);
 
-                                }
-                                ActivitySessions.Add(null);
-                            }
-                            else
-                            {
-                                for (int v = 0; v < time; v++)
-                                {
-                                    ActivitySessions.Add(StartActivities[i]);
+								}
+								ActivitySessions.Add(null);
+							}
+							else
+							{
+								for (int v = 0; v < time; v++)
+								{
+									ActivitySessions.Add(StartActivities[i]);
 
-                                }
-                                ActivitySessions.Add(null);
-                            }
+								}
+								ActivitySessions.Add(null);
+							}
 
-                        }
-                    }
-                    else if (StartActivities[i].StartTime.Hour > 12 && StartActivities[i].EndTime.Hour > 12)
-                    {
-                        if (StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].StartTime.ToString("yyyy-MM-dd")).Count >= 2)
-                        {
-
-
-                            for (int v = 0; v < 3; v++)
-                            {
-                                ActivitySessions.Add(StartActivities[i]);
-                            }
-
-                        }
-                        else
-                        {
-                            ActivitySessions.Add(null);
-                            for (int v = 0; v < 3; v++)
-                            {
-                                ActivitySessions.Add(StartActivities[i]);
-
-                            }
-
-                        }
-                    }
-                    else if (StartActivities[i].StartTime.Hour <= 12 && StartActivities[i].EndTime.Hour > 12)
-                    {
-                        for (int v = 0; v < 4; v++)
-                        {
-                            ActivitySessions.Add(StartActivities[i]);
-
-                        }
-
-                    }
-
-                    else if (StartActivities[i].StartTime.Hour > 12 && StartActivities[i].EndTime.Hour <= 12)
-                    {
-                        var activityOnSameDay = StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].StartTime.ToString("yyyy-MM-dd"));
-                        var activityOnSameDayStart = StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].StartTime.ToString("yyyy-MM-dd")).LastOrDefault();
-                        var activityOnSameDayEnd = StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].EndTime.ToString("yyyy-MM-dd")).LastOrDefault();
-                        if (activityOnSameDayStart?.StartTime.Hour >= 8 && activityOnSameDay.Count >= 2)
-                        {
-                            for (int v = 0; v < 2; v++)
-                            {
-                                ActivitySessions.Add(StartActivities[i]);
-
-                            }
-                            ActivitySessions.Add(null);
-                        }
-                        else if (activityOnSameDayEnd?.StartTime.Hour >= 12 && activityOnSameDay.Count >= 2)
-                        {
-                            ActivitySessions.Add(null);
-                            for (int v = 0; v < 2; v++)
-                            {
-                                ActivitySessions.Add(StartActivities[i]);
-
-                            }
-                        }
-
-                        else
-                        {
-                            ActivitySessions.Add(null);
-                            for (int v = 0; v < 2; v++)
-                            {
-                                ActivitySessions.Add(StartActivities[i]);
-
-                            }
-                            ActivitySessions.Add(null);
-                        }
+						}
+					}
+					else if (StartActivities[i].StartTime.Hour > 12 && StartActivities[i].EndTime.Hour > 12)
+					{
+						if (StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].StartTime.ToString("yyyy-MM-dd")).Count >= 2)
+						{
 
 
-                    }
-                }
+							for (int v = 0; v < 3; v++)
+							{
+								ActivitySessions.Add(StartActivities[i]);
+							}
+
+						}
+						else
+						{
+							ActivitySessions.Add(null);
+							for (int v = 0; v < 3; v++)
+							{
+								ActivitySessions.Add(StartActivities[i]);
+
+							}
+
+						}
+					}
+					else if (StartActivities[i].StartTime.Hour <= 12 && StartActivities[i].EndTime.Hour > 12)
+					{
+						for (int v = 0; v < 4; v++)
+						{
+							ActivitySessions.Add(StartActivities[i]);
+
+						}
+
+					}
+
+					else if (StartActivities[i].StartTime.Hour > 12 && StartActivities[i].EndTime.Hour <= 12)
+					{
+						var activityOnSameDay = StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].StartTime.ToString("yyyy-MM-dd"));
+						var activityOnSameDayStart = StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].StartTime.ToString("yyyy-MM-dd")).LastOrDefault();
+						var activityOnSameDayEnd = StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].EndTime.ToString("yyyy-MM-dd")).LastOrDefault();
+						if (activityOnSameDayStart?.StartTime.Hour >= 8 && activityOnSameDay.Count >= 2)
+						{
+							for (int v = 0; v < 2; v++)
+							{
+								ActivitySessions.Add(StartActivities[i]);
+
+							}
+							ActivitySessions.Add(null);
+						}
+						else if (activityOnSameDayEnd?.StartTime.Hour >= 12 && activityOnSameDay.Count >= 2)
+						{
+							ActivitySessions.Add(null);
+							for (int v = 0; v < 2; v++)
+							{
+								ActivitySessions.Add(StartActivities[i]);
+
+							}
+						}
+
+						else
+						{
+							ActivitySessions.Add(null);
+							for (int v = 0; v < 2; v++)
+							{
+								ActivitySessions.Add(StartActivities[i]);
+
+							}
+							ActivitySessions.Add(null);
+						}
 
 
-                if (!dates.Any(d => d == StartActivities[i].StartTime.ToString("yyyy-MM-dd")))
-                {
-                    dates.Add(StartActivities[i].StartTime.ToString("yyyy-MM-dd"));
-                    weekDays.Add(StartActivities[i].StartTime.DayOfWeek);
-                }
+					}
+				}
 
-                if (!dates.Any(d => d == StartActivities[i].EndTime.ToString("yyyy-MM-dd")))
-                {
-                    dates.Add(StartActivities[i].EndTime.ToString("yyyy-MM-dd"));
-                    weekDays.Add(StartActivities[i].EndTime.DayOfWeek);
-                }
-            }
-            for (double i = 0; i < ActivitySessions.Count; i++)
-            {
-                if (i == 0)
-                {
-                    FM.Add(ActivitySessions[(int)i]);
-                }
-                else if (i == 1)
-                {
-                    EM.Add(ActivitySessions[(int)i]);
-                }
-                else if (i % 2 == 0)
-                {
 
-                    FM.Add(ActivitySessions[(int)i]);
-                }
-                else
-                {
-                    EM.Add(ActivitySessions[(int)i]);
-                }
-            }
-            ViewBag.ActivitySessions = ActivitySessions;
-            ViewBag.FM = FM;
-            ViewBag.EM = EM;
-            ViewBag.Dates = dates;
-            ViewBag.WeekDays = weekDays;
+				if (!dates.Any(d => d == StartActivities[i].StartTime.ToString("yyyy-MM-dd")))
+				{
+					dates.Add(StartActivities[i].StartTime.ToString("yyyy-MM-dd"));
+					weekDays.Add(StartActivities[i].StartTime.DayOfWeek);
+				}
+
+				if (!dates.Any(d => d == StartActivities[i].EndTime.ToString("yyyy-MM-dd")))
+				{
+					dates.Add(StartActivities[i].EndTime.ToString("yyyy-MM-dd"));
+					weekDays.Add(StartActivities[i].EndTime.DayOfWeek);
+				}
+			}
+			for (double i = 0; i < ActivitySessions.Count; i++)
+			{
+				if (i == 0)
+				{
+					FM.Add(ActivitySessions[(int)i]);
+				}
+				else if (i == 1)
+				{
+					EM.Add(ActivitySessions[(int)i]);
+				}
+				else if (i % 2 == 0)
+				{
+
+					FM.Add(ActivitySessions[(int)i]);
+				}
+				else
+				{
+					EM.Add(ActivitySessions[(int)i]);
+				}
+			}
+			ViewBag.ActivitySessions = ActivitySessions;
+			ViewBag.FM = FM;
+			ViewBag.EM = EM;
+			ViewBag.Dates = dates;
+			ViewBag.WeekDays = weekDays;
 
             return View(module);
         }
