@@ -155,6 +155,21 @@ namespace LMS.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Course course = db.Courses.Find(id);
+            
+            foreach (var item in db.Users.Where(u => u.CourseId == course.Id))
+            {
+                db.Users.Remove(item);
+            }
+
+            foreach (var module in db.Modules.Where(m => m.CourseId == course.Id).ToList())
+            {
+                foreach (var activity in db.Activities.Where(a => a.ModuleId == module.Id).ToList())
+                {
+                    db.Activities.Remove(activity);
+                }
+                db.Modules.Remove(module);
+            }
+
             db.Courses.Remove(course);
             db.SaveChanges();
             return RedirectToAction("Index");

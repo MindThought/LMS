@@ -1,11 +1,14 @@
 ﻿using LMS.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace LMS.Controllers
 {
@@ -15,6 +18,7 @@ namespace LMS.Controllers
 
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -138,6 +142,21 @@ namespace LMS.Controllers
                     ModelState.AddModelError("", "Invalid code.");
                     return View(model);
             }
+        }
+
+        public ActionResult Teachers()
+        {
+            var teachers = new List<ApplicationUser>();
+            
+            foreach (var item in db.Users)
+            {
+                if (item.CourseId == null)
+                {
+                    teachers.Add(item);
+                }
+            }
+
+            return View(teachers);
         }
 
         // GET: /Account/Register
