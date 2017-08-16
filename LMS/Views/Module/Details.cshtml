@@ -9,7 +9,7 @@
 <h2>@Model.Name</h2>
 
 <div>
-    <h4>Modul</h4>
+    <h4>@Html.DisplayFor(model => model.Description)</h4>
     <hr />
 
     <table class="table table-bordered">
@@ -25,8 +25,8 @@
             @{ var v = 0;}
             @for (int i = 0; i < ViewBag.Dates.Count; i++)
             {
-                <tr >
-                    
+                <tr>
+
 
                     @if (i <= ViewBag.Dates.Count)
                     {
@@ -41,7 +41,7 @@
                     @if (i < ViewBag.FM.Count && @ViewBag.FM[i] != null)
                     {
                         <td class="text-center">
-                            <a href="@Url.Action("Details", "Activities", new { id = ViewBag.FM[i].Id })">@ViewBag.FM[i].Name</a> 
+                            <a href="@Url.Action("Details", "Activities", new { id = ViewBag.FM[i].Id })">@ViewBag.FM[i].Name</a>
                         </td>
                     }
                     else
@@ -52,7 +52,7 @@
                     @if (i < ViewBag.EM.Count && @ViewBag.EM[i] != null)
                     {
                         <td class="text-center">
-                            <a href="@Url.Action("Details", "Activities", new { id = @ViewBag.EM[i].Id })">@ViewBag.EM[i].Name</a>  
+                            <a href="@Url.Action("Details", "Activities", new { id = @ViewBag.EM[i].Id })">@ViewBag.EM[i].Name</a>
                         </td>
                     }
                     else
@@ -61,51 +61,15 @@
                     }
                 </tr>
             }
-        </tbody></table><div class="row">
-        <a class="btn btn-default col-md-3" href="@Url.Action("Create", "Activities", new { ModuleId = Model.Id })">Skapa en ny aktivitet för denna modul</a> <!--Ändra namn för route value om det behövs-->
+        </tbody>
+    </table>
+
+    <div class="row">
+        @if (User.IsInRole("Teacher"))
+        {
+            <a class="btn btn-default col-md-3" href="@Url.Action("Create", "Activities", new { ModuleId = Model.Id })">Skapa en ny aktivitet för denna modul</a> <!--Ändra namn för route value om det behövs-->
+        }
     </div>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Course.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Course.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EndDate)
-        </dd>
-
-    </dl>
 </div>
 <div class="row">
     <button class="btn btn-default col-md-2" id="courseModulesButton">Schema</button>

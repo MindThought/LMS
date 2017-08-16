@@ -63,7 +63,12 @@ namespace LMS.Controllers
                 var time = (StartActivities[i].EndTime - StartActivities[i].StartTime).Days * 2;
                 if (time == 0)
                 {
-                    if (StartActivities[i].StartTime.Hour <= 12)
+                    if (StartActivities[i].StartTime.Hour <= 12 && StartActivities[i].EndTime.Hour > 12)
+                    {
+                        ActivitySessions.Add(StartActivities[i]);
+                        ActivitySessions.Add(StartActivities[i]);
+                    }
+                    else if (StartActivities[i].StartTime.Hour <= 12)
                     {
                         if (StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].StartTime.ToString("yyyy-MM-dd")).Count >= 2)
                         {
