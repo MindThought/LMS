@@ -6,12 +6,6 @@ namespace LMS.Migrations
 	using System;
 	using System.Data.Entity.Migrations;
 	using System.Linq;
-    using LMS.Models;
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
-    using System;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
 
 	internal sealed class Configuration : DbMigrationsConfiguration<LMS.Models.ApplicationDbContext>
 	{
@@ -20,9 +14,9 @@ namespace LMS.Migrations
 			AutomaticMigrationsEnabled = false;
 		}
 
-        protected override void Seed(ApplicationDbContext context)
-        {
-            //  This method will be called after migrating to the latest version.
+		protected override void Seed(ApplicationDbContext context)
+		{
+			//  This method will be called after migrating to the latest version.
 
 			//  You can use the DbSet<T>.AddOrUpdate() helper extension method 
 			//  to avoid creating duplicate seed data. E.g.
@@ -191,91 +185,26 @@ namespace LMS.Migrations
 
 			context.SaveChanges();
 
-            context.Activities.AddOrUpdate(
-                a => a.Name,
-                new Activity
-                {
-                    Name = "C# Basics",
-                    Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
-                    Type = Models.ActivityType.ELearning,
-                    StartTime = new DateTime(2017, 8, 19, 8, 0, 0),
-                    EndTime = new DateTime(2017, 8, 19, 12, 0, 0),
-                    Description = "The basics of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
-                },
-                new Activity
-                {
-                    Name = "C# Intermediate",
-                    Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
-                    Type = Models.ActivityType.ELearning,
-                    StartTime = new DateTime(2017, 8, 19, 13, 0, 0),
-                    EndTime = new DateTime(2017, 8, 19, 20, 0, 0),
-                    Description = "The intermediates of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
-                },
-
-                new Activity
-                {
-                    Name = "test",
-                    Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
-                    Type = Models.ActivityType.ELearning,
-                    StartTime = new DateTime(2017, 9, 19, 13, 0, 0),
-                    EndTime = new DateTime(2017, 9, 19, 20, 0, 0),
-                    Description = "The intermediates of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
-                },
-                new Activity
-                {
-                    Name = "test 2",
-                    Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
-                    Type = Models.ActivityType.ELearning,
-                    StartTime = new DateTime(2017, 9, 20, 13, 0, 0),
-                    EndTime = new DateTime(2017, 9, 21, 20, 0, 0),
-                    Description = "The intermediates of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
-                },
-                new Activity
-                {
-                    Name = "C# Basics",
-                    Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
-                    Type = Models.ActivityType.Lecture,
-                    StartTime = new DateTime(2017, 4, 20, 8, 0, 0),
-                    EndTime = new DateTime(2017, 04, 20, 20, 0, 0),
-                    Description = "Lectire with follow up coding"
-                },
-                new Activity
-                {
-                    Name = "C# Intermediate",
-                    Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
-                    Type = Models.ActivityType.ELearning,
-                    StartTime = new DateTime(2017, 4, 21, 08, 0, 0),
-                    EndTime = new DateTime(2017, 04, 24, 20, 0, 0),
-                    Description = "The intermediates of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
-                },
-                new Activity
-                {
-                    Name = "C# Intermediate",
-                    Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
-                    Type = Models.ActivityType.Lecture,
-                    StartTime = new DateTime(2017, 4, 27, 8, 0, 0),
-                    EndTime = new DateTime(2017, 04, 27, 20, 0, 0),
-                    Description = "Lectire with follow up coding"
-                },
-                new Activity
-                {
-                    Name = "C# Exercise",
-                    Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
-                    Type = Models.ActivityType.Submission,
-                    StartTime = new DateTime(2017, 4, 28, 8, 0, 0),
-                    EndTime = new DateTime(2017, 05, 04, 20, 0, 0),
-                    Description = "Individual code task. Console application: Garage 1.0"
-                },
-                new Activity
-                {
-                    Name = "C# Basics",
-                    Module = context.Modules.Where(m => m.Name == "Projektledning").FirstOrDefault(),
-                    Type = Models.ActivityType.ELearning,
-                    StartTime = new DateTime(2017, 4, 19, 8, 0, 0),
-                    EndTime = new DateTime(2017, 04, 19, 12, 0, 0),
-                    Description = "The basics of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
-                }
-                );
+			context.Activities.AddOrUpdate(
+				a => a.Name,
+				new Activity
+				{
+					Name = "C# Basics",
+					Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
+					Type = Models.ActivityType.ELearning,
+					StartTime = new DateTime(2017, 8, 19, 8, 0, 0),
+					EndTime = new DateTime(2017, 8, 19, 12, 0, 0),
+					Description = "The basics of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
+				},
+				new Activity
+				{
+					Name = "C# Intermediate",
+					Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
+					Type = Models.ActivityType.ELearning,
+					StartTime = new DateTime(2017, 8, 19, 13, 0, 0),
+					EndTime = new DateTime(2017, 8, 19, 20, 0, 0),
+					Description = "The intermediates of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
+				},
 
 				new Activity
 				{
@@ -299,19 +228,37 @@ namespace LMS.Migrations
 				{
 					Name = "C# Basics",
 					Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
-					Type = Models.ActivityType.ELearning,
-					StartTime = new DateTime(2017, 4, 19, 8, 0, 0),
-					EndTime = new DateTime(2017, 04, 19, 12, 0, 0),
-					Description = "The basics of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
+					Type = Models.ActivityType.Lecture,
+					StartTime = new DateTime(2017, 4, 20, 8, 0, 0),
+					EndTime = new DateTime(2017, 04, 20, 20, 0, 0),
+					Description = "Lectire with follow up coding"
 				},
 				new Activity
 				{
-					Name = "C# Basics",
+					Name = "C# Intermediate",
 					Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
 					Type = Models.ActivityType.ELearning,
-					StartTime = new DateTime(2017, 4, 19, 8, 0, 0),
-					EndTime = new DateTime(2017, 04, 19, 12, 0, 0),
-					Description = "The basics of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
+					StartTime = new DateTime(2017, 4, 21, 08, 0, 0),
+					EndTime = new DateTime(2017, 04, 24, 20, 0, 0),
+					Description = "The intermediates of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
+				},
+				new Activity
+				{
+					Name = "C# Intermediate",
+					Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
+					Type = Models.ActivityType.Lecture,
+					StartTime = new DateTime(2017, 4, 27, 8, 0, 0),
+					EndTime = new DateTime(2017, 04, 27, 20, 0, 0),
+					Description = "Lectire with follow up coding"
+				},
+				new Activity
+				{
+					Name = "C# Exercise",
+					Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
+					Type = Models.ActivityType.Submission,
+					StartTime = new DateTime(2017, 4, 28, 8, 0, 0),
+					EndTime = new DateTime(2017, 05, 04, 20, 0, 0),
+					Description = "Individual code task. Console application: Garage 1.0"
 				},
 				new Activity
 				{
