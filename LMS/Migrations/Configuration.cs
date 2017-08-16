@@ -184,65 +184,63 @@ namespace LMS.Migrations
 				}
 				);
 
+			context.SaveChanges();
 
-                new Module
-                {
-                    Name = "C#",
-                    Course = context.Courses.Where(c => c.Name == ".NET-utbildning NB17").FirstOrDefault(),
-                    StartDate = new DateTime(2017, 4, 18),
-                    Description = "E-learning, forelesningar och övningsuppgifter: Grund, OOP, Generics och LINQ",
-                    EndDate = new DateTime(2017, 5, 16)
-                },
-                new Module
-                {
-                    Name = "Webb",
-                    Course = context.Courses.Where(c => c.Name == ".NET-utbildning NB17").FirstOrDefault(),
-                    StartDate = new DateTime(2017, 5, 17),
-                    Description = "E-learning, forelesningar och övningsuppgifter: HTML, CSS, JS, BOOTSTRAP och GIT",
-                    EndDate = new DateTime(2017, 5, 31)
-                },
-                new Module
-                {
-                    Name = "MVC",
-                    Course = context.Courses.Where(c => c.Name == ".NET-utbildning NB17").FirstOrDefault(),
-                    StartDate = new DateTime(2017, 6, 1),
-                    Description = "E-learning, forelesningar och övningsuppgifter: MVC, ASP.NET",
-                    EndDate = new DateTime(2017, 6, 15)
-                },
-                new Module
-                {
-                    Name = "Databas",
-                    Course = context.Courses.Where(c => c.Name == ".NET-utbildning NB17").FirstOrDefault(),
-                    StartDate = new DateTime(2017, 6, 16),
-                    Description = "E-learning, föreläsningar och övningsuppgifter: SQLBolt",
-                    EndDate = new DateTime(2017, 6, 22)
-                },
-                new Module
-                {
-                    Name = "ApplikationsUtvekling",
-                    Course = context.Courses.Where(c => c.Name == ".NET-utbildning NB17").FirstOrDefault(),
-                    StartDate = new DateTime(2017, 6, 26),
-                    Description = "E-learning, föreläsningar och övningsuppgifter: JS-Ramverk, Client vs. Server, UX och Identity",
-                    EndDate = new DateTime(2017, 6, 30)
-                },
-                new Module
-                {
-                    Name = "Testning",
-                    Course = context.Courses.Where(c => c.Name == ".NET-utbildning NB17").FirstOrDefault(),
-                    StartDate = new DateTime(2017, 7, 3),
-                    Description = "E-learning, föreläsningar och övningsuppgifter: Grundläggande Testning",
-                    EndDate = new DateTime(2017, 7, 7)
-                },
-                new Module
-                {
-                    Name = "MVC fördjpning",
-                    Course = context.Courses.Where(c => c.Name == ".NET-utbildning NB17").FirstOrDefault(),
-                    StartDate = new DateTime(2017, 7, 21),
-                    Description = "E-learning, föreläsningar och övningsuppgifter: MVC, SKRUM, Projektplanering, " +
-                                  "Planering sprint (1-3), Sprint review och Slutredovisning (OBS! vv 30&31 Sommarstängt)",
-                    EndDate = new DateTime(2017, 8, 25)
-                },
+			context.Activities.AddOrUpdate(
+				a => a.Name,
+				new Activity
+				{
+					Name = "C# Basics",
+					Module = context.Modules.Where(m => m.Name == "C#Default").FirstOrDefault(),
+					Type = Models.ActivityType.ELearning,
+					StartTime = new DateTime(2017, 4, 19, 8, 0, 0),
+					EndTime = new DateTime(2017, 04, 19, 12, 0, 0),
+					Description = "The basics of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
+				},
+				new Activity
+				{
+					Name = "C# Intermediate",
+					Module = context.Modules.Where(m => m.Name == "C#Default").FirstOrDefault(),
+					Type = Models.ActivityType.ELearning,
+					StartTime = new DateTime(2017, 4, 19, 13, 0, 0),
+					EndTime = new DateTime(2017, 04, 19, 20, 0, 0),
+					Description = "The intermediates of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
+				},
+				new Activity
+				{
+					Name = "C# Advanced",
+					Module = context.Modules.Where(m => m.Name == "C#Default").FirstOrDefault(),
+					Type = Models.ActivityType.ELearning,
+					StartTime = new DateTime(2017, 8, 16, 8, 0, 0),
+					EndTime = new DateTime(2017, 8, 18, 12, 0, 0),
+					Description = "The Advanced parts of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
+				},
+				new Activity
+				{
+					Name = "JAVA Basics",
+					Module = context.Modules.Where(m => m.Name == "JAVA").FirstOrDefault(),
+					Type = Models.ActivityType.ELearning,
+					StartTime = new DateTime(2017, 4, 19, 8, 0, 0),
+					EndTime = new DateTime(2017, 04, 19, 12, 0, 0),
+					Description = "The basics of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
+				},
+				new Activity
+				{
+					Name = "What Basics",
+					Module = context.Modules.Where(m => m.Name == "Projektledning").FirstOrDefault(),
+					Type = Models.ActivityType.ELearning,
+					StartTime = new DateTime(2017, 4, 19, 8, 0, 0),
+					EndTime = new DateTime(2017, 04, 19, 12, 0, 0),
+					Description = "The basics of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
+				}
+				);
 
+			context.SaveChanges();
+			////////////////////////
+			// User Seeding below //
+			////////////////////////
+			var roleStore = new RoleStore<IdentityRole>(context);
+			var roleManager = new RoleManager<IdentityRole>(roleStore);
 
                 new Module
                 {
