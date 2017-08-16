@@ -295,11 +295,12 @@ namespace LMS.Migrations
 			var userManager = new UserManager<ApplicationUser>(userStore);
 
 			var teacherEmails = new[] { "john@lexicon.se", "dimitris@lexicon.se", "oscar@lexicon.se" };
-			foreach (var email in teacherEmails)
+			var teacherNames = new[] { "John", "Dimitris", "Oscar" };
+			for (int i = 0; i < teacherEmails.Count(); i++)
 			{
-				if (!context.Users.Any(u => u.UserName == email))
+				if (!context.Users.Any(u => u.UserName == teacherEmails[i]))
 				{
-					var user = new ApplicationUser { UserName = email, Email = email };
+					var user = new ApplicationUser { UserName = teacherEmails[i], Email = teacherEmails[i], Name = teacherNames[i] };
 					var result = userManager.Create(user, "foobar");
 					if (!result.Succeeded)
 					{
@@ -310,11 +311,12 @@ namespace LMS.Migrations
 
 			var studentEmails = new[] { "student0@lexicon.se", "student1@lexicon.se", "student2@lexicon.se", "student3@lexicon.se",
 								 "student4@lexicon.se", "student5@lexicon.se", "student6@lexicon.se", "student7@lexicon.se" };
-			foreach (var email in studentEmails)
+			var studentNames = new[] {"student0", "student1", "student2", "student3", "student4", "student5", "student6", "student7" };
+			for (int i = 0; i < studentEmails.Count(); i++)
 			{
-				if (!context.Users.Any(u => u.UserName == email))
+				if (!context.Users.Any(u => u.UserName == studentEmails[i]))
 				{
-					var user = new ApplicationUser { UserName = email, Email = email, CourseId = context.Courses.Where(c => c.Name == ".Net2017").FirstOrDefault().Id };
+					var user = new ApplicationUser { UserName = studentEmails[i], Email = studentEmails[i], Name = studentNames[i], CourseId = context.Courses.Where(c => c.Name == ".Net2017").FirstOrDefault().Id };
 					var result = userManager.Create(user, "foobar");
 					if (!result.Succeeded)
 					{
