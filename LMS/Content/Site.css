@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 0px;
+    padding-top: 0;
     padding-bottom: 20px;
     font-family: "Whitney SSm A","Whitney SSm B",arial,sans-serif;
     font-size: 14px;
@@ -63,8 +63,8 @@ ul.navbar-nav {
 }
 
 .row {
-    margin-left: 0px;
-    margin-right:0px;
+    margin-left: 0;
+    margin-right:0;
 }
 
 p{
