@@ -192,8 +192,8 @@ namespace LMS.Migrations
 					Name = "C# Basics",
 					Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
 					Type = Models.ActivityType.ELearning,
-					StartTime = new DateTime(2017, 8, 19, 8, 0, 0),
-					EndTime = new DateTime(2017, 8, 19, 12, 0, 0),
+					StartTime = new DateTime(2017, 8, 18, 8, 0, 0),
+					EndTime = new DateTime(2017, 8, 18, 12, 0, 0),
 					Description = "The basics of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
 				},
 				new Activity
@@ -201,8 +201,8 @@ namespace LMS.Migrations
 					Name = "C# Intermediate",
 					Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
 					Type = Models.ActivityType.ELearning,
-					StartTime = new DateTime(2017, 8, 19, 13, 0, 0),
-					EndTime = new DateTime(2017, 8, 19, 20, 0, 0),
+					StartTime = new DateTime(2017, 8, 18, 13, 0, 0),
+					EndTime = new DateTime(2017, 8, 18, 20, 0, 0),
 					Description = "The intermediates of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
 				},
 
