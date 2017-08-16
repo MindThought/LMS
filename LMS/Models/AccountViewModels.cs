@@ -65,7 +65,7 @@ namespace LMS.Models
 
     public class RegisterViewModel
     {
-        //[Required] Temporary not required TBD
+        [Required]
         [Display(Name = "Name")]
         public string UserName { get; set; }
 
