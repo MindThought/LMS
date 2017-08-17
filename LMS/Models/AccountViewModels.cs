@@ -67,7 +67,7 @@ namespace LMS.Models
     {
         [Required(ErrorMessage = "Namn är obligatorisk")]
         [Display(Name = "Namn")]
-        public string UserName { get; set; }
+        public string Name { get; set; }
 
         [Required(ErrorMessage = "E-postadress är obligatorisk")]
         [EmailAddress(ErrorMessage = "Ogiltig E-postadress")]
