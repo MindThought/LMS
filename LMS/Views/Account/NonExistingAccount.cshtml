@@ -2,13 +2,11 @@
 @{
     ViewBag.Title = "Non Existing Account";
 }
+<link rel="stylesheet" href="../Content/Login.css" />
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-</hgroup>
+<font size="66" color="#3ed3d3">Konto med angiven E-postadress finns inte!</font>
+
 <div>
-    <p>
-        <h1> Account does not exist! </h1>
-    </p>
-    <a class="btn btn-default" href="@Url.Action("Index", "Home")">Back to start page</a>
+    <a class="btn btn-primary" href="@Url.Action("Index","Courses")">Till kursöversikt</a>
+    <a class="btn btn-primary" href="@Url.Action("ExitAccount","Account")">Till kontoborttagning</a>
 </div>
