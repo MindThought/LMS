@@ -36,7 +36,6 @@ namespace LMS.Migrations
 				c => c.Name,
 				new Course
 				{
-					Id = 1,
 					Name = ".Net2017",
 					StartDate = new DateTime(2017, 4, 18),
 					Description = ".NET för de med tidigare IT-erfarenhet"
@@ -44,42 +43,36 @@ namespace LMS.Migrations
 				,
 				new Course
 				{
-					Id = 2,
 					Name = "JAVA",
 					StartDate = new DateTime(2017, 6, 18),
 					Description = "JAVA för de med tidigare IT-erfarenhet"
 				},
 				new Course
 				{
-					Id = 3,
 					Name = "Projektledning",
 					StartDate = new DateTime(2017, 8, 18),
 					Description = "Projektledning"
 				},
 				new Course
 				{
-					Id = 4,
 					Name = ".NET-utbildning NB17",
 					StartDate = new DateTime(2017, 4, 18),
 					Description = "Systemutvecklare .NET för dem som har tidigare erfarenhet av programering"
 				},
 				new Course
 				{
-					Id = 5,
 					Name = ".NET-utbildning NB18",
 					StartDate = new DateTime(2017, 10, 18),
 					Description = "Systemutvecklare .NET för dem som har tidigare erfarenhet av C++ programering"
 				},
 				new Course
 				{
-					Id = 6,
 					Name = ".NET-utbildning NB20",
 					StartDate = new DateTime(2018, 01, 18),
 					Description = "Systemutvecklare .NET för dem som har tidigare erfarenhet av Delfi programering"
 				},
 				new Course
 				{
-					Id = 7,
 					Name = ".NET-utbildning NB66",
 					StartDate = new DateTime(2018, 03, 18),
 					Description = "Systemutvecklare .NET för dem som har ingen erfarenhet av programering"
@@ -171,8 +164,6 @@ namespace LMS.Migrations
 								  "Planering sprint (1-3), Sprint review och Slutredovisning (OBS! vv 30&31 Sommarstängt)",
 					EndDate = new DateTime(2017, 8, 25)
 				},
-
-
 				new Module
 				{
 					Name = "Projektledning",
@@ -226,33 +217,6 @@ namespace LMS.Migrations
 				},
 				new Activity
 				{
-					Name = "C# Basics",
-					Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
-					Type = Models.ActivityType.Lecture,
-					StartTime = new DateTime(2017, 4, 20, 8, 0, 0),
-					EndTime = new DateTime(2017, 04, 20, 20, 0, 0),
-					Description = "Lectire with follow up coding"
-				},
-				new Activity
-				{
-					Name = "C# Intermediate",
-					Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
-					Type = Models.ActivityType.ELearning,
-					StartTime = new DateTime(2017, 4, 21, 08, 0, 0),
-					EndTime = new DateTime(2017, 04, 24, 20, 0, 0),
-					Description = "The intermediates of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
-				},
-				new Activity
-				{
-					Name = "C# Intermediate",
-					Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
-					Type = Models.ActivityType.Lecture,
-					StartTime = new DateTime(2017, 4, 27, 8, 0, 0),
-					EndTime = new DateTime(2017, 04, 27, 20, 0, 0),
-					Description = "Lectire with follow up coding"
-				},
-				new Activity
-				{
 					Name = "C# Exercise",
 					Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
 					Type = Models.ActivityType.Submission,
@@ -262,12 +226,12 @@ namespace LMS.Migrations
 				},
 				new Activity
 				{
-					Name = "C# Basics",
-					Module = context.Modules.Where(m => m.Name == "Projektledning").FirstOrDefault(),
-					Type = Models.ActivityType.ELearning,
-					StartTime = new DateTime(2017, 4, 19, 8, 0, 0),
-					EndTime = new DateTime(2017, 04, 19, 12, 0, 0),
-					Description = "The basics of C# on <a href= https://app.pluralsight.com/library/courses/c-sharp-fundamentals-with-visual-studio-2015 > course </a>"
+					Name = "Slutprojekt",
+					Module = context.Modules.Where(m => m.Name == "MVC fördjupning").FirstOrDefault(),
+					Type = Models.ActivityType.Submission,
+					StartTime = new DateTime(2017, 8, 1, 8, 0, 0),
+					EndTime = new DateTime(2017, 8, 24, 20, 0, 0),
+					Description = "Individual code task. Console application: Garage 1.0"
 				}
 				);
 
@@ -298,7 +262,8 @@ namespace LMS.Migrations
 			var teacherNames = new[] { "John", "Dimitris", "Oscar" };
 			for (int i = 0; i < teacherEmails.Count(); i++)
 			{
-				if (!context.Users.Any(u => u.UserName == teacherEmails[i]))
+				var compareMail = teacherEmails[i];
+				if (!context.Users.Any(u => u.UserName == compareMail))
 				{
 					var user = new ApplicationUser { UserName = teacherEmails[i], Email = teacherEmails[i], Name = teacherNames[i] };
 					var result = userManager.Create(user, "foobar");
@@ -314,7 +279,8 @@ namespace LMS.Migrations
 			var studentNames = new[] {"student0", "student1", "student2", "student3", "student4", "student5", "student6", "student7" };
 			for (int i = 0; i < studentEmails.Count(); i++)
 			{
-				if (!context.Users.Any(u => u.UserName == studentEmails[i]))
+				var compareMail = studentEmails[i];
+				if (!context.Users.Any(u => u.UserName == compareMail))
 				{
 					var user = new ApplicationUser { UserName = studentEmails[i], Email = studentEmails[i], Name = studentNames[i], CourseId = context.Courses.Where(c => c.Name == ".Net2017").FirstOrDefault().Id };
 					var result = userManager.Create(user, "foobar");
