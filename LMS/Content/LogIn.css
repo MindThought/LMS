@@ -1,13 +1,22 @@
 ﻿
-.btnlex {
+.btn-danger {
     background-color: #4CAF50;
     /*border: none;*/
     color: white;
     padding: 5px 124px;
     text-align: left;
+    border-color: forestgreen;
     /*text-decoration: none;*/
     /*display: inline-block;*/
     /*font-size: 22px;*/
     /*margin: 4px 2px;*/
     /*cursor: pointer;*/
+}
+.btn-warning{
+     background-color: #4CAF50;
+    /*border: none;*/
+    color: white;
+    padding: 5px 124px;
+    text-align: left;
+    border-color: yellow;
 }

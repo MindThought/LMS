@@ -3,8 +3,10 @@
     ViewBag.Title = "Exit Account";
 }
 
+<link rel="stylesheet" href="../Content/Login.css" />
+
 @*<h1>@ViewBag.Title</h1>*@
-<font size="33" color="red">Exit Account</font>
+<font size="33" color="red">Avsluta ett användarkonto</font>
 
 @using (Html.BeginForm("ExitAccount", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
@@ -14,19 +16,19 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email (account to delete)" })
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "E-postadress (konto för att avsluta)" })
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Teacher's password" })
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Inloggade lärarens lösenord" })
             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-warning" value="Submit" onclick="return confirm('Are you sure?')" />
+            <input type="submit" class="btn-warning" value="Verkställ" onclick="return confirm('Är Du säker?')" />
         </div>
     </div>
 
