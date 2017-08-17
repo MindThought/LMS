@@ -38,7 +38,6 @@ namespace LMS.Controllers
 				else
 				{
 					return RedirectToAction("Index");
-					//return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 				}
 			}
 			course = db.Courses.Find(id);
