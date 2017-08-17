@@ -163,6 +163,8 @@ namespace LMS.Controllers
 					var result = await UserManager.CreateAsync(user, model.Password);
 					if (result.Succeeded)
 					{
+						var teacherUser = UserManager.FindByName(model.Email);
+						UserManager.AddToRole(teacherUser.Id, "Teacher");
 						return RedirectToAction("Index", "Courses");
 					}
 					AddErrors(result);
@@ -173,6 +175,8 @@ namespace LMS.Controllers
 					var result = await UserManager.CreateAsync(user, model.Password);
 					if (result.Succeeded)
 					{
+						var studentUser = UserManager.FindByName(model.Email);
+						UserManager.AddToRole(studentUser.Id, "Student");
 						return RedirectToAction("Index", "Courses", new { id = model.courseID });
 					}
 					AddErrors(result);
