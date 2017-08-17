@@ -5,15 +5,12 @@
 }
 
 <h2>@ViewBag.Title</h2>
-
-<p>
-    @Html.ActionLink("Skapa ny kurs", "Create")
-</p>
-
-<hr />
+<div class="row">
+    <p class="col-md-3">@Html.ActionLink("Skapa ny kurs", "Create")</p>
+</div>
 
 <form class="form-inline">
-    <div class="form-group">
+    <div class="form-group col-md-3">
         @Html.Label("SearchText", "Sök", new { @class = "sr-only"} )
         @*<label for="searchText" class="sr-only">Text Search: </label>*@
         @Html.TextBox("SearchText", null ,new { @class = "form-control wide-text", placeholder ="Sök" })
@@ -40,7 +37,7 @@
             </div>
             
             @*<div class="row"><b>Namn: </b>@Html.DisplayFor(modelItem => item.Name)</div>*@
-            <div class="row"><b>Beskrivning: </b>@Html.DisplayFor(modelItem => item.Description)</div>
+            @*<div class="row"><b>Beskrivning: </b>@Html.DisplayFor(modelItem => item.Description)</div>*@
             @*<div class="row"><b>Start Datum: </b>@Html.DisplayFor(modelItem => item.StartDate)</div>*@
             <div class="row"><b>Start Datum: </b>@item.StartDate.ToString("d")</div>
             <div class="row"><b>Moduler: </b>@Html.DisplayFor(modelItem => item.Modules.Count)</div>
