@@ -23,7 +23,6 @@ namespace LMS.Controllers
 			var result = db.Courses.Where(c => c.Name.Contains(SearchText));
 			return View(result.ToList());
 		}
-
 		// GET: Courses/Details/5
 		[Authorize]
 		public ActionResult Details(int? id)
