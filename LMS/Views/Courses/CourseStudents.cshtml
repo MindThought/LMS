@@ -1,9 +1,12 @@
 ﻿@model IEnumerable<LMS.Models.ApplicationUser>
 
-<h3>Students:</h3>
+<h3>Elever:</h3>
 
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Email)
         </th>
@@ -12,21 +15,16 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Email)
         </td>
 
         <td>
-            @if (User.IsInRole("Teacher"))
-            {
-                @Html.ActionLink("Edit", "Edit", "Account", new { id = item.Id }, null)
-                <span>|</span>
-            }
-
-            @Html.ActionLink("Details", "Details", "Account", new { id = item.Id }, null)
 
             @if (User.IsInRole("Teacher"))
             {
-                <span>|</span>
                 @Html.ActionLink("Delete", "Delete", "Account", new { id = item.Id }, null)
             }
         </td>

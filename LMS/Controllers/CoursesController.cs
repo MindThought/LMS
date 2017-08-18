@@ -1,6 +1,7 @@
 ﻿using LMS.Models;
 using LMS.SpecialBehaviour;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -84,7 +85,6 @@ namespace LMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-<<<<<<< Updated upstream
 
             Course course = db.Courses.Where(c => c.Id == id).FirstOrDefault();
             if (course == null)
@@ -100,23 +100,6 @@ namespace LMS.Controllers
 
                 case DayOfWeek.Monday:
 
-=======
-
-            Course course = db.Courses.Where(c => c.Id == id).FirstOrDefault();
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
-
-            DateTime today = DateTime.Now;
-            today = new DateTime(today.Year, today.Month, today.Day);
-            DateTime start = today;
-            switch (today.DayOfWeek)
-            {
-
-                case DayOfWeek.Monday:
-
->>>>>>> Stashed changes
                     break;
                 case DayOfWeek.Tuesday:
                     start = new DateTime(start.Year, start.Month, start.Day - 1);
@@ -147,10 +130,7 @@ namespace LMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NoContent);
             }
-<<<<<<< Updated upstream
             return PartialView(course);
-=======
->>>>>>> Stashed changes
         }
 
         // POST: Courses/Delete/5
@@ -179,238 +159,86 @@ namespace LMS.Controllers
             return RedirectToAction("Index");
         }
 
-<<<<<<< Updated upstream
-=======
-        List<Period> periodes = new List<Period>();
-			foreach (var item in activities)
-			{
-				int startHour = 0;
-        int startMinute = 0;
-        int endHour = 0;
-        int endMinute = 0;
-        int days = item.EndTime.Day - item.StartTime.Day;
+        // GET: Courses/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
 
-				if (days == 0)//If it is only during one day
-				{
-					if (item.StartTime.Hour <= 8)
-					{
-						startHour = 8;
-						startMinute = 30;
-					}
-					else
-					{
-						startHour = item.StartTime.Hour;
-						startMinute = item.StartTime.Minute;
-					}
-					if (item.EndTime.Hour > 17)
-					{
-						endHour = 17;
-						endMinute = 0;
-					}
-					else
-					{
-						endHour = item.EndTime.Hour;
-						endMinute = item.EndTime.Minute;
-					}
-					Period period0 = new Period
-                    {
-                        ModuleId = item.Id,
-                        Day = item.StartTime.Day - start.Day,
-                        Name = item.Name,
-                        StartHour = startHour,
-                        StartMinute = startMinute,
-                        EndHour = endHour,
-                        EndMinute = endMinute
-                    };
-					if (period0.Day >= 0)
-					{
-						periodes.Add(period0);
-					}
-				}
-				if (days > 0)
-				{
-					if (item.StartTime.Hour <= 8)
-					{
-						startHour = 8;
-						startMinute = 30;
-					}
-					else
-					{
-						startHour = item.StartTime.Hour;
-						startMinute = item.StartTime.Minute;
-					}
-					endHour = 17;
-					endMinute = 0;
-					Period period0 = new Period
-                    {
-                        ModuleId = item.Id,
-                        Day = item.StartTime.Day - start.Day,
-                        Name = item.Name,
-                        StartHour = startHour,
-                        StartMinute = startMinute,
-                        EndHour = endHour,
-                        EndMinute = endMinute
-                    };
-					if (period0.Day< 0)
-					{
-						period0.Day = 0;
-						period0.StartHour = 8;
-						period0.StartMinute = 30;
-					}
-					periodes.Add(period0);
-				}
-				if (days > 1)
-				{
-					for (int i = 1; i <= days; i++)
-					{
-						startHour = 8;
-						startMinute = 30;
-						endHour = 17;
-						endMinute = 0;
-						Period period = new Period
-                        {
-                            ModuleId = item.Id,
-                            Day = item.StartTime.Day - start.Day + i,
-                            Name = item.Name,
-                            StartHour = startHour,
-                            StartMinute = startMinute,
-                            EndHour = endHour,
-                            EndMinute = endMinute
-                        };
-						if (period.Day< 5 && period.Day >= 0)
-						{
-							periodes.Add(period);
-						}
-					}
-				}
-				if (days > 0)
-				{
-					startHour = 8;
-					startMinute = 30;
+        // POST: Courses/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate")] Course course)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Courses.Add(course);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
 
-					if (item.EndTime.Hour > 17)
-					{
-						endHour = 17;
-						endMinute = 0;
-					}
-					else
-					{
-						endHour = item.EndTime.Hour;
-						endMinute = item.EndTime.Minute;
-					}
-					Period periodN = new Period
-                    {
-                        ModuleId = item.Id,
-                        Day = item.EndTime.Day - start.Day,
-                        Name = item.Name,
-                        StartHour = startHour,
-                        StartMinute = startMinute,
-                        EndHour = endHour,
-                        EndMinute = endMinute
-                    };
-					if (periodN.Day< 5)
-					{
-						periodes.Add(periodN);
-					}
-				}
-			}
-			return PartialView(periodes);
-		}
+            return View(course);
+        }
 
->>>>>>> Stashed changes
-		// GET: Courses/Create
-		public ActionResult Create()
-{
-    return View();
-}
+        // GET: Courses/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Course course = db.Courses.Find(id);
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+            return View(course);
+        }
 
-// POST: Courses/Create
-// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-[HttpPost]
-[ValidateAntiForgeryToken]
-public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate")] Course course)
-{
-    if (ModelState.IsValid)
-    {
-        db.Courses.Add(course);
-        db.SaveChanges();
-        return RedirectToAction("Index");
+        // POST: Courses/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate")] Course course)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(course).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(course);
+        }
+
+        // GET: Courses/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Course course = db.Courses.Find(id);
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+            return View(course);
+        }
+
+        // POST: Courses/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
-
-    return View(course);
-}
-
-// GET: Courses/Edit/5
-public ActionResult Edit(int? id)
-{
-    if (id == null)
-    {
-        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-    }
-    Course course = db.Courses.Find(id);
-    if (course == null)
-    {
-        return HttpNotFound();
-    }
-    return View(course);
-}
-
-// POST: Courses/Edit/5
-// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-[HttpPost]
-[ValidateAntiForgeryToken]
-public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate")] Course course)
-{
-    if (ModelState.IsValid)
-    {
-        db.Entry(course).State = EntityState.Modified;
-        db.SaveChanges();
-        return RedirectToAction("Index");
-    }
-    return View(course);
-}
-
-// GET: Courses/Delete/5
-public ActionResult Delete(int? id)
-{
-    if (id == null)
-    {
-        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-    }
-    Course course = db.Courses.Find(id);
-    if (course == null)
-    {
-        return HttpNotFound();
-    }
-    return View(course);
-}
-
-<<<<<<< Updated upstream
-		// POST: Courses/Delete/5
-		[HttpPost, ActionName("Delete")]
-		[ValidateAntiForgeryToken]
-=======
-// POST: Courses/Delete/5
-[HttpPost, ActionName("Delete")]
-[ValidateAntiForgeryToken]
-public ActionResult DeleteConfirmed(int id)
-{
-    Course course = db.Courses.Find(id);
-    db.Courses.Remove(course);
-    db.SaveChanges();
-    return RedirectToAction("Index");
-}
->>>>>>> Stashed changes
-
-protected override void Dispose(bool disposing)
-{
-    if (disposing)
-    {
-        db.Dispose();
-    }
-    base.Dispose(disposing);
-}
-	}
 }

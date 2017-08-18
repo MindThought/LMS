@@ -303,7 +303,7 @@ namespace LMS.Migrations
 
 			var studentEmails = new[] { "student0@lexicon.se", "student1@lexicon.se", "student2@lexicon.se", "student3@lexicon.se",
 								 "student4@lexicon.se", "student5@lexicon.se", "student6@lexicon.se", "student7@lexicon.se" };
-			var studentNames = new[] {"student0", "student1", "student2", "student3", "student4", "student5", "student6", "student7" };
+			var studentNames = new[] {"Alfa", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta" };
 			for (int i = 0; i < studentEmails.Count(); i++)
 			{
 				var compareMail = studentEmails[i];
