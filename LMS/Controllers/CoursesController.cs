@@ -79,57 +79,59 @@ namespace LMS.Controllers
 			return PartialView(course.Modules);
 		}
 
-		public ActionResult Schedule(int? id)
-		{
-			if (id == null)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-			}
+        public ActionResult Schedule(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
-			Course course = db.Courses.Where(c => c.Id == id).FirstOrDefault();
-			if (course == null)
-			{
-				return HttpNotFound();
-			}
+            Course course = db.Courses.Where(c => c.Id == id).FirstOrDefault();
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
 
-			DateTime today = DateTime.Now;
-			today = new DateTime(today.Year, today.Month, today.Day);
-			DateTime start = today;
-			switch (today.DayOfWeek)
-			{
+            DateTime today = DateTime.Now;
+            today = new DateTime(today.Year, today.Month, today.Day);
+            DateTime start = today;
+            switch (today.DayOfWeek)
+            {
 
-				case DayOfWeek.Monday:
+                case DayOfWeek.Monday:
 
-					break;
-				case DayOfWeek.Tuesday:
-					start = new DateTime(start.Year, start.Month, start.Day - 1);
-					break;
-				case DayOfWeek.Wednesday:
-					start = new DateTime(start.Year, start.Month, start.Day - 2);
-					break;
-				case DayOfWeek.Thursday:
-					start = new DateTime(start.Year, start.Month, start.Day - 3);
-					break;
-				case DayOfWeek.Friday:
-					start = new DateTime(start.Year, start.Month, start.Day - 4);
-					break;
-				case DayOfWeek.Saturday:
-					start.AddDays(2);
-					break;
-				case DayOfWeek.Sunday:
-					start.AddDays(1);
-					break;
-				default:
-					break;
-			}
-			DateTime end = start.AddDays(5);
+                    break;
+                case DayOfWeek.Tuesday:
+                    start = new DateTime(start.Year, start.Month, start.Day - 1);
+                    break;
+                case DayOfWeek.Wednesday:
+                    start = new DateTime(start.Year, start.Month, start.Day - 2);
+                    break;
+                case DayOfWeek.Thursday:
+                    start = new DateTime(start.Year, start.Month, start.Day - 3);
+                    break;
+                case DayOfWeek.Friday:
+                    start = new DateTime(start.Year, start.Month, start.Day - 4);
+                    break;
+                case DayOfWeek.Saturday:
+                    start.AddDays(2);
+                    break;
+                case DayOfWeek.Sunday:
+                    start.AddDays(1);
+                    break;
+                default:
+                    break;
+            }
+            DateTime end = start.AddDays(5);
 
 
-			List<Module> modules = course.Modules.Where(m => m.EndDate > start && m.StartDate < end).ToList();
-			if (modules.Count == 0)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.NoContent);
-			}
+            List<Module> modules = course.Modules.Where(m => m.EndDate > start && m.StartDate < end).ToList();
+            if (modules.Count == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NoContent);
+            }
+            return PartialView(course);
+        }
 
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
@@ -156,142 +158,6 @@ namespace LMS.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-			List<Period> periodes = new List<Period>();
-			foreach (var item in activities)
-			{
-				int startHour = 0;
-				int startMinute = 0;
-				int endHour = 0;
-				int endMinute = 0;
-				int days = item.EndTime.Day - item.StartTime.Day;
-
-				if (days == 0)//If it is only during one day
-				{
-					if (item.StartTime.Hour <= 8)
-					{
-						startHour = 8;
-						startMinute = 30;
-					}
-					else
-					{
-						startHour = item.StartTime.Hour;
-						startMinute = item.StartTime.Minute;
-					}
-					if (item.EndTime.Hour > 17)
-					{
-						endHour = 17;
-						endMinute = 0;
-					}
-					else
-					{
-						endHour = item.EndTime.Hour;
-						endMinute = item.EndTime.Minute;
-					}
-					Period period0 = new Period
-					{
-						ModuleId = item.Id,
-						Day = item.StartTime.Day - start.Day,
-						Name = item.Name,
-						StartHour = startHour,
-						StartMinute = startMinute,
-						EndHour = endHour,
-						EndMinute = endMinute
-					};
-					if (period0.Day >= 0)
-					{
-						periodes.Add(period0);
-					}
-				}
-				if (days > 0)
-				{
-					if (item.StartTime.Hour <= 8)
-					{
-						startHour = 8;
-						startMinute = 30;
-					}
-					else
-					{
-						startHour = item.StartTime.Hour;
-						startMinute = item.StartTime.Minute;
-					}
-					endHour = 17;
-					endMinute = 0;
-					Period period0 = new Period
-					{
-						ModuleId = item.Id,
-						Day = item.StartTime.Day - start.Day,
-						Name = item.Name,
-						StartHour = startHour,
-						StartMinute = startMinute,
-						EndHour = endHour,
-						EndMinute = endMinute
-					};
-					if (period0.Day < 0)
-					{
-						period0.Day = 0;
-						period0.StartHour = 8;
-						period0.StartMinute = 30;
-					}
-					periodes.Add(period0);
-				}
-				if (days > 1)
-				{
-					for (int i = 1; i <= days; i++)
-					{
-						startHour = 8;
-						startMinute = 30;
-						endHour = 17;
-						endMinute = 0;
-						Period period = new Period
-						{
-							ModuleId = item.Id,
-							Day = item.StartTime.Day - start.Day + i,
-							Name = item.Name,
-							StartHour = startHour,
-							StartMinute = startMinute,
-							EndHour = endHour,
-							EndMinute = endMinute
-						};
-						if (period.Day < 5 && period.Day >= 0)
-						{
-							periodes.Add(period);
-						}
-					}
-				}
-				if (days > 0)
-				{
-					startHour = 8;
-					startMinute = 30;
-
-					if (item.EndTime.Hour > 17)
-					{
-						endHour = 17;
-						endMinute = 0;
-					}
-					else
-					{
-						endHour = item.EndTime.Hour;
-						endMinute = item.EndTime.Minute;
-					}
-					Period periodN = new Period
-					{
-						ModuleId = item.Id,
-						Day = item.EndTime.Day - start.Day,
-						Name = item.Name,
-						StartHour = startHour,
-						StartMinute = startMinute,
-						EndHour = endHour,
-						EndMinute = endMinute
-					};
-					if (periodN.Day < 5)
-					{
-						periodes.Add(periodN);
-					}
-				}
-			}
-			return PartialView(periodes);
-		}
 
 		// GET: Courses/Create
 		public ActionResult Create()
@@ -365,13 +231,6 @@ namespace LMS.Controllers
 		// POST: Courses/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
-		public ActionResult DeleteConfirmed(int id)
-		{
-			Course course = db.Courses.Find(id);
-			db.Courses.Remove(course);
-			db.SaveChanges();
-			return RedirectToAction("Index");
-		}
 
 		protected override void Dispose(bool disposing)
 		{
