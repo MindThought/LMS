@@ -131,15 +131,31 @@ namespace LMS.Controllers
 				return new HttpStatusCodeResult(HttpStatusCode.NoContent);
 			}
 
-			List<Activity> activities = new List<Activity>();
-			foreach (var module in modules)
-			{
-				activities.AddRange(module.Activities.Where(a => a.EndTime > start && a.StartTime < end).ToList());
-			}
-			if (activities.Count == 0)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.NoContent);
-			}
+        // POST: Courses/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Course course = db.Courses.Find(id);
+            
+            foreach (var item in db.Users.Where(u => u.CourseId == course.Id))
+            {
+                db.Users.Remove(item);
+            }
+
+            foreach (var module in db.Modules.Where(m => m.CourseId == course.Id).ToList())
+            {
+                foreach (var activity in db.Activities.Where(a => a.ModuleId == module.Id).ToList())
+                {
+                    db.Activities.Remove(activity);
+                }
+                db.Modules.Remove(module);
+            }
+
+            db.Courses.Remove(course);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
 			List<Period> periodes = new List<Period>();
 			foreach (var item in activities)
