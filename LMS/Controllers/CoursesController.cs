@@ -3,8 +3,10 @@ using LMS.SpecialBehaviour;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 
 namespace LMS.Controllers
@@ -275,6 +277,54 @@ namespace LMS.Controllers
 				}
 			}
 			return PartialView(periodes);
+		}
+
+		[HttpPost]
+		[Authorize(Roles = "Teacher")]
+		public ActionResult SaveDocument(List<HttpPostedFileBase> fileUpload, int Id)
+		{
+			List<string> myTempPaths = new List<string>();
+
+			if (fileUpload.Count > 1)
+			{
+
+
+				foreach (var file in fileUpload)
+				{
+					if (file != null && file.ContentLength > 0)
+					{
+
+						int MaxContentLength = 1024 * 1024 * 10; //10 MB
+						string[] AllowedFileExtensions = new string[] { ".jpg", ".gif", ".png" };
+						if (!AllowedFileExtensions.Contains(file.FileName.Substring(file.FileName.LastIndexOf('.'))))
+						{
+							ModelState.AddModelError("File", "Please file of type: " + string.Join(", ", AllowedFileExtensions));
+							TempData["error"] = ("Please file of type: " + string.Join(", ", AllowedFileExtensions));
+
+							// return ("TicketsEdit",TempData["error"].ToString());
+						}
+						else if (file.ContentLength > MaxContentLength)
+						{
+							ModelState.AddModelError("File", "Your file is too large, maximum allowed size is: " + MaxContentLength + " B");
+						}
+						else
+						{
+							string extension = Path.GetExtension(file.FileName);
+							string fileName = DateTime.Now.ToString("yyMMddHHmmss").ToString() + extension;
+							//         TempData["FileName"] = fileName;
+
+
+							//var filename = Guid.NewGuid() + Path.GetFileName(file.FileName);
+							//file.SaveAs(Path.Combine(Server.MapPath("~/Attach/Document"), Guid.NewGuid() + Path.GetExtension(file.FileName)));
+							file.SaveAs(Path.Combine(Server.MapPath("~/Attach/Document"), fileName + Path.GetExtension(file.FileName)));
+							ModelState.Clear();
+							//       ViewBag.Message = "File uploaded successfully";
+							myTempPaths.Add(fileName);
+						}
+					}
+				}
+			}
+			return View("Details");
 		}
 
 		// GET: Courses/Create
