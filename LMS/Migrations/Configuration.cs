@@ -94,82 +94,62 @@ namespace LMS.Migrations
 				{
 					Name = "C#Default",
 					CourseId = context.Courses.Where(c => c.Name == ".Net2017").FirstOrDefault().Id,
-					StartDate = new DateTime(2017, 4, 19),
 					Description = "Grundläggande C#",
-					EndDate = new DateTime(2017, 5, 4)
 				},
 				new Module
 				{
 					Name = "JQuery",
 					CourseId = context.Courses.Where(c => c.Name == ".Net2017").FirstOrDefault().Id,
-					StartDate = new DateTime(2017, 5, 5),
 					Description = "Grundläggande JQuery",
-					EndDate = new DateTime(2017, 5, 30)
 				},
 				new Module
 				{
 					Name = "JAVA",
 					Course = context.Courses.Where(c => c.Name == "JAVA").FirstOrDefault(),
-					StartDate = new DateTime(2017, 6, 20),
 					Description = "Grundläggande JQuery",
-					EndDate = new DateTime(2017, 6, 30)
 				},
 				new Module
 				{
 					Name = "C#",
 					Course = context.Courses.Where(c => c.Name == ".NET-utbildning NB17").FirstOrDefault(),
-					StartDate = new DateTime(2017, 4, 18),
 					Description = "E-learning, forelesningar och övningsuppgifter: Grund, OOP, Generics och LINQ",
-					EndDate = new DateTime(2017, 5, 16)
 				},
 				new Module
 				{
 					Name = "Webb",
 					Course = context.Courses.Where(c => c.Name == ".NET-utbildning NB17").FirstOrDefault(),
-					StartDate = new DateTime(2017, 5, 17),
 					Description = "E-learning, forelesningar och övningsuppgifter: HTML, CSS, JS, BOOTSTRAP och GIT",
-					EndDate = new DateTime(2017, 5, 31)
 				},
 				new Module
 				{
 					Name = "MVC",
 					Course = context.Courses.Where(c => c.Name == ".NET-utbildning NB17").FirstOrDefault(),
-					StartDate = new DateTime(2017, 6, 1),
 					Description = "E-learning, forelesningar och övningsuppgifter: MVC, ASP.NET",
-					EndDate = new DateTime(2017, 6, 15)
 				},
 				new Module
 				{
 					Name = "Databas",
 					Course = context.Courses.Where(c => c.Name == ".NET-utbildning NB17").FirstOrDefault(),
-					StartDate = new DateTime(2017, 6, 16),
 					Description = "E-learning, föreläsningar och övningsuppgifter: SQLBolt",
-					EndDate = new DateTime(2017, 6, 22)
 				},
 				new Module
 				{
 					Name = "ApplikationsUtveckling",
 					Course = context.Courses.Where(c => c.Name == ".NET-utbildning NB17").FirstOrDefault(),
-					StartDate = new DateTime(2017, 6, 26),
 					Description = "E-learning, föreläsningar och övningsuppgifter: JS-Ramverk, Client vs. Server, UX och Identity",
-					EndDate = new DateTime(2017, 6, 30)
 				},
 				new Module
 				{
 					Name = "Testning",
 					Course = context.Courses.Where(c => c.Name == ".NET-utbildning NB17").FirstOrDefault(),
-					StartDate = new DateTime(2017, 7, 3),
 					Description = "E-learning, föreläsningar och övningsuppgifter: Grundläggande Testning",
-					EndDate = new DateTime(2017, 7, 7)
 				},
 				new Module
 				{
 					Name = "MVC fördjupning",
 					Course = context.Courses.Where(c => c.Name == ".NET-utbildning NB17").FirstOrDefault(),
-					StartDate = new DateTime(2017, 7, 21),
 					Description = "E-learning, föreläsningar och övningsuppgifter: MVC, SKRUM, Projektplanering, " +
 								  "Planering sprint (1-3), Sprint review och Slutredovisning (OBS! vv 30&31 Sommarstängt)",
-					EndDate = new DateTime(2017, 8, 25)
 				},
 
 
@@ -177,9 +157,7 @@ namespace LMS.Migrations
 				{
 					Name = "Projektledning",
 					Course = context.Courses.Where(c => c.Name == "Projektledning").FirstOrDefault(),
-					StartDate = new DateTime(2017, 9, 5),
 					Description = "Grundläggande JQuery",
-					EndDate = new DateTime(2017, 9, 30)
 				}
 				);
 
@@ -228,7 +206,7 @@ namespace LMS.Migrations
                 {
                     Name = "C# Basics",
                     Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
-                    Type = Models.ActivityType.Lecture,
+                    Type = Models.ActivityType.Lektion,
                     StartTime = new DateTime(2017, 4, 20, 8, 0, 0),
                     EndTime = new DateTime(2017, 04, 20, 20, 0, 0),
                     Description = "Lectire with follow up coding"
@@ -246,7 +224,7 @@ namespace LMS.Migrations
 				{
 					Name = "C# Intermediate",
 					Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
-					Type = Models.ActivityType.Lecture,
+					Type = Models.ActivityType.Lektion,
 					StartTime = new DateTime(2017, 4, 27, 8, 0, 0),
 					EndTime = new DateTime(2017, 04, 27, 20, 0, 0),
 					Description = "Lectire with follow up coding"
@@ -255,7 +233,7 @@ namespace LMS.Migrations
 				{
 					Name = "C# Exercise",
 					Module = context.Modules.Where(m => m.Name == "C#").FirstOrDefault(),
-					Type = Models.ActivityType.Submission,
+					Type = Models.ActivityType.Inlämning,
 					StartTime = new DateTime(2017, 4, 28, 8, 0, 0),
 					EndTime = new DateTime(2017, 05, 04, 20, 0, 0),
 					Description = "Individual code task. Console application: Garage 1.0"

@@ -1,6 +1,7 @@
 ﻿using LMS.Models;
 using LMS.SpecialBehaviour;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -8,7 +9,7 @@ using System.Web.Mvc;
 
 namespace LMS.Controllers
 {
-    [CustomAuthorize(Roles = "Teacher" )]
+    [CustomAuthorize(Roles = "Teacher")]
     public class CoursesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -22,7 +23,6 @@ namespace LMS.Controllers
             var result = db.Courses.Where(c => c.Name.Contains(SearchText));
             return View(result.ToList());
         }
-
         // GET: Courses/Details/5
         [Authorize]
         public ActionResult Details(int? id)
@@ -37,7 +37,6 @@ namespace LMS.Controllers
                 else
                 {
                     return RedirectToAction("Index");
-                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
             }
             course = db.Courses.Find(id);
@@ -78,6 +77,86 @@ namespace LMS.Controllers
             }
 
             return PartialView(course.Modules);
+        }
+
+        public ActionResult Schedule(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Course course = db.Courses.Where(c => c.Id == id).FirstOrDefault();
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+
+            DateTime today = DateTime.Now;
+            today = new DateTime(today.Year, today.Month, today.Day);
+            DateTime start = today;
+            switch (today.DayOfWeek)
+            {
+
+                case DayOfWeek.Monday:
+
+                    break;
+                case DayOfWeek.Tuesday:
+                    start = new DateTime(start.Year, start.Month, start.Day - 1);
+                    break;
+                case DayOfWeek.Wednesday:
+                    start = new DateTime(start.Year, start.Month, start.Day - 2);
+                    break;
+                case DayOfWeek.Thursday:
+                    start = new DateTime(start.Year, start.Month, start.Day - 3);
+                    break;
+                case DayOfWeek.Friday:
+                    start = new DateTime(start.Year, start.Month, start.Day - 4);
+                    break;
+                case DayOfWeek.Saturday:
+                    start.AddDays(2);
+                    break;
+                case DayOfWeek.Sunday:
+                    start.AddDays(1);
+                    break;
+                default:
+                    break;
+            }
+            DateTime end = start.AddDays(5);
+
+
+            List<Module> modules = course.Modules.Where(m => m.EndDate > start && m.StartDate < end).ToList();
+            if (modules.Count == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NoContent);
+            }
+            return PartialView(course);
+        }
+
+        // POST: Courses/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Course course = db.Courses.Find(id);
+
+            foreach (var item in db.Users.Where(u => u.CourseId == course.Id))
+            {
+                db.Users.Remove(item);
+            }
+
+            foreach (var module in db.Modules.Where(m => m.CourseId == course.Id).ToList())
+            {
+                foreach (var activity in db.Activities.Where(a => a.ModuleId == module.Id).ToList())
+                {
+                    db.Activities.Remove(activity);
+                }
+                db.Modules.Remove(module);
+            }
+
+            db.Courses.Remove(course);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: Courses/Create
@@ -152,28 +231,6 @@ namespace LMS.Controllers
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Course course = db.Courses.Find(id);
-            
-            foreach (var item in db.Users.Where(u => u.CourseId == course.Id))
-            {
-                db.Users.Remove(item);
-            }
-
-            foreach (var module in db.Modules.Where(m => m.CourseId == course.Id).ToList())
-            {
-                foreach (var activity in db.Activities.Where(a => a.ModuleId == module.Id).ToList())
-                {
-                    db.Activities.Remove(activity);
-                }
-                db.Modules.Remove(module);
-            }
-
-            db.Courses.Remove(course);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
 
         protected override void Dispose(bool disposing)
         {

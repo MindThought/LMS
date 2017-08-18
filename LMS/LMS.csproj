@@ -176,9 +176,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708171111353_init.cs" />
-    <Compile Include="Migrations\201708171111353_init.Designer.cs">
-      <DependentUpon>201708171111353_init.cs</DependentUpon>
+    <Compile Include="Migrations\201708181434391_init.cs" />
+    <Compile Include="Migrations\201708181434391_init.Designer.cs">
+      <DependentUpon>201708181434391_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -254,6 +254,8 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="Scripts\jquery.datetimepicker.full.min.js" />
+    <Content Include="Scripts\jquery.datetimepicker.min.css" />
     <Content Include="Scripts\jquery.schedule.css" />
     <Content Include="Scripts\jquery.schedule.js" />
     <Content Include="Scripts\jquery.schedule.min.css" />
@@ -327,6 +329,7 @@
     <Content Include="Views\Activities\ActivityDetails.cshtml" />
     <Content Include="Views\Account\Teachers.cshtml" />
     <Content Include="Views\Activities\Create.cshtml" />
+    <Content Include="Views\Module\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -340,8 +343,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708171111353_init.resx">
-      <DependentUpon>201708171111353_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708181434391_init.resx">
+      <DependentUpon>201708181434391_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

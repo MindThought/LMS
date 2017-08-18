@@ -42,12 +42,20 @@
             @Html.DisplayFor(model => model.StartTime)
         </dd>
 
+        <dd>
+            @Html.DisplayFor(model => model.StartTime.Hour)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.EndTime)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.EndTime)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndTime.Hour)
         </dd>
 
     </dl>
@@ -60,7 +68,7 @@
         <span>|</span>
         @Html.ActionLink("Edit", "Edit", new { id = Model.Id });
         <span>|</span>
-        @Html.ActionLink("Delete", "Delete", new { id = Model.ModuleId });
+        @Html.ActionLink("Delete", "Delete", new { id = Model.Id });
     }
 
 </p>

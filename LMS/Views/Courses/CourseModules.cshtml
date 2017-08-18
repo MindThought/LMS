@@ -20,8 +20,11 @@
             </div>
             
             <div class="row"><b>Beskrivning: </b>@Html.DisplayFor(modelItem => item.Description)</div>
-            <div class="row"><b>Start Datum: </b>@item.StartDate.ToString("d")</div>
-            <div class="row"><b>Slut Datum: </b>@item.EndDate.ToString("d")</div>
+            @if (item.StartDate != null)
+            {
+                <div class="row"><b>Start Datum: </b>@item.StartDate</div>
+                <div class="row"><b>Slut Datum: </b>@item.EndDate</div>
+            }
             <div class="row"><b>Aktiviteter: </b>@Html.DisplayFor(modelItem => item.Activities.Count)</div>
             @if (User.IsInRole("Teacher"))
             {
