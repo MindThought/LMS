@@ -2,13 +2,16 @@
 @{
     ViewBag.Title = "NotAllowedToDeleteOwnAccount";
 }
+<link rel="stylesheet" href="../Content/Login.css" />
 
-<font size="66" color="red">Inloggad får inte avsluta eget konto!</font>
+<div class="floating-box">
+    <font size="66" color="red">Inloggad får inte avsluta sitt eget konto!</font>
 
-<hgroup class="title"></hgroup>
-<div>
-    <p>
-        Kontakta support !
-    </p>
-    <a class="btn btn-primary" href="@Url.Action("Index","Courses")">Till kursöversikt</a>
+    <hgroup class="title"></hgroup>
+    <div>
+        <p>
+            Kontakta support !
+        </p>
+        <a class="btn btn-primary" href="@Url.Action("Index","Courses")">Till kursöversikt</a>
+    </div>
 </div>

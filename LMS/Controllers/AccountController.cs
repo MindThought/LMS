@@ -302,10 +302,10 @@ namespace LMS.Controllers
             return View();
         }
 
-		//
-		// GET: /Account/ResetPassword
-		[AllowAnonymous]
-		public ActionResult ResetPassword(string code)
+        //
+        // GET: /Account/ResetPassword
+        [Authorize(Roles = "Teacher")]
+        public ActionResult ResetPassword(string code)
 		{
 			return code == null ? View("Error") : View();
 		}
@@ -355,10 +355,10 @@ namespace LMS.Controllers
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
 
-		//
-		// GET: /Account/SendCode
-		[AllowAnonymous]
-		public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
+        //
+        // GET: /Account/SendCode
+        [Authorize(Roles = "Teacher")]
+        public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
 		{
 			var userId = await SignInManager.GetVerifiedUserIdAsync();
 			if (userId == null)
@@ -373,8 +373,8 @@ namespace LMS.Controllers
 		//
 		// POST: /Account/SendCode
 		[HttpPost]
-		[AllowAnonymous]
-		[ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
+        [ValidateAntiForgeryToken]
 		public async Task<ActionResult> SendCode(SendCodeViewModel model)
 		{
 			if (!ModelState.IsValid)
@@ -390,10 +390,10 @@ namespace LMS.Controllers
 			return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
 		}
 
-		//
-		// GET: /Account/ExternalLoginCallback
-		[AllowAnonymous]
-		public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
+        //
+        // GET: /Account/ExternalLoginCallback
+        [Authorize(Roles = "Teacher")]
+        public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
 		{
 			var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
 			if (loginInfo == null)
@@ -423,8 +423,8 @@ namespace LMS.Controllers
 		//
 		// POST: /Account/ExternalLoginConfirmation
 		[HttpPost]
-		[AllowAnonymous]
-		[ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
+        [ValidateAntiForgeryToken]
 		public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
 		{
 			if (User.Identity.IsAuthenticated)
@@ -468,10 +468,10 @@ namespace LMS.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-		//
-		// GET: /Account/ExternalLoginFailure
-		[AllowAnonymous]
-		public ActionResult ExternalLoginFailure()
+        //
+        // GET: /Account/ExternalLoginFailure
+        [Authorize(Roles = "Teacher")]
+        public ActionResult ExternalLoginFailure()
 		{
 			return View();
 		}
