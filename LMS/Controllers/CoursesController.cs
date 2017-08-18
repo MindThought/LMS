@@ -1,6 +1,7 @@
 ﻿using LMS.Models;
 using LMS.SpecialBehaviour;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -8,187 +9,146 @@ using System.Web.Mvc;
 
 namespace LMS.Controllers
 {
-    [CustomAuthorize(Roles = "Teacher")]
-    public class CoursesController : Controller
-    {
-        private ApplicationDbContext db = new ApplicationDbContext();
+	[CustomAuthorize(Roles = "Teacher")]
+	public class CoursesController : Controller
+	{
+		private ApplicationDbContext db = new ApplicationDbContext();
 
-        public ActionResult Index(string SearchText)
-        {
-            if (String.IsNullOrWhiteSpace(SearchText))
-            {
-                return View(db.Courses.ToList());
-            }
-            var result = db.Courses.Where(c => c.Name.Contains(SearchText));
-            return View(result.ToList());
-        }
-        // GET: Courses/Details/5
-        [Authorize]
-        public ActionResult Details(int? id)
-        {
-            Course course = null;
-            if (id == null)
-            {
-                if (User.IsInRole("Student"))
-                {
-                    id = (int)db.Users.Where(s => s.UserName == User.Identity.Name).FirstOrDefault().CourseId;
-                }
-                else
-                {
-                    return RedirectToAction("Index");
-                }
-            }
-            course = db.Courses.Find(id);
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
-            return View(course);
-        }
-        [Authorize]
-        public ActionResult CourseStudents(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Course course = db.Courses.Find(id);
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
-            var output = course.Students.OrderBy(s => s.UserName);
-            return PartialView(output);
-        }
-        [HttpGet]
-        [Authorize]
-        public ActionResult CourseModules(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Course course = db.Courses.Find(id);
-            ViewBag.CourseId = id;
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
+		public ActionResult Index(string SearchText)
+		{
+			if (String.IsNullOrWhiteSpace(SearchText))
+			{
+				return View(db.Courses.ToList());
+			}
+			var result = db.Courses.Where(c => c.Name.Contains(SearchText));
+			return View(result.ToList());
+		}
+		// GET: Courses/Details/5
+		[Authorize]
+		public ActionResult Details(int? id)
+		{
+			Course course = null;
+			if (id == null)
+			{
+				if (User.IsInRole("Student"))
+				{
+					id = (int)db.Users.Where(s => s.UserName == User.Identity.Name).FirstOrDefault().CourseId;
+				}
+				else
+				{
+					return RedirectToAction("Index");
+				}
+			}
+			course = db.Courses.Find(id);
+			if (course == null)
+			{
+				return HttpNotFound();
+			}
+			return View(course);
+		}
+		[Authorize]
+		public ActionResult CourseStudents(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Course course = db.Courses.Find(id);
+			if (course == null)
+			{
+				return HttpNotFound();
+			}
+			var output = course.Students.OrderBy(s => s.UserName);
+			return PartialView(output);
+		}
+		[HttpGet]
+		[Authorize]
+		public ActionResult CourseModules(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Course course = db.Courses.Find(id);
+			ViewBag.CourseId = id;
+			if (course == null)
+			{
+				return HttpNotFound();
+			}
 
-            return PartialView(course.Modules);
-        }
+			return PartialView(course.Modules);
+		}
 
-        public ActionResult Schedule(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-<<<<<<< Updated upstream
+		public ActionResult Schedule(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
 
-            Course course = db.Courses.Where(c => c.Id == id).FirstOrDefault();
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
+			Course course = db.Courses.Where(c => c.Id == id).FirstOrDefault();
+			if (course == null)
+			{
+				return HttpNotFound();
+			}
 
-            DateTime today = DateTime.Now;
-            today = new DateTime(today.Year, today.Month, today.Day);
-            DateTime start = today;
-            switch (today.DayOfWeek)
-            {
+			DateTime today = DateTime.Now;
+			today = new DateTime(today.Year, today.Month, today.Day);
+			DateTime start = today;
+			switch (today.DayOfWeek)
+			{
 
-                case DayOfWeek.Monday:
+				case DayOfWeek.Monday:
 
-=======
-
-            Course course = db.Courses.Where(c => c.Id == id).FirstOrDefault();
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
-
-            DateTime today = DateTime.Now;
-            today = new DateTime(today.Year, today.Month, today.Day);
-            DateTime start = today;
-            switch (today.DayOfWeek)
-            {
-
-                case DayOfWeek.Monday:
-
->>>>>>> Stashed changes
-                    break;
-                case DayOfWeek.Tuesday:
-                    start = new DateTime(start.Year, start.Month, start.Day - 1);
-                    break;
-                case DayOfWeek.Wednesday:
-                    start = new DateTime(start.Year, start.Month, start.Day - 2);
-                    break;
-                case DayOfWeek.Thursday:
-                    start = new DateTime(start.Year, start.Month, start.Day - 3);
-                    break;
-                case DayOfWeek.Friday:
-                    start = new DateTime(start.Year, start.Month, start.Day - 4);
-                    break;
-                case DayOfWeek.Saturday:
-                    start.AddDays(2);
-                    break;
-                case DayOfWeek.Sunday:
-                    start.AddDays(1);
-                    break;
-                default:
-                    break;
-            }
-            DateTime end = start.AddDays(5);
+					break;
+				case DayOfWeek.Tuesday:
+					start = new DateTime(start.Year, start.Month, start.Day - 1);
+					break;
+				case DayOfWeek.Wednesday:
+					start = new DateTime(start.Year, start.Month, start.Day - 2);
+					break;
+				case DayOfWeek.Thursday:
+					start = new DateTime(start.Year, start.Month, start.Day - 3);
+					break;
+				case DayOfWeek.Friday:
+					start = new DateTime(start.Year, start.Month, start.Day - 4);
+					break;
+				case DayOfWeek.Saturday:
+					start.AddDays(2);
+					break;
+				case DayOfWeek.Sunday:
+					start.AddDays(1);
+					break;
+				default:
+					break;
+			}
+			DateTime end = start.AddDays(5);
 
 
-            List<Module> modules = course.Modules.Where(m => m.EndDate > start && m.StartDate < end).ToList();
-            if (modules.Count == 0)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.NoContent);
-            }
-<<<<<<< Updated upstream
-            return PartialView(course);
-=======
->>>>>>> Stashed changes
-        }
+			List<Module> modules = course.Modules.Where(m => m.EndDate > start && m.StartDate < end).ToList();
+			if (modules.Count == 0)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.NoContent);
+			}
 
-        // POST: Courses/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Course course = db.Courses.Find(id);
+			List<Activity> activities = new List<Activity>();
+			foreach (var module in modules)
+			{
+				activities.AddRange(module.Activities.Where(a => a.EndTime > start && a.StartTime < end).ToList());
+			}
+			if (activities.Count == 0)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.NoContent);
+			}
 
-            foreach (var item in db.Users.Where(u => u.CourseId == course.Id))
-            {
-                db.Users.Remove(item);
-            }
-
-            foreach (var module in db.Modules.Where(m => m.CourseId == course.Id).ToList())
-            {
-                foreach (var activity in db.Activities.Where(a => a.ModuleId == module.Id).ToList())
-                {
-                    db.Activities.Remove(activity);
-                }
-                db.Modules.Remove(module);
-            }
-
-            db.Courses.Remove(course);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-<<<<<<< Updated upstream
-=======
-        List<Period> periodes = new List<Period>();
+			List<Period> periodes = new List<Period>();
 			foreach (var item in activities)
 			{
 				int startHour = 0;
-        int startMinute = 0;
-        int endHour = 0;
-        int endMinute = 0;
-        int days = item.EndTime.Day - item.StartTime.Day;
+				int startMinute = 0;
+				int endHour = 0;
+				int endMinute = 0;
+				int days = item.EndTime.Day - item.StartTime.Day;
 
 				if (days == 0)//If it is only during one day
 				{
@@ -213,15 +173,15 @@ namespace LMS.Controllers
 						endMinute = item.EndTime.Minute;
 					}
 					Period period0 = new Period
-                    {
-                        ModuleId = item.Id,
-                        Day = item.StartTime.Day - start.Day,
-                        Name = item.Name,
-                        StartHour = startHour,
-                        StartMinute = startMinute,
-                        EndHour = endHour,
-                        EndMinute = endMinute
-                    };
+					{
+						ModuleId = item.Id,
+						Day = item.StartTime.Day - start.Day,
+						Name = item.Name,
+						StartHour = startHour,
+						StartMinute = startMinute,
+						EndHour = endHour,
+						EndMinute = endMinute
+					};
 					if (period0.Day >= 0)
 					{
 						periodes.Add(period0);
@@ -242,16 +202,16 @@ namespace LMS.Controllers
 					endHour = 17;
 					endMinute = 0;
 					Period period0 = new Period
-                    {
-                        ModuleId = item.Id,
-                        Day = item.StartTime.Day - start.Day,
-                        Name = item.Name,
-                        StartHour = startHour,
-                        StartMinute = startMinute,
-                        EndHour = endHour,
-                        EndMinute = endMinute
-                    };
-					if (period0.Day< 0)
+					{
+						ModuleId = item.Id,
+						Day = item.StartTime.Day - start.Day,
+						Name = item.Name,
+						StartHour = startHour,
+						StartMinute = startMinute,
+						EndHour = endHour,
+						EndMinute = endMinute
+					};
+					if (period0.Day < 0)
 					{
 						period0.Day = 0;
 						period0.StartHour = 8;
@@ -268,16 +228,16 @@ namespace LMS.Controllers
 						endHour = 17;
 						endMinute = 0;
 						Period period = new Period
-                        {
-                            ModuleId = item.Id,
-                            Day = item.StartTime.Day - start.Day + i,
-                            Name = item.Name,
-                            StartHour = startHour,
-                            StartMinute = startMinute,
-                            EndHour = endHour,
-                            EndMinute = endMinute
-                        };
-						if (period.Day< 5 && period.Day >= 0)
+						{
+							ModuleId = item.Id,
+							Day = item.StartTime.Day - start.Day + i,
+							Name = item.Name,
+							StartHour = startHour,
+							StartMinute = startMinute,
+							EndHour = endHour,
+							EndMinute = endMinute
+						};
+						if (period.Day < 5 && period.Day >= 0)
 						{
 							periodes.Add(period);
 						}
@@ -299,16 +259,16 @@ namespace LMS.Controllers
 						endMinute = item.EndTime.Minute;
 					}
 					Period periodN = new Period
-                    {
-                        ModuleId = item.Id,
-                        Day = item.EndTime.Day - start.Day,
-                        Name = item.Name,
-                        StartHour = startHour,
-                        StartMinute = startMinute,
-                        EndHour = endHour,
-                        EndMinute = endMinute
-                    };
-					if (periodN.Day< 5)
+					{
+						ModuleId = item.Id,
+						Day = item.EndTime.Day - start.Day,
+						Name = item.Name,
+						StartHour = startHour,
+						StartMinute = startMinute,
+						EndHour = endHour,
+						EndMinute = endMinute
+					};
+					if (periodN.Day < 5)
 					{
 						periodes.Add(periodN);
 					}
@@ -317,11 +277,10 @@ namespace LMS.Controllers
 			return PartialView(periodes);
 		}
 
->>>>>>> Stashed changes
 		// GET: Courses/Create
 		public ActionResult Create()
 {
-    return View();
+	return View();
 }
 
 // POST: Courses/Create
@@ -331,29 +290,29 @@ namespace LMS.Controllers
 [ValidateAntiForgeryToken]
 public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate")] Course course)
 {
-    if (ModelState.IsValid)
-    {
-        db.Courses.Add(course);
-        db.SaveChanges();
-        return RedirectToAction("Index");
-    }
+	if (ModelState.IsValid)
+	{
+		db.Courses.Add(course);
+		db.SaveChanges();
+		return RedirectToAction("Index");
+	}
 
-    return View(course);
+	return View(course);
 }
 
 // GET: Courses/Edit/5
 public ActionResult Edit(int? id)
 {
-    if (id == null)
-    {
-        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-    }
-    Course course = db.Courses.Find(id);
-    if (course == null)
-    {
-        return HttpNotFound();
-    }
-    return View(course);
+	if (id == null)
+	{
+		return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+	}
+	Course course = db.Courses.Find(id);
+	if (course == null)
+	{
+		return HttpNotFound();
+	}
+	return View(course);
 }
 
 // POST: Courses/Edit/5
@@ -363,54 +322,64 @@ public ActionResult Edit(int? id)
 [ValidateAntiForgeryToken]
 public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate")] Course course)
 {
-    if (ModelState.IsValid)
-    {
-        db.Entry(course).State = EntityState.Modified;
-        db.SaveChanges();
-        return RedirectToAction("Index");
-    }
-    return View(course);
+	if (ModelState.IsValid)
+	{
+		db.Entry(course).State = EntityState.Modified;
+		db.SaveChanges();
+		return RedirectToAction("Index");
+	}
+	return View(course);
 }
 
 // GET: Courses/Delete/5
-public ActionResult Delete(int? id)
-{
-    if (id == null)
-    {
-        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-    }
-    Course course = db.Courses.Find(id);
-    if (course == null)
-    {
-        return HttpNotFound();
-    }
-    return View(course);
-}
+		public ActionResult Delete(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Course course = db.Courses.Find(id);
+			if (course == null)
+			{
+				return HttpNotFound();
+			}
+			return View(course);
+		}
 
-<<<<<<< Updated upstream
+
 		// POST: Courses/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
-=======
-// POST: Courses/Delete/5
-[HttpPost, ActionName("Delete")]
-[ValidateAntiForgeryToken]
-public ActionResult DeleteConfirmed(int id)
-{
-    Course course = db.Courses.Find(id);
-    db.Courses.Remove(course);
-    db.SaveChanges();
-    return RedirectToAction("Index");
-}
->>>>>>> Stashed changes
+		public ActionResult DeleteConfirmed(int id)
+		{
+			Course course = db.Courses.Find(id);
 
-protected override void Dispose(bool disposing)
-{
-    if (disposing)
-    {
-        db.Dispose();
-    }
-    base.Dispose(disposing);
-}
+			foreach (var item in db.Users.Where(u => u.CourseId == course.Id))
+			{
+				db.Users.Remove(item);
+			}
+
+			foreach (var module in db.Modules.Where(m => m.CourseId == course.Id).ToList())
+			{
+				foreach (var activity in db.Activities.Where(a => a.ModuleId == module.Id).ToList())
+				{
+					db.Activities.Remove(activity);
+				}
+				db.Modules.Remove(module);
+			}
+
+			db.Courses.Remove(course);
+			db.SaveChanges();
+			return RedirectToAction("Index");
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				db.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 	}
 }
