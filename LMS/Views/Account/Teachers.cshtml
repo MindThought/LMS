@@ -1,0 +1,30 @@
+﻿@model IEnumerable<LMS.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Teachers";
+}
+<roleManager enabled="true" defaultProvider="DefaultRoleProvider">
+    <h2>Lärare</h2>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    <a class="btn btn-warning" href="@Url.Action("ExitAccount", "Account", new { id = item.Id })">Avsluta konto</a>
+
+                    @*@Html.ActionLink("Account", "ExitAccount", new { id = item.Id })*@
+                </td>
+            </tr>
+        }
+    </table>

@@ -1,0 +1,52 @@
+﻿@model LMS.Models.Course
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+@*<h2>Ta bort</h2>*@
+
+@*<h1>Är du säker att du vill ta bort kursen?</h1>*@
+
+<font size="33" color="red">Är du säker att du vill ta bort kursen?</font>
+
+<div>
+    <h4></h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Ta bort" class="btn btn-warning" />
+            @*@Html.ActionLink("Till kursöversikten", "Index")*@
+            <a class="btn btn-primary" href="@Url.Action("Index","Courses")">Till kursöversikt</a>
+        </div>
+    }
+</div>

@@ -5,30 +5,32 @@
  
 @if (User.IsInRole("Teacher")) 
 { 
-    <p>@Html.ActionLink("Skapa ny modul", "Create", "Module", new { CourseId = ViewBag.CourseId }, null)</p> 
+	<p>@Html.ActionLink("Skapa ny modul", "Create", "Module", new { CourseId = ViewBag.CourseId }, null)</p> 
 } 
 
 <div class="row">
 
 @foreach (var item in Model)
 {
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="row">
-                <b>Namn:</b>
-                @Html.RouteLink( @Html.DisplayFor(modelItem => item.Name).ToString() , 
-                new RouteValueDictionary(new {controller = "Module", action = "Details", id = item.Id }))
-            </div>
-            
-            <div class="row"><b>Beskrivning: </b>@Html.DisplayFor(modelItem => item.Description)</div>
-            <div class="row"><b>Start Datum: </b>@item.StartDate.ToString("d")</div>
-            <div class="row"><b>Slut Datum: </b>@item.EndDate.ToString("d")</div>
-            <div class="row"><b>Aktiviteter: </b>@Html.DisplayFor(modelItem => item.Activities.Count)</div>
-            @if (User.IsInRole("Teacher"))
-            {
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <span>|</span>
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id }) 
-            }
-            <br><br/>
-        </div>
+		<div class="col-xs-12 col-sm-6 col-md-4">
+			<div class="row">
+				<b>Namn:</b>
+				@Html.RouteLink( @Html.DisplayFor(modelItem => item.Name).ToString() , 
+				new RouteValueDictionary(new {controller = "Module", action = "Details", id = item.Id }))
+			</div>
+			
+			<div class="row"><b>Beskrivning: </b>@Html.DisplayFor(modelItem => item.Description)</div>
+			<div class="row"><b>Start Datum: </b>@item.StartDate.ToString("d")</div>
+			<div class="row"><b>Slut Datum: </b>@item.EndDate.ToString("d")</div>
+			<div class="row"><b>Aktiviteter: </b>@Html.DisplayFor(modelItem => item.Activities.Count)</div>
+			<div class="row">
+			@if (User.IsInRole("Teacher"))
+			{
+				@Html.ActionLink("Edit", "Edit", new { id = item.Id }) <span>|</span>
+				@Html.ActionLink("Delete", "Delete", new { id = item.Id }) 
+			}
+			</div>
+			<br><br/>
+		</div>
 }
 </div>

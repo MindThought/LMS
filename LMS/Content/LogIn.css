@@ -1,13 +1,42 @@
 ﻿
-.btnlex {
+.btn-danger {
     background-color: #4CAF50;
     /*border: none;*/
     color: white;
     padding: 5px 124px;
     text-align: left;
+    border-color: forestgreen;
     /*text-decoration: none;*/
     /*display: inline-block;*/
     /*font-size: 22px;*/
     /*margin: 4px 2px;*/
     /*cursor: pointer;*/
+}
+
+.btn-warning {
+    background-color: #4CAF50;
+    /*border: none;*/
+    color: white;
+    padding: 5px 124px;
+    text-align: left;
+    border-color: yellow;
+}
+
+.titlehg {
+    color: #3ed3d3;
+}
+
+.floating-box {
+    /*background-color: aquamarine;*/
+    padding-top: 200px;
+}
+
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }

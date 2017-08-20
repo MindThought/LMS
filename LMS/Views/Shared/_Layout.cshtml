@@ -28,12 +28,13 @@
                     {
                         //TODO Link to Teacher management
                         <li>@Html.ActionLink("Kursöversikt","Index","Courses")</li>
+                        <li><a href="@Url.Action("Teachers", "Account",null,null)">Lärarlista</a></li>
                         <li><a href="@Url.Action("Register", "Account", new {course_id="0"})">Registrera en ny lärare</a></li>
-                        <li><a href="@Url.Action("ExitAccount", "Account")">Exit account</a></li>
-                            }
-                            @if (User.IsInRole("Student"))
-                            {
-<li>@Html.ActionLink("Min Kurs", "Details","Courses")</li>
+                        <li><a href="@Url.Action("ExitAccount", "Account")">Avsluta användarkonto</a></li>
+                    }
+                    @if (User.IsInRole("Student"))
+                    {
+                        <li>@Html.ActionLink("Min Kurs", "Details","Courses")</li>
                         //TODO Link to work
                     }
                 </ul>
