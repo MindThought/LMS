@@ -211,17 +211,23 @@ namespace LMS.Controllers
 			return RedirectToAction("Register", "Account", new { courseID = model.courseID });
 		}
 
-		//
-		// GET: /Account/ExitAccount
-		[Authorize(Roles = "Teacher")]
-		public ActionResult ExitAccount()
-		{
-			return View();
-		}
+        //
+        // GET: /Account/ExitAccount
+        [Authorize(Roles = "Teacher")]
+        public ActionResult ExitAccount(string id)
+        {
+            if (id != null)
+            {
+                //ViewBag.userID = id;
+                ViewBag.userEmail = db.Users.Find(id).Email;
+            }
+            id = null;
+            return View();
+        }
 
-		//
-		// POST: /Account/ExitAccount
-		[HttpPost]
+        //
+        // POST: /Account/ExitAccount
+        [HttpPost]
 		[Authorize(Roles = "Teacher")]
 		[ValidateAntiForgeryToken]
 		public async Task<ActionResult> ExitAccount(ExitAccountViewModel model)
@@ -253,8 +259,8 @@ namespace LMS.Controllers
 				else { return View("NotAllowedToDeleteOwnAccount"); }
 
 			}
-			return View(model);
-		}
+			return RedirectToAction("Index", "Courses");
+        }
 
         //
         // GET: /Account/NonExistingAccount

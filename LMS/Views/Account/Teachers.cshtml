@@ -4,7 +4,7 @@
     ViewBag.Title = "Teachers";
 }
 <roleManager enabled="true" defaultProvider="DefaultRoleProvider">
-    <h2>Teachers</h2>
+    <h2>Lärare</h2>
 
     <table class="table">
         <tr>
@@ -21,7 +21,9 @@
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    <a class="btn btn-warning" href="@Url.Action("ExitAccount", "Account", new { id = item.Id })">Avsluta konto</a>
+
+                    @*@Html.ActionLink("Account", "ExitAccount", new { id = item.Id })*@
                 </td>
             </tr>
         }

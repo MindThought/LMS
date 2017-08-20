@@ -25,7 +25,10 @@
 
             @if (User.IsInRole("Teacher"))
             {
-                @Html.ActionLink("Delete", "Delete", "Account", new { id = item.Id }, null)
+                @*@ViewBag.EmailForExitAccount = item.Email;*@
+                <a class="btn btn-warning" href="@Url.Action("ExitAccount", "Account", new { id = item.Id })">Avsluta konto</a>
+
+                @*@Html.ActionLink("ExitAccount", "Account", new { id = item.Id }, null)*@
             }
         </td>
     </tr>

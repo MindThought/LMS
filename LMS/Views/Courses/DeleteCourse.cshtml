@@ -44,11 +44,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            @*<input type="submit" value="Ta bort" class="btn btn-warning" />*@
+            <input type="submit" value="Ta bort" class="btn btn-warning" />
             @*@Html.ActionLink("Till kursöversikten", "Index")*@
-
-            <input type="password" value="" class="btn btn-warning" placeholder="Lösenord"/>
-
             <a class="btn btn-primary" href="@Url.Action("Index","Courses")">Till kursöversikt</a>
         </div>
     }
