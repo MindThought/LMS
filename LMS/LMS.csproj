@@ -325,7 +325,6 @@
     <Content Include="Views\Activities\Delete.cshtml" />
     <Content Include="Views\Activities\Details.cshtml" />
     <Content Include="Views\Activities\Edit.cshtml" />
-    <Content Include="Views\Activities\Index.cshtml" />
     <Content Include="Views\Activities\ActivityDetails.cshtml" />
     <Content Include="Views\Account\Teachers.cshtml" />
     <Content Include="Views\Activities\Create.cshtml" />

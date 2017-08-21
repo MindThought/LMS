@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
@@ -9,8 +10,12 @@ namespace LMS.Models
     {
         [Key]
         public int Id { get; set; }
+        [Required]
+        [DisplayName("Kursnamn")]
         public string Name { get; set; }
+        [DisplayName("Beskrivning")]
         public string Description { get; set; }
+        [DisplayName("Starttid")]
         public DateTime? StartDate
         {
             get

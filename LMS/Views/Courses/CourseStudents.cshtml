@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<LMS.Models.ApplicationUser>
 
-<h3>Students:</h3>
+<h3>Elever:</h3>
 
 <table class="table">
     <tr>
@@ -18,7 +18,7 @@
         <td>
             @if (User.IsInRole("Teacher"))
             {
-                @Html.ActionLink("Delete", "Delete", "Account", new { id = item.Id }, null)
+                @Html.ActionLink("Radera", "Delete", "Account", new { id = item.Id }, null)
             }
         </td>
     </tr>
