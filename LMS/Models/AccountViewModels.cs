@@ -130,4 +130,12 @@ namespace LMS.Models
         [Display(Name = "E-postadress")]
         public string Email { get; set; }
     }
+
+    public class PasswordRequestViewModel
+    {
+        [Required(ErrorMessage = "Lösenord är obligatorisk")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Lösenord")]
+        public string Password { get; set; }
+    }
 }

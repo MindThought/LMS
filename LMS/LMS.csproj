@@ -341,6 +341,7 @@
     <Content Include="Views\Activities\ActivityDetails.cshtml" />
     <Content Include="Views\Account\Teachers.cshtml" />
     <Content Include="Views\Activities\Create.cshtml" />
+    <Content Include="Views\Account\PasswordRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

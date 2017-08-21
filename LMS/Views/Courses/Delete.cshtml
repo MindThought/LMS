@@ -8,7 +8,7 @@
 
 @*<h1>Är du säker att du vill ta bort kursen?</h1>*@
 
-<font size="33" color="red">Är du säker att du vill ta bort kursen?</font>
+<font size="33" color="red">Är du säker att du vill fortsätta?</font>
 
 <div>
     <h4></h4>
@@ -40,16 +40,15 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            @*<input type="submit" value="Ta bort" class="btn btn-warning" />*@
-            @*@Html.ActionLink("Till kursöversikten", "Index")*@
-
-            <input type="password" value="" class="btn btn-warning" placeholder="Lösenord"/>
-
-            <a class="btn btn-primary" href="@Url.Action("Index","Courses")">Till kursöversikt</a>
+            <form>
+                <a class="btn btn-warning" href="@Url.Action("PasswordRequest","Account", new { id = Model.Id })">Verkställ</a>
+                <a class="btn btn-primary" href="@Url.Action("Index","Courses")">Till kursöversikt</a>
+            </form>
         </div>
     }
 </div>
