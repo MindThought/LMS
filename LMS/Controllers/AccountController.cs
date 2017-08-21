@@ -82,6 +82,8 @@ namespace LMS.Controllers
             if (doesUserExist == null)// || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
             {
                 // Don't reveal that the user does not exist or is not confirmed
+                ViewBag.Reason = "InvalidLogin";
+                //return View("NonExistingAccount", ViewBag.Reason);
                 return View("NonExistingAccount");
             }
             switch (result)
@@ -238,9 +240,11 @@ namespace LMS.Controllers
                 if (userToDelete == null)// || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
+                    ViewBag.Reason = "NotExistingUser";
+                    //return View("NonExistingAccount", ViewBag.Reason);
                     return View("NonExistingAccount");
+                    //return RedirectToAction("NonExistingAccount", "Courses", new { id });
                 }
-
                 var userDeleting = User.Identity.GetUserName();
 
                 var user = await UserManager.FindAsync(userDeleting, model.Password);
