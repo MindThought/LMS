@@ -11,15 +11,9 @@
 
 <form class="form-inline">
     <div class="form-group col-md-3">
-        @Html.Label("SearchText", "Sök", new { @class = "sr-only" })
-        @*<label for="searchText" class="sr-only">Text Search: </label>*@
-        @Html.TextBox("SearchText", null, new { @class = "form-control wide-text", placeholder = "Sök" })
-        @*<input type="text" class="form-control" id="searchText" placeholder="Sök" />*@
+        @Html.Label("SearchText", "Sök", new { @class = "sr-only"} )
+        @Html.TextBox("SearchText", null ,new { @class = "form-control wide-text", placeholder ="Sök" }) 
     </div>
-    @*<div class="checkbox">
-            <input type="checkbox">
-            <label>Inkludera alla kurser</label>
-        </div>*@
     <button type="submit" class="btn btn-default">Sök</button>
 </form>
 

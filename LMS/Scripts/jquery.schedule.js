@@ -3,7 +3,7 @@
  * https://github.com/Yehzuna/jquery-schedule
  * Thomas BORUSZEWSKI <yehzuna@outlook.com>
  */
-;(function ($, window, document, undefined) {
+(function ($, window, document, undefined) {
 	"use strict";
 
 	// Defaults options

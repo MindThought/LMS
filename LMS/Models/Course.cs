@@ -29,9 +29,8 @@ namespace LMS.Models
                 return Start.StartDate;
             }
         }
-
-        public virtual List<ApplicationUser> Students { get; set; }
-        public virtual List<Module> Modules { get; set; }
-        //public virtual List<Document> Documents { get; set; } TODO
-    }
+		public virtual List<ApplicationUser> Students { get; set; }
+		public virtual List<Module> Modules { get; set; }
+		public virtual List<Document> Documents { get; set; }
+	}
 }
