@@ -65,7 +65,7 @@
     @if (User.IsInRole("Teacher"))
     {
         <span>|</span>
-        @Html.ActionLink("Ändra egenskaper", "Edit", new { id = Model.Id });
+        @Html.ActionLink("Ändra egenskaper", "Edit", new { id = Model.Id, ModuleId = Model.Module.Id });
         <span>|</span>
         @Html.ActionLink("Radera", "Delete", new { id = Model.Id });
     }

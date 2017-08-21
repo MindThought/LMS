@@ -56,7 +56,7 @@ namespace LMS.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Lösenord")]
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]
@@ -66,25 +66,25 @@ namespace LMS.Models
     public class RegisterViewModel
     {
         //[Required] Temporary not required TBD
-        [Display(Name = "Name")]
+        [Display(Name = "Namn")]
         public string UserName { get; set; }
 
         [Required]
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [EmailAddress(ErrorMessage = "Ogilitg email adress")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
         public string courseID { get; set; }
 
         [Required]
-        [MembershipPassword(MinRequiredNonAlphanumericCharacters = 1, MinNonAlphanumericCharactersError = "Your password needs to contain at least one symbol (!, @, #, etc).", ErrorMessage = "Your password must be 6 characters long and contain at least one symbol (!, @, #, etc).", MinRequiredPasswordLength = 6)]
+        [MembershipPassword(MinRequiredNonAlphanumericCharacters = 1, MinNonAlphanumericCharactersError = "Lösenordet måste innehålla minst en symbol (!, @, #, etc).", ErrorMessage = "Lösenordet måste minst ha 6 tecken och innehålla minst en symbol (!, @, #, etc).", MinRequiredPasswordLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Lösenord")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Konfirmera lösenord")]
+        [Compare("Password", ErrorMessage = "Lösenordet och det konfirmerade lösenordet stämmer inte överens.")]
         public string ConfirmPassword { get; set; }
 
     }
@@ -98,7 +98,7 @@ namespace LMS.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Lösenord")]
         public string Password { get; set; }
     }
 
@@ -110,14 +110,14 @@ namespace LMS.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0}et kan inte ha mindre än {2} tecken", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Lösenord")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Konfirmera lösenord")]
+        [Compare("Password", ErrorMessage = "Lösenordet och det konfirmerade lösenordet stämmer inte överens.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }

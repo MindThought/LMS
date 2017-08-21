@@ -112,11 +112,41 @@ namespace LMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Type,Name,Description,StartTime,EndTime")] Activity activity)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Type,Name,Description,StartTime,EndTime")] Activity activity, int? ModuleId)
         {
+
             if (ModelState.IsValid)
             {
                 db.Entry(activity).State = EntityState.Modified;
+
+                var module = db.Modules.Find(ModuleId);
+                var course = module.Course;
+                if (activity.StartTime >= activity.EndTime)
+                {
+                    ModelState.AddModelError("", "Fel, starttiden kan inte vara senare än sluttiden");
+                    return View(activity);
+                }
+
+                var moduleOverlapST = course.Modules.Any(m => m.StartDate <= activity.StartTime && m.EndDate >= activity.StartTime && m != module);
+                var moduleOverlapET = course.Modules.Any(m => m.StartDate <= activity.EndTime && m.EndDate >= activity.EndTime && m != module);
+                var activityOverlapST = module.Activities.Any(a => a.StartTime <= activity.StartTime && a.EndTime >= activity.StartTime && a != activity);
+                var activityOverlapSTS = module.Activities.Any(a => a.StartTime >= activity.StartTime && a.EndTime <= activity.EndTime && a != activity);
+                var activityOverlapET = module.Activities.Any(a => a.StartTime <= activity.EndTime && a.EndTime >= activity.EndTime && a != activity);
+
+                if (moduleOverlapST || moduleOverlapET)
+                {
+                    ModelState.AddModelError("", "Fel, Tiden på aktiviteten överlappar en annan modul");
+                    return View(activity);
+                }
+
+                if (activityOverlapST || activityOverlapET || activityOverlapSTS)
+                {
+                    ModelState.AddModelError("", "Fel, Tiden på aktiviteten överlappar en annan aktivitet i denna modul");
+                    return View(activity);
+                }
+
+                activity.Module = module;
+                
                 await db.SaveChangesAsync();
                 return RedirectToAction("Details",new {id = activity.Id});
             }
