@@ -3,7 +3,7 @@ namespace LMS.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class asjfkiaweor : DbMigration
+    public partial class data : DbMigration
     {
         public override void Up()
         {
@@ -14,7 +14,7 @@ namespace LMS.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         ModuleId = c.Int(nullable: false),
                         Type = c.Int(nullable: false),
-                        Name = c.String(),
+                        Name = c.String(nullable: false),
                         Description = c.String(),
                         StartTime = c.DateTime(nullable: false),
                         EndTime = c.DateTime(nullable: false),
@@ -50,11 +50,31 @@ namespace LMS.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
+                "dbo.Documents",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        Description = c.String(),
+                        FilePath = c.String(),
+                        Uploaded = c.DateTime(nullable: false),
+                        DeadLine = c.DateTime(),
+                        Uploader_Id = c.String(nullable: false, maxLength: 128),
+                        Course_Id = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.Uploader_Id, cascadeDelete: true)
+                .ForeignKey("dbo.Courses", t => t.Course_Id)
+                .Index(t => t.Uploader_Id)
+                .Index(t => t.Course_Id);
+            
+            CreateTable(
                 "dbo.AspNetUsers",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         CourseId = c.Int(),
+                        Name = c.String(nullable: false),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
@@ -125,11 +145,13 @@ namespace LMS.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Modules", "CourseId", "dbo.Courses");
+            DropForeignKey("dbo.Documents", "Course_Id", "dbo.Courses");
+            DropForeignKey("dbo.Documents", "Uploader_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUsers", "CourseId", "dbo.Courses");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Modules", "CourseId", "dbo.Courses");
             DropForeignKey("dbo.Activities", "ModuleId", "dbo.Modules");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
@@ -138,6 +160,8 @@ namespace LMS.Migrations
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUsers", new[] { "CourseId" });
+            DropIndex("dbo.Documents", new[] { "Course_Id" });
+            DropIndex("dbo.Documents", new[] { "Uploader_Id" });
             DropIndex("dbo.Modules", new[] { "CourseId" });
             DropIndex("dbo.Activities", new[] { "ModuleId" });
             DropTable("dbo.AspNetRoles");
@@ -145,6 +169,7 @@ namespace LMS.Migrations
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
+            DropTable("dbo.Documents");
             DropTable("dbo.Courses");
             DropTable("dbo.Modules");
             DropTable("dbo.Activities");

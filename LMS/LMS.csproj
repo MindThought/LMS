@@ -177,17 +177,17 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Content\Controllers\AccountController.cs" />
-    <Compile Include="Content\Controllers\ActivitiesController.cs" />
-    <Compile Include="Content\Controllers\CoursesController.cs" />
-    <Compile Include="Content\Controllers\ManageController.cs" />
-    <Compile Include="Content\Controllers\ModuleController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ActivitiesController.cs" />
+    <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708181428469_data.cs" />
-    <Compile Include="Migrations\201708181428469_data.Designer.cs">
-      <DependentUpon>201708181428469_data.cs</DependentUpon>
+    <Compile Include="Migrations\201708211333250_data.cs" />
+    <Compile Include="Migrations\201708211333250_data.Designer.cs">
+      <DependentUpon>201708211333250_data.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -346,6 +346,7 @@
     <Content Include="Views\Activities\ActivityDetails.cshtml" />
     <Content Include="Views\Account\Teachers.cshtml" />
     <Content Include="Views\Activities\Create.cshtml" />
+    <Content Include="Views\Courses\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -356,8 +357,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708181428469_data.resx">
-      <DependentUpon>201708181428469_data.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708211333250_data.resx">
+      <DependentUpon>201708211333250_data.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

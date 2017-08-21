@@ -1,5 +1,6 @@
 ﻿using LMS.Models;
 using LMS.SpecialBehaviour;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -14,7 +15,43 @@ namespace LMS.Controllers
 	[CustomAuthorize(Roles = "Teacher")]
 	public class CoursesController : Controller
 	{
+		private ApplicationSignInManager _signInManager;
+		private ApplicationUserManager _userManager;
 		private ApplicationDbContext db = new ApplicationDbContext();
+
+		public CoursesController()
+		{
+		}
+
+		public CoursesController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+		{
+			UserManager = userManager;
+			SignInManager = signInManager;
+		}
+
+		public ApplicationSignInManager SignInManager
+		{
+			get
+			{
+				return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+			}
+			private set
+			{
+				_signInManager = value;
+			}
+		}
+
+		public ApplicationUserManager UserManager
+		{
+			get
+			{
+				return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+			}
+			private set
+			{
+				_userManager = value;
+			}
+		}
 
 		public ActionResult Index(string SearchText)
 		{
@@ -279,13 +316,28 @@ namespace LMS.Controllers
 			return PartialView(periodes);
 		}
 
+		public ActionResult Upload(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Course course = db.Courses.Where(c => c.Id == id).First();
+			return View(course);
+		}
+
 		[HttpPost]
 		[Authorize(Roles = "Teacher")]
-		public ActionResult SaveDocument(List<HttpPostedFileBase> fileUpload, int Id)
+		public ActionResult SaveDocument(List<HttpPostedFileBase> fileUpload, string name, string desc, int? id)
 		{
 			List<string> myTempPaths = new List<string>();
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Course course = db.Courses.Where(c => c.Id == id).First(); 
 
-			if (fileUpload.Count > 1)
+			if (fileUpload.Count >= 1)
 			{
 
 
@@ -310,76 +362,77 @@ namespace LMS.Controllers
 						else
 						{
 							string extension = Path.GetExtension(file.FileName);
-							string fileName = DateTime.Now.ToString("yyMMddHHmmss").ToString() + extension;
-							//         TempData["FileName"] = fileName;
+							string fileName = name + " - " + DateTime.Now.ToString("yyyyMMddHHmmss").ToString() + extension;
 
-
-							//var filename = Guid.NewGuid() + Path.GetFileName(file.FileName);
-							//file.SaveAs(Path.Combine(Server.MapPath("~/Attach/Document"), Guid.NewGuid() + Path.GetExtension(file.FileName)));
-							file.SaveAs(Path.Combine(Server.MapPath("~/Attach/Document"), fileName + Path.GetExtension(file.FileName)));
+							file.SaveAs(Path.Combine(Server.MapPath("~/Attach/Document"), fileName));
+							//It has to be this way!
+							var user = UserManager.FindByNameAsync(User.Identity.Name).Result;
+							var second = db.Users.Find(user.Id);
+							course.Documents.Add(new Document { Description = desc, Name = name, FilePath = fileName, Uploader = second, Uploaded = DateTime.Now });
 							ModelState.Clear();
+							db.SaveChanges();
 							//       ViewBag.Message = "File uploaded successfully";
 							myTempPaths.Add(fileName);
 						}
 					}
 				}
 			}
-			return View("Details");
+			return View("Details", course);
 		}
 
 		// GET: Courses/Create
 		public ActionResult Create()
-{
-	return View();
-}
+		{
+			return View();
+		}
 
-// POST: Courses/Create
-// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-[HttpPost]
-[ValidateAntiForgeryToken]
-public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate")] Course course)
-{
-	if (ModelState.IsValid)
-	{
-		db.Courses.Add(course);
-		db.SaveChanges();
-		return RedirectToAction("Index");
-	}
+		// POST: Courses/Create
+		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate")] Course course)
+		{
+			if (ModelState.IsValid)
+			{
+				db.Courses.Add(course);
+				db.SaveChanges();
+				return RedirectToAction("Index");
+			}
+		
+			return View(course);
+		}
 
-	return View(course);
-}
-
-// GET: Courses/Edit/5
-public ActionResult Edit(int? id)
-{
-	if (id == null)
-	{
-		return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-	}
-	Course course = db.Courses.Find(id);
-	if (course == null)
-	{
-		return HttpNotFound();
-	}
-	return View(course);
-}
-
-// POST: Courses/Edit/5
-// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-[HttpPost]
-[ValidateAntiForgeryToken]
-public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate")] Course course)
-{
-	if (ModelState.IsValid)
-	{
-		db.Entry(course).State = EntityState.Modified;
-		db.SaveChanges();
-		return RedirectToAction("Index");
-	}
-	return View(course);
-}
+		// GET: Courses/Edit/5
+		public ActionResult Edit(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Course course = db.Courses.Find(id);
+			if (course == null)
+			{
+				return HttpNotFound();
+			}
+			return View(course);
+		}
+		
+		// POST: Courses/Edit/5
+		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate")] Course course)
+		{
+			if (ModelState.IsValid)
+			{
+				db.Entry(course).State = EntityState.Modified;
+				db.SaveChanges();
+				return RedirectToAction("Index");
+			}
+			return View(course);
+		}
 
 // GET: Courses/Delete/5
 		public ActionResult Delete(int? id)
