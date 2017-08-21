@@ -38,7 +38,6 @@ namespace LMS.Migrations
 				{
 					Id = 1,
 					Name = ".Net2017",
-					StartDate = new DateTime(2017, 4, 18),
 					Description = ".NET för de med tidigare IT-erfarenhet"
 				}
 				,
@@ -46,42 +45,36 @@ namespace LMS.Migrations
 				{
 					Id = 2,
 					Name = "JAVA",
-					StartDate = new DateTime(2017, 6, 18),
 					Description = "JAVA för de med tidigare IT-erfarenhet"
 				},
 				new Course
 				{
 					Id = 3,
 					Name = "Projektledning",
-					StartDate = new DateTime(2017, 8, 18),
 					Description = "Projektledning"
 				},
 				new Course
 				{
 					Id = 4,
 					Name = ".NET-utbildning NB17",
-					StartDate = new DateTime(2017, 4, 18),
 					Description = "Systemutvecklare .NET för dem som har tidigare erfarenhet av programering"
 				},
 				new Course
 				{
 					Id = 5,
 					Name = ".NET-utbildning NB18",
-					StartDate = new DateTime(2017, 10, 18),
 					Description = "Systemutvecklare .NET för dem som har tidigare erfarenhet av C++ programering"
 				},
 				new Course
 				{
 					Id = 6,
 					Name = ".NET-utbildning NB20",
-					StartDate = new DateTime(2018, 01, 18),
 					Description = "Systemutvecklare .NET för dem som har tidigare erfarenhet av Delfi programering"
 				},
 				new Course
 				{
 					Id = 7,
 					Name = ".NET-utbildning NB66",
-					StartDate = new DateTime(2018, 03, 18),
 					Description = "Systemutvecklare .NET för dem som har ingen erfarenhet av programering"
 				}
 				);

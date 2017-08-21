@@ -11,15 +11,15 @@
 
 <form class="form-inline">
     <div class="form-group col-md-3">
-        @Html.Label("SearchText", "Sök", new { @class = "sr-only"} )
+        @Html.Label("SearchText", "Sök", new { @class = "sr-only" })
         @*<label for="searchText" class="sr-only">Text Search: </label>*@
-        @Html.TextBox("SearchText", null ,new { @class = "form-control wide-text", placeholder ="Sök" })
+        @Html.TextBox("SearchText", null, new { @class = "form-control wide-text", placeholder = "Sök" })
         @*<input type="text" class="form-control" id="searchText" placeholder="Sök" />*@
     </div>
     @*<div class="checkbox">
-        <input type="checkbox">
-        <label>Inkludera alla kurser</label>
-    </div>*@
+            <input type="checkbox">
+            <label>Inkludera alla kurser</label>
+        </div>*@
     <button type="submit" class="btn btn-default">Sök</button>
 </form>
 
@@ -27,26 +27,40 @@
 
 <div class="row">
 
-@foreach (var item in Model)
-{
+    @foreach (var item in Model)
+    {
         <div class="col-xs-12 col-sm-6 col-md-4">
             <div class="row">
                 <b>Namn:</b>
-                @Html.RouteLink( @Html.DisplayFor(modelItem => item.Name).ToString() , 
-                new RouteValueDictionary(new {controller = "Courses", action = "Details", id = item.Id }))
+                @Html.RouteLink(@Html.DisplayFor(modelItem => item.Name).ToString(),
+                new RouteValueDictionary(new { controller = "Courses", action = "Details", id = item.Id }))
             </div>
-            
+
             @*<div class="row"><b>Namn: </b>@Html.DisplayFor(modelItem => item.Name)</div>*@
             @*<div class="row"><b>Beskrivning: </b>@Html.DisplayFor(modelItem => item.Description)</div>*@
             @*<div class="row"><b>Start Datum: </b>@Html.DisplayFor(modelItem => item.StartDate)</div>*@
-            <div class="row"><b>Start Datum: </b>@item.StartDate.ToString("d")</div>
+            @if (item.StartDate == DateTime.MinValue)
+            {
+                if (item.Modules.Count == 0)
+                {
+                    <div class="row"><b>Start Datum: </b>Kursen Saknar modul och aktivitet</div>
+                }
+                else
+                {
+                    <div class="row"><b>Start Datum: </b>Kursen Saknar aktivitet</div>
+                }
+            }
+            else
+            {
+                <div class="row"><b>Start Datum: </b>@item.StartDate.Value.ToShortDateString()</div>
+            }
             <div class="row"><b>Moduler: </b>@Html.DisplayFor(modelItem => item.Modules.Count)</div>
             <div class="row"><b>Elever: </b>@Html.DisplayFor(modelItem => item.Students.Count)</div>
-             @Html.ActionLink("Ändra egenskaper", "Edit", new { id = item.Id }) |
-             @Html.ActionLink("Detaljer", "Details", new { id = item.Id }) |
-             @Html.ActionLink("Radera", "Delete", new { id = item.Id })
-            <br><br/>
+            @Html.ActionLink("Ändra egenskaper", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Detaljer", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Radera", "Delete", new { id = item.Id })
+            <br><br />
         </div>
-}
+    }
 
 </div>

@@ -192,7 +192,7 @@ namespace LMS.Controllers
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index", "Courses", new { id = model.courseID });
+                        return RedirectToAction("Details", "Courses", new { id = model.courseID });
                     }
                     AddErrors(result);
                 }
@@ -474,7 +474,7 @@ namespace LMS.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login");
         }
 
         //

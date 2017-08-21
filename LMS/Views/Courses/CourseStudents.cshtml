@@ -18,15 +18,6 @@
         <td>
             @if (User.IsInRole("Teacher"))
             {
-                @Html.ActionLink("Edit", "Edit", "Account", new { id = item.Id }, null)
-                <span>|</span>
-            }
-
-            @Html.ActionLink("Details", "Details", "Account", new { id = item.Id }, null)
-
-            @if (User.IsInRole("Teacher"))
-            {
-                <span>|</span>
                 @Html.ActionLink("Delete", "Delete", "Account", new { id = item.Id }, null)
             }
         </td>

@@ -10,11 +10,12 @@
 <br />
 <div class="well well-lg">@Html.DisplayFor(model => model.Description)</div>
 <div class="row">
-    <button class="btn btn-default col-md-2" id="courseModulesButton">Modullista</button>
+    <button  class="btn btn-default col-md-2" id="courseModulesButton">Modullista</button>
     <button class="btn btn-default col-md-offset-1 col-md-2" id="studentListButton">Studentlista</button>
     @if (User.IsInRole("Teacher"))
     {
-        <a class="btn btn-default col-md-offset-1 col-md-2" href="@Url.Action("Register", "Account", new { courseID = Model.Id })">Registrera en ny student</a>    
+        <a class="btn btn-default col-md-offset-1 col-md-2" href="@Url.Action("Create", "Module", new { CourseId= Model.Id })">Skapa en ny modul</a>
+        <a class="btn btn-default col-md-offset-1 col-md-2" href="@Url.Action("Register", "Account", new { courseID = Model.Id })">Registrera en ny student</a>
     }
 </div>
 <br />

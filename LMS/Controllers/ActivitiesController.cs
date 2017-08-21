@@ -62,10 +62,10 @@ namespace LMS.Controllers
                 return View(activity);
             }
 
-            var moduleOverlapST = course.Modules.Any(m => m.StartDate < activity.StartTime && m.EndDate > activity.StartTime && m != module);
-            var moduleOverlapET = course.Modules.Any(m => m.StartDate < activity.EndTime && m.EndDate > activity.EndTime && m != module);
-            var activityOverlapST = module.Activities.Any(a => a.StartTime < activity.StartTime && a.EndTime > activity.StartTime && a != activity);
-            var activityOverlapET = module.Activities.Any(a => a.StartTime < activity.EndTime && a.EndTime > activity.EndTime && a != activity);
+            var moduleOverlapST = course.Modules.Any(m => m.StartDate <= activity.StartTime && m.EndDate >= activity.StartTime && m != module);
+            var moduleOverlapET = course.Modules.Any(m => m.StartDate <= activity.EndTime && m.EndDate >= activity.EndTime && m != module);
+            var activityOverlapST = module.Activities.Any(a => a.StartTime <= activity.StartTime && a.EndTime >= activity.StartTime && a != activity);
+            var activityOverlapET = module.Activities.Any(a => a.StartTime <= activity.EndTime && a.EndTime >= activity.EndTime && a != activity);
 
             if (moduleOverlapST || moduleOverlapET)
             {
@@ -118,7 +118,7 @@ namespace LMS.Controllers
             {
                 db.Entry(activity).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details",new {id = activity.Id});
             }
             return View(activity);
         }
@@ -150,7 +150,7 @@ namespace LMS.Controllers
             module.Activities.Remove(activity);
             db.Activities.Remove(activity);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details","Module", new { id = module.Id });
         }
 
         protected override void Dispose(bool disposing)

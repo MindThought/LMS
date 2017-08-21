@@ -3,11 +3,6 @@
 
 <h3>Moduler:</h3>
 
-@if (User.IsInRole("Teacher"))
-{
-    <p>@Html.ActionLink("Skapa en ny modul", "Create", "Module", new { CourseId = ViewBag.CourseId }, null)</p>
-}
-
 <div class="row">
 
     @foreach (var item in Model)
@@ -20,11 +15,17 @@
             </div>
 
             <div class="row"><b>Beskrivning: </b>@Html.DisplayFor(modelItem => item.Description)</div>
-            @if (item.StartDate != null)
+
+            @if (item.Activities.Count == 0)
+            {
+                <div class="row"><b>Start Datum: </b>Kursen Saknar aktivitet</div>
+            }
+            else
             {
                 <div class="row"><b>Start Datum: </b>@item.StartDate</div>
                 <div class="row"><b>Slut Datum: </b>@item.EndDate</div>
             }
+
             <div class="row"><b>Aktiviteter: </b>@Html.DisplayFor(modelItem => item.Activities.Count)</div>
             @if (User.IsInRole("Teacher"))
             {
