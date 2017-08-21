@@ -6,7 +6,7 @@
 
 <h2>@ViewBag.Title</h2>
 <div class="row">
-    <p class="col-md-3">@Html.ActionLink("Skapa ny kurs", "Create")</p>
+    <p class="col-md-3">@Html.ActionLink("Skapa en ny kurs", "Create")</p>
 </div>
 
 <form class="form-inline">
@@ -21,25 +21,39 @@
 
 <div class="row">
 
-@foreach (var item in Model)
-{
+    @foreach (var item in Model)
+    {
         <div class="col-xs-12 col-sm-6 col-md-4">
             <div class="row">
                 <b>Namn:</b>
-                @Html.RouteLink( @Html.DisplayFor(modelItem => item.Name).ToString() , 
-                new RouteValueDictionary(new {controller = "Courses", action = "Details", id = item.Id }))
+                @Html.RouteLink(@Html.DisplayFor(modelItem => item.Name).ToString(),
+                new RouteValueDictionary(new { controller = "Courses", action = "Details", id = item.Id }))
             </div>
-            
+
             @*<div class="row"><b>Namn: </b>@Html.DisplayFor(modelItem => item.Name)</div>*@
             @*<div class="row"><b>Beskrivning: </b>@Html.DisplayFor(modelItem => item.Description)</div>*@
             @*<div class="row"><b>Start Datum: </b>@Html.DisplayFor(modelItem => item.StartDate)</div>*@
-            <div class="row"><b>Start Datum: </b>@item.StartDate.ToString("d")</div>
+            @if (item.StartDate == DateTime.MinValue)
+            {
+                if (item.Modules.Count == 0)
+                {
+                    <div class="row"><b>Start Datum: </b>Kursen Saknar modul och aktivitet</div>
+                }
+                else
+                {
+                    <div class="row"><b>Start Datum: </b>Kursen Saknar aktivitet</div>
+                }
+            }
+            else
+            {
+                <div class="row"><b>Start Datum: </b>@item.StartDate.Value.ToShortDateString()</div>
+            }
             <div class="row"><b>Moduler: </b>@Html.DisplayFor(modelItem => item.Modules.Count)</div>
             <div class="row"><b>Elever: </b>@Html.DisplayFor(modelItem => item.Students.Count)</div>
-             @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-             @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            <br><br/>
+            @Html.ActionLink("Ändra egenskaper", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Radera", "Delete", new { id = item.Id })
+            <br><br />
         </div>
-}
+    }
 
 </div>

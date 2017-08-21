@@ -4,10 +4,9 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>@Model.Name</h2>
 
 <div>
-    <h4>Activity</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -42,6 +41,10 @@
             @Html.DisplayFor(model => model.StartTime)
         </dd>
 
+        <dd>
+            @Html.DisplayFor(model => model.StartTime.Hour)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.EndTime)
         </dt>
@@ -50,17 +53,21 @@
             @Html.DisplayFor(model => model.EndTime)
         </dd>
 
+        <dd>
+            @Html.DisplayFor(model => model.EndTime.Hour)
+        </dd>
+
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Back to List", "Details", "Module", new { id = Model.ModuleId }, null)
+    @Html.ActionLink("Tillbaka till modulen", "Details", "Module", new { id = Model.ModuleId }, null)
 
     @if (User.IsInRole("Teacher"))
     {
         <span>|</span>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id });
+        @Html.ActionLink("Ändra egenskaper", "Edit", new { id = Model.Id, ModuleId = Model.Module.Id });
         <span>|</span>
-        @Html.ActionLink("Delete", "Delete", new { id = Model.ModuleId });
+        @Html.ActionLink("Radera", "Delete", new { id = Model.Id });
     }
 
 </p>

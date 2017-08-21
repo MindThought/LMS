@@ -249,7 +249,7 @@ namespace LMS.Controllers
                     }
                     else if (StartActivities[i].StartTime.Hour <= 12)
                     {
-                        if (StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].StartTime.ToString("yyyy-MM-dd")).Count >= 2)
+                        if (SameDayActivity(StartActivities[i]))
                         {
                             ActivitySessions.Add(StartActivities[i]);
                         }
@@ -261,7 +261,7 @@ namespace LMS.Controllers
                     }
                     else
                     {
-                        if (StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].StartTime.ToString("yyyy-MM-dd")).Count >= 2)
+                        if (SameDayActivity(StartActivities[i]))
                         {
                             ActivitySessions.Add(StartActivities[i]);
                         }
@@ -277,7 +277,7 @@ namespace LMS.Controllers
                     time += 1;
                     if (StartActivities[i].StartTime.Hour <= 12 && StartActivities[i].EndTime.Hour <= 12)
                     {
-                        if (StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].StartTime.ToString("yyyy-MM-dd")).Count >= 2)
+                        if (SameDayActivity(StartActivities[i]))
                         {
                             for (int v = 0; v < time; v++)
                             {
@@ -309,7 +309,7 @@ namespace LMS.Controllers
                     }
                     else if (StartActivities[i].StartTime.Hour > 12 && StartActivities[i].EndTime.Hour > 12)
                     {
-                        if (StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == StartActivities[i].StartTime.ToString("yyyy-MM-dd")).Count >= 2)
+                        if (SameDayActivity(StartActivities[i]))
                         {
 
 
@@ -426,6 +426,19 @@ namespace LMS.Controllers
         {
             ViewBag.CourseId = CourseId;
             return View();
+        }
+
+        public bool SameDayActivity(Activity activity)
+        {
+            var StartActivities = activity.Module.Activities.OrderBy(a => a.StartTime).ToList();
+            if (StartActivities.FindAll(a => a.StartTime.ToString("yyyy-MM-dd") == activity.StartTime.ToString("yyyy-MM-dd")).Count >= 2 || 
+                StartActivities.FindAll(a => a.EndTime.ToString("yyyy-MM-dd") == activity.StartTime.ToString("yyyy-MM-dd")).Count >= 2 ||
+                StartActivities.FindAll(a => a.EndTime.ToString("yyyy-MM-dd") == activity.EndTime.ToString("yyyy-MM-dd")).Count >= 2)
+            {
+                return true;
+            }
+            return false;
+            
         }
 
         // POST: Module/Create

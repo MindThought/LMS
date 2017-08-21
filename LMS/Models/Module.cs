@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace LMS.Models
 {
@@ -9,10 +11,37 @@ namespace LMS.Models
         [Key]
         public int Id { get; set; }
         [MaxLength(60)]
+        [Required]
+        [DisplayName("Modulnamn")]
         public string Name { get; set; }
+        [DisplayName("Beskrivning")]
         public string Description { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        [DisplayName("Starttid")]
+        public DateTime? StartDate
+        {
+            get
+            {
+                var Start = Activities.OrderBy(a => a.StartTime).FirstOrDefault();
+                if (Start == null)
+                {
+                    return DateTime.MinValue;
+                }
+                return Start.StartTime;
+            }
+        }
+        [DisplayName("Sluttid")]
+        public DateTime? EndDate
+        {
+            get
+            {
+                var End = Activities.OrderBy(a => a.EndTime).LastOrDefault();
+                if (End == null)
+                {
+                    return DateTime.MinValue;
+                }
+                return End.EndTime;
+            }
+        }
 
 
         public virtual Course Course { get; set; }
