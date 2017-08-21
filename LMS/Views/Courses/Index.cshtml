@@ -6,7 +6,7 @@
 
 <h2>@ViewBag.Title</h2>
 <div class="row">
-    <p class="col-md-3">@Html.ActionLink("Skapa ny kurs", "Create")</p>
+    <p class="col-md-3">@Html.ActionLink("Skapa en ny kurs", "Create")</p>
 </div>
 
 <form class="form-inline">
@@ -42,9 +42,9 @@
             <div class="row"><b>Start Datum: </b>@item.StartDate.ToString("d")</div>
             <div class="row"><b>Moduler: </b>@Html.DisplayFor(modelItem => item.Modules.Count)</div>
             <div class="row"><b>Elever: </b>@Html.DisplayFor(modelItem => item.Students.Count)</div>
-             @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-             @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-             @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+             @Html.ActionLink("Ändra egenskaper", "Edit", new { id = item.Id }) |
+             @Html.ActionLink("Detaljer", "Details", new { id = item.Id }) |
+             @Html.ActionLink("Radera", "Delete", new { id = item.Id })
             <br><br/>
         </div>
 }
