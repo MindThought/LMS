@@ -8,7 +8,7 @@
 
 
 
-@using (Html.BeginForm("SaveDocument", "Courses",
+@using (Html.BeginForm("SaveDocument", "Activities",
 FormMethod.Post, new { enctype = "multipart/form-data", id = Model.Id, desc = Model.Name + " - Ultimate Pain & Suffering" }))
 {
 	@Html.HiddenFor(i => i.Id)
@@ -16,12 +16,12 @@ FormMethod.Post, new { enctype = "multipart/form-data", id = Model.Id, desc = Mo
 		<label>Files</label>
 	</div>
 	<div>
-		@Html.Label("Namn:")
-		@Html.TextBox("name")
+		@Html.Label("Namn:", htmlAttributes: new { @class = "control-label col-md-2" })
+		@Html.TextBox("name", null, new { htmlAttributes = new { @class = "form-control" } })
 	</div>
 	<div>
-		@Html.Label("Beskrivning:")
-		@Html.TextBox("desc")
+		@Html.Label("Beskrivning:", htmlAttributes: new { @class = "control-label col-md-2" })
+		@Html.TextBox("desc", null, new { htmlAttributes = new { @class = "form-control" } })
 	</div>
 	<div id="uploaders">
 		<input type="file" id="fileToUpload"

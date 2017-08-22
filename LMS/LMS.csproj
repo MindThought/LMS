@@ -336,7 +336,6 @@
     <Content Include="Views\Module\Create.cshtml" />
     <Content Include="Views\Account\NotAllowedToDeleteOwnAccount.cshtml" />
     <Content Include="Views\Account\SpecifiedPasswordNotMatchLoggedInUser.cshtml" />
-    <Content Include="Views\Module\ModuleSchedule.cshtml" />
     <Content Include="Views\Module\Schedule.cshtml" />
     <Content Include="Views\Activities\Delete.cshtml" />
     <Content Include="Views\Activities\Details.cshtml" />
