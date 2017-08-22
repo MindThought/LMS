@@ -17,11 +17,10 @@
                 new RouteValueDictionary(new { controller = "Module", action = "Details", id = item.Id }))
                 </div>
 
-                <div class="row"><b>Beskrivning: </b>@Html.DisplayFor(modelItem => item.Description)</div>
-
                 @if (item.Activities.Count == 0)
                 {
                     <div class="row"><b>Start Datum: </b>Modulen Saknar aktivitet</div>
+                    <div class="row"><b>Slut Datum: </b>Modulen Saknar aktivitet</div>
                 }
                 else
                 {

@@ -6,11 +6,11 @@
 
 <h2>@ViewBag.Title</h2>
 <div class="row">
-    <p class="col-md-3">@Html.ActionLink("Skapa en ny kurs", "Create")</p>
+    <p>@Html.ActionLink("Skapa en ny kurs", "Create")</p>
 </div>
 
 <form class="form-inline">
-    <div class="form-group col-md-3">
+    <div class="form-group ">
         @Html.Label("SearchText", "Sök", new { @class = "sr-only"} )
         @Html.TextBox("SearchText", null ,new { @class = "form-control wide-text", placeholder ="Sök" }) 
     </div>
