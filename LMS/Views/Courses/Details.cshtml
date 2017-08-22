@@ -1,8 +1,8 @@
 ﻿@model LMS.Models.Course
 
 @{
-	ViewBag.Title = Model.Name + " - Detaljvy";
-	ViewBag.CourseId = Model.Id;
+    ViewBag.Title = Model.Name + " - Detaljvy";
+    ViewBag.CourseId = Model.Id;
 }
 <script src="~/Scripts/jquery-3.1.1.min.js"></script>
 <h2>@Html.DisplayFor(model => model.Name)</h2>
@@ -11,10 +11,11 @@
 <div class="well well-lg">@Html.DisplayFor(model => model.Description)</div>
 <div class="row">
 
-	<button class="btn btn-default col-md-2" id="courseModulesButton">Modullista</button>
-	<button class="btn btn-default col-md-offset-1 col-md-2" id="studentListButton">Studentlista</button>
-	<button class="btn btn-default col-md-offset-1 col-md-2" id="scheduleButton">Schema</button>
-	@if (User.IsInRole("Teacher"))
+    <button class="btn btn-default col-md-2" id="courseModulesButton">Modullista</button>
+    <button class="btn btn-default col-md-offset-1 col-md-2" id="studentListButton">Studentlista</button>
+    <button class="btn btn-default col-md-offset-1 col-md-2" id="scheduleButton">Schema</button>
+    <button class="btn btn-default col-md-offset-1 col-md-2" id="documentButton">Kursdokument</button>
+    @if (User.IsInRole("Teacher"))
     {
         <a class="btn btn-default col-md-offset-1 col-md-2" href="@Url.Action("Create", "Module", new { CourseId= Model.Id })">Skapa en ny modul</a>
         <a class="btn btn-default col-md-offset-1 col-md-2" href="@Url.Action("Register", "Account", new { courseID = Model.Id })">Registrera en ny student</a>
@@ -23,30 +24,36 @@
 </div>
 <br />
 <div class="row">
-	@*<button class="btn btn-default col-md-2">Course literature</button>*@
-	
+    
+    
 </div>
 <div id="Scheme"></div>
 <div id="schedule"></div>
 <div id="studentList"></div>
+<div id="documents"></div>
 
 <script>
-	$(document).ready(function () {
-		$('#courseModulesButton').click(function () {
-			$('#Scheme').toggle(500, function () {
-				$("#Scheme").load("@Url.Action("CourseModules","Courses",new { id = Model.Id})");
-			});
-		});
-		 $('#scheduleButton').click(function () {
-			$('#schedule').toggle(500, function () {
-				$("#schedule").load('@Url.Action("Schedule","Courses",new { id = Model.Id})');
-			});
+    $(document).ready(function () {
+        $('#courseModulesButton').click(function () {
+            $('#Scheme').toggle(500, function () {
+                $("#Scheme").load("@Url.Action("CourseModules","Courses",new { id = Model.Id})");
+            });
+        });
+         $('#scheduleButton').click(function () {
+            $('#schedule').toggle(500, function () {
+                $("#schedule").load('@Url.Action("Schedule","Courses",new { id = Model.Id})');
+            });
 
-		});
-		$('#studentListButton').click(function () {
-			$('#studentList').toggle(500, function () {
-				$('#studentList').load('@Url.Action("CourseStudents","Courses",new { id = Model.Id})');
-			});
-		});
-	});
+        });
+        $('#studentListButton').click(function () {
+            $('#studentList').toggle(500, function () {
+                $('#studentList').load('@Url.Action("CourseStudents","Courses",new { id = Model.Id})');
+            });
+        });
+        $('#documentButton').click(function () {
+            $('#documents').toggle(500, function () {
+                $("#documents").load("@Url.Action("ShowDocuments","Courses",new { id = Model.Id})");
+            });
+        });
+    });
 </script>
