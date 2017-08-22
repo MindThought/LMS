@@ -72,19 +72,23 @@ namespace LMS.Models
         [Required(ErrorMessage = "E-postadress är obligatorisk")]
         [EmailAddress(ErrorMessage = "Ogiltig E-postadress")]
         [Display(Name = "E-postadress")]
+
         public string Email { get; set; }
 
         public string courseID { get; set; }
 
         [Required(ErrorMessage = "Lösenord är obligatorisk")]
         [MembershipPassword(MinRequiredNonAlphanumericCharacters = 1, MinNonAlphanumericCharactersError = "Ditt lösenord måste innehålla minst en symbol (!, @, #, Etc).", ErrorMessage = "Ditt lösenord måste vara 6 tecken långt och innehålla minst en symbol (!, @, #, Etc).", MinRequiredPasswordLength = 6)]
+
         [DataType(DataType.Password)]
         [Display(Name = "Lösenord")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
+
         [Display(Name = "Bekräfta lösenord")]
         [Compare("Password", ErrorMessage = "Lösenordet och det bekräftade lösenord matchar inte.")]
+
         public string ConfirmPassword { get; set; }
 
     }
@@ -111,13 +115,16 @@ namespace LMS.Models
 
         [Required(ErrorMessage = "Lösenord är obligatorisk")]
         [StringLength(100, ErrorMessage = "Detta {0} måste vara minst {2} tecken långt.", MinimumLength = 6)]
+
         [DataType(DataType.Password)]
         [Display(Name = "Lösenord")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
+
         [Display(Name = "Bekräfta lösenord")]
         [Compare("Password", ErrorMessage = "Lösenordet och det bekräftade lösenord matchar inte.")]
+
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }

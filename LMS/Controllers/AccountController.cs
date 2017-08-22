@@ -1,6 +1,5 @@
 ﻿using LMS.Models;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System.Collections.Generic;
@@ -8,7 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
 
 namespace LMS.Controllers
 {
@@ -16,9 +14,9 @@ namespace LMS.Controllers
     public class AccountController : Controller
     {
 
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
-        private ApplicationDbContext db = new ApplicationDbContext();
+		private ApplicationSignInManager _signInManager;
+		private ApplicationUserManager _userManager;
+		private ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -98,41 +96,41 @@ namespace LMS.Controllers
                     //return RedirectToLocal(returnUrl);
                     return RedirectToAction("Details", "Courses", new { id = courseId });
 
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Ogiltigt inloggningsförsök.");
-                    return View(model);
-            }
-        }
+				case SignInStatus.LockedOut:
+					return View("Lockout");
+				case SignInStatus.RequiresVerification:
+					return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+				case SignInStatus.Failure:
+				default:
+					ModelState.AddModelError("", "Ogiltigt inloggningsförsök.");
+					return View(model);
+			}
+		}
 
-        //
-        // GET: /Account/VerifyCode
-        [Authorize(Roles = "Teacher,Student")]
-        public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
-        {
-            // Require that the user has already logged in via username/password or external login
-            if (!await SignInManager.HasBeenVerifiedAsync())
-            {
-                return View("Error");
-            }
-            return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
-        }
+		//
+		// GET: /Account/VerifyCode
+		[Authorize(Roles = "Teacher,Student")]
+		public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
+		{
+			// Require that the user has already logged in via username/password or external login
+			if (!await SignInManager.HasBeenVerifiedAsync())
+			{
+				return View("Error");
+			}
+			return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
+		}
 
-        //
-        // POST: /Account/VerifyCode
-        [HttpPost]
-        [Authorize(Roles = "Teacher,Student")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+		//
+		// POST: /Account/VerifyCode
+		[HttpPost]
+		[Authorize(Roles = "Teacher,Student")]
+		[ValidateAntiForgeryToken]
+		public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
 
             // The following code protects for brute force attacks against the two factor codes. 
             // If a user enters incorrect codes for a specified amount of time then the user account 
@@ -164,16 +162,16 @@ namespace LMS.Controllers
                 }
             }
 
-            return View(teachers);
-        }
+			return View(teachers);
+		}
 
-        // GET: /Account/Register
-        [Authorize(Roles = "Teacher")]
-        public ActionResult Register(string courseID)
-        {
-            ViewBag.CourseID = courseID;
-            return View();
-        }
+		// GET: /Account/Register
+		[Authorize(Roles = "Teacher")]
+		public ActionResult Register(string courseID)
+		{
+			ViewBag.CourseID = courseID;
+			return View();
+		}
 
         //
         // POST: /Account/Register
@@ -274,42 +272,42 @@ namespace LMS.Controllers
             return View();
         }
 
-        //
-        // GET: /Account/ConfirmEmail
-        [Authorize(Roles = "Teacher")]
-        public async Task<ActionResult> ConfirmEmail(string userId, string code)
-        {
-            if (userId == null || code == null)
-            {
-                return View("Error");
-            }
-            var result = await UserManager.ConfirmEmailAsync(userId, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
-        }
+		//
+		// GET: /Account/ConfirmEmail
+		[Authorize(Roles = "Teacher")]
+		public async Task<ActionResult> ConfirmEmail(string userId, string code)
+		{
+			if (userId == null || code == null)
+			{
+				return View("Error");
+			}
+			var result = await UserManager.ConfirmEmailAsync(userId, code);
+			return View(result.Succeeded ? "ConfirmEmail" : "Error");
+		}
 
-        //
-        // GET: /Account/ForgotPassword
-        [Authorize(Roles = "Teacher,Student")]
-        public ActionResult ForgotPassword()
-        {
-            return View();
-        }
+		//
+		// GET: /Account/ForgotPassword
+		[Authorize(Roles = "Teacher,Student")]
+		public ActionResult ForgotPassword()
+		{
+			return View();
+		}
 
-        //
-        // POST: /Account/ForgotPassword
-        [HttpPost]
-        [Authorize(Roles = "Teacher,Student")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await UserManager.FindByEmailAsync(model.Email); // FindByNameAsync changed to FindByEmailAsync
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
-                {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
-                }
+		//
+		// POST: /Account/ForgotPassword
+		[HttpPost]
+		[Authorize(Roles = "Teacher,Student")]
+		[ValidateAntiForgeryToken]
+		public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var user = await UserManager.FindByEmailAsync(model.Email); // FindByNameAsync changed to FindByEmailAsync
+				if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+				{
+					// Don't reveal that the user does not exist or is not confirmed
+					return View("ForgotPasswordConfirmation");
+				}
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
@@ -323,13 +321,13 @@ namespace LMS.Controllers
             return View(model);
         }
 
-        //
-        // GET: /Account/ForgotPasswordConfirmation
-        [Authorize(Roles = "Teacher,Student")]
-        public ActionResult ForgotPasswordConfirmation()
-        {
-            return View();
-        }
+		//
+		// GET: /Account/ForgotPasswordConfirmation
+		[Authorize(Roles = "Teacher,Student")]
+		public ActionResult ForgotPasswordConfirmation()
+		{
+			return View();
+		}
 
         //
         // GET: /Account/ResetPassword
@@ -339,50 +337,50 @@ namespace LMS.Controllers
             return code == null ? View("Error") : View();
         }
 
-        //
-        // POST: /Account/ResetPassword
-        [HttpPost]
-        [Authorize(Roles = "Teacher")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            var user = await UserManager.FindByEmailAsync(model.Email); // FindByNameAsync changed to FindByEmailAsync
-            if (user == null)
-            {
-                // Don't reveal that the user does not exist
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
-            }
-            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
-            if (result.Succeeded)
-            {
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
-            }
-            AddErrors(result);
-            return View();
-        }
+		//
+		// POST: /Account/ResetPassword
+		[HttpPost]
+		[Authorize(Roles = "Teacher")]
+		[ValidateAntiForgeryToken]
+		public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
+			var user = await UserManager.FindByEmailAsync(model.Email); // FindByNameAsync changed to FindByEmailAsync
+			if (user == null)
+			{
+				// Don't reveal that the user does not exist
+				return RedirectToAction("ResetPasswordConfirmation", "Account");
+			}
+			var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+			if (result.Succeeded)
+			{
+				return RedirectToAction("ResetPasswordConfirmation", "Account");
+			}
+			AddErrors(result);
+			return View();
+		}
 
-        //
-        // GET: /Account/ResetPasswordConfirmation
-        [Authorize(Roles = "Teacher")]
-        public ActionResult ResetPasswordConfirmation()
-        {
-            return View();
-        }
+		//
+		// GET: /Account/ResetPasswordConfirmation
+		[Authorize(Roles = "Teacher")]
+		public ActionResult ResetPasswordConfirmation()
+		{
+			return View();
+		}
 
-        //
-        // POST: /Account/ExternalLogin
-        [HttpPost]
-        [Authorize(Roles = "Teacher,Student")]
-        [ValidateAntiForgeryToken]
-        public ActionResult ExternalLogin(string provider, string returnUrl)
-        {
-            // Request a redirect to the external login provider
-            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
-        }
+		//
+		// POST: /Account/ExternalLogin
+		[HttpPost]
+		[Authorize(Roles = "Teacher,Student")]
+		[ValidateAntiForgeryToken]
+		public ActionResult ExternalLogin(string provider, string returnUrl)
+		{
+			// Request a redirect to the external login provider
+			return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
+		}
 
         //
         // GET: /Account/SendCode
@@ -487,15 +485,15 @@ namespace LMS.Controllers
             return View(model);
         }
 
-        //
-        // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult LogOff()
-        {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Login", "Account");
-        }
+		//
+		// POST: /Account/LogOff
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult LogOff()
+		{
+			AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+			return RedirectToAction("Login", "Account");
+		}
 
         //
         // GET: /Account/ExternalLoginFailure
