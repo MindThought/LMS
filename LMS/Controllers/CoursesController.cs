@@ -97,6 +97,7 @@ namespace LMS.Controllers
 			{
 				return HttpNotFound();
 			}
+			ViewBag.CourseId = course.Id;
 			var output = course.Students.OrderBy(s => s.UserName);
 			return PartialView(output);
 		}
@@ -109,12 +110,12 @@ namespace LMS.Controllers
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
 			Course course = db.Courses.Find(id);
-			ViewBag.CourseId = id;
+
 			if (course == null)
 			{
 				return HttpNotFound();
 			}
-
+			ViewBag.CourseId = id;
 			return PartialView(course.Modules);
 		}
 

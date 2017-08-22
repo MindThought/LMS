@@ -1,7 +1,10 @@
 ﻿@model IEnumerable<LMS.Models.Module>
 
 <h3>Moduler:</h3>
-
+@if (User.IsInRole("Teacher"))
+{
+    <a class="btn btn-default col-md-offset-10 col-md-2" href="@Url.Action("Create", "Module", new { CourseId= ViewBag.CourseId })">Skapa en ny modul</a>
+}
 <div class="row">
 
     @foreach (var item in Model)
