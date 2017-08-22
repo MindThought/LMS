@@ -70,3 +70,13 @@ ul.navbar-nav {
 p{
     margin: 14px 0 14px;
 }
+
+#courses {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.panelfix{
+    padding-left:5px;
+    padding-right:5px;
+}

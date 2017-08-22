@@ -21,7 +21,7 @@ namespace LMS.Models
         {
             get
             {
-                var Start = Activities.OrderBy(a => a.StartTime).FirstOrDefault();
+                var Start = Activities?.OrderBy(a => a.StartTime).FirstOrDefault();
                 if (Start == null)
                 {
                     return DateTime.MinValue;
@@ -34,7 +34,7 @@ namespace LMS.Models
         {
             get
             {
-                var End = Activities.OrderBy(a => a.EndTime).LastOrDefault();
+                var End = Activities?.OrderBy(a => a.EndTime).LastOrDefault();
                 if (End == null)
                 {
                     return DateTime.MinValue;

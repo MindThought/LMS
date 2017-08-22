@@ -345,6 +345,7 @@
     <Content Include="Views\Activities\Create.cshtml" />
     <Content Include="Views\Courses\Upload.cshtml" />
     <Content Include="Views\Module\Index.cshtml" />
+    <Content Include="Views\Courses\Schedule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

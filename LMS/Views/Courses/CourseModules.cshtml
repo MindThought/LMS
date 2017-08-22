@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<LMS.Models.Module>
 
-<h3>Moduler:</h3>
+<h3 id="P1">Moduler:</h3>
 @if (User.IsInRole("Teacher"))
 {
     <a class="btn btn-default col-md-offset-10 col-md-2" href="@Url.Action("Create", "Module", new { CourseId= ViewBag.CourseId })">Skapa en ny modul</a>
@@ -9,32 +9,34 @@
 
     @foreach (var item in Model)
     {
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="row">
-                <b>Namn:</b>
-                @Html.RouteLink(@Html.DisplayFor(modelItem => item.Name).ToString(),
+        <div id="courses" class="col-xs-12 col-sm-6 col-md-4">
+            <div class="panelfix panel panel-default">
+                <div class="row">
+                    <b>Namn:</b>
+                    @Html.RouteLink(@Html.DisplayFor(modelItem => item.Name).ToString(),
                 new RouteValueDictionary(new { controller = "Module", action = "Details", id = item.Id }))
+                </div>
+
+                <div class="row"><b>Beskrivning: </b>@Html.DisplayFor(modelItem => item.Description)</div>
+
+                @if (item.Activities.Count == 0)
+                {
+                    <div class="row"><b>Start Datum: </b>Modulen Saknar aktivitet</div>
+                }
+                else
+                {
+                    <div class="row"><b>Start Datum: </b>@item.StartDate</div>
+                    <div class="row"><b>Slut Datum: </b>@item.EndDate</div>
+                }
+
+                <div class="row"><b>Aktiviteter: </b>@Html.DisplayFor(modelItem => item.Activities.Count)</div>
+                @if (User.IsInRole("Teacher"))
+                {
+                    @Html.ActionLink("Ändra egenskaper", "Edit", "Module", new { id = item.Id }, null) <span>|</span>
+                    @Html.ActionLink("Radera", "Delete", "Module", new { id = item.Id }, null)
+                }
+                <br><br />
             </div>
-
-            <div class="row"><b>Beskrivning: </b>@Html.DisplayFor(modelItem => item.Description)</div>
-
-            @if (item.Activities.Count == 0)
-            {
-                <div class="row"><b>Start Datum: </b>Modulen Saknar aktivitet</div>
-            }
-            else
-            {
-                <div class="row"><b>Start Datum: </b>@item.StartDate</div>
-                <div class="row"><b>Slut Datum: </b>@item.EndDate</div>
-            }
-
-            <div class="row"><b>Aktiviteter: </b>@Html.DisplayFor(modelItem => item.Activities.Count)</div>
-            @if (User.IsInRole("Teacher"))
-            {
-                @Html.ActionLink("Ändra egenskaper", "Edit", "Module", new { id = item.Id }, null) <span>|</span>
-                @Html.ActionLink("Radera", "Delete", "Module", new { id = item.Id }, null)
-            }
-            <br><br />
         </div>
     }
 </div>
