@@ -40,13 +40,13 @@
 
     </dl>
 
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Course", "DeleteVerify", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
+        <div class="form-actions no-color">@*COURSE*@
             <form>
-                <a class="btn btn-warning" href="@Url.Action("PasswordRequest","Account", new { id = Model.Id })">Verkställ</a>
+                <a class="btn btn-warning" href="@Url.Action("PasswordRequest","Account", new { id = Model.Id, @id1 = 11 })">Verkställ</a>
                 <a class="btn btn-primary" href="@Url.Action("Index","Courses")">Till kursöversikt</a>
             </form>
         </div>
