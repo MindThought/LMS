@@ -46,7 +46,7 @@
 
         <div class="form-actions no-color">@*COURSE*@
             <form>
-                <a class="btn btn-warning" href="@Url.Action("PasswordRequest","Account", new { id = Model.Id, @id1 = 11 })">Verkställ</a>
+                <a class="btn btn-warning" href="@Url.Action("PasswordRequest","Account", new { id = (Model.Id + 100000) })">Verkställ</a>
                 <a class="btn btn-primary" href="@Url.Action("Index","Courses")">Till kursöversikt</a>
             </form>
         </div>

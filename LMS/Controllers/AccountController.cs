@@ -552,18 +552,16 @@ namespace LMS.Controllers
                 }
             }
 
-            //if (id1 == 12)
-            ////Moduls.Column.Contains("CourseId")) //(db.Modules.Contains(column)
-            //{
-            //    return RedirectToAction("DeleteConfirmed", "Modules", new { id });
-            //}
-            //else if (id1 == 11)
-            //{
-            //    return RedirectToAction("DeleteVerify", "Courses", new { id });
-            //}
-            //else { return View(); }
-
-            return View();
+            if (id > 200000)
+            {
+                id = id - 200000;
+                return RedirectToAction("DeleteConfirmed", "Modules", new { id });
+            }
+            else
+            {
+                id = id - 100000;
+                return RedirectToAction("DeleteVerify", "Courses", new { id });
+            }
         }
 
 
