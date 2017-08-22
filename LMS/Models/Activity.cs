@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace LMS.Models
 {
-    public enum ActivityType { ELearning, Lektion, Lab, Inlämning};
+	public enum ActivityType { ELearning, Lektion, Lab, Inlämning};
 
     public class Activity
     {
@@ -24,6 +25,6 @@ namespace LMS.Models
         [Required]
         [DisplayName("Sluttid")]
         public DateTime EndTime { get; set; }
-        //public virtual List<Document> Documents { get; set; } TODO
+        public virtual List<Document> Documents { get; set; }
     }
 }

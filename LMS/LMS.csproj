@@ -346,6 +346,12 @@
     <Content Include="Views\Courses\Upload.cshtml" />
     <Content Include="Views\Module\Index.cshtml" />
     <Content Include="Views\Account\PasswordRequest.cshtml" />
+    <Content Include="Views\Courses\ShowDocuments.cshtml" />
+    <Content Include="Views\Courses\Schedule.cshtml" />
+    <Content Include="Views\Module\Upload.cshtml" />
+    <Content Include="Views\Module\ShowDocuments.cshtml" />
+    <Content Include="Views\Activities\ShowDocuments.cshtml" />
+    <Content Include="Views\Activities\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

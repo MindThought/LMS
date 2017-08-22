@@ -47,5 +47,7 @@ namespace LMS.Models
 		{
 			return new ApplicationDbContext();
 		}
+
+		public System.Data.Entity.DbSet<LMS.Models.Document> Documents { get; set; }
 	}
 }

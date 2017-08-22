@@ -347,7 +347,7 @@ namespace LMS.Controllers
 					{
 
 						int MaxContentLength = 1024 * 1024 * 10; //10 MB
-						string[] AllowedFileExtensions = new string[] { ".jpg", ".gif", ".png" };
+						string[] AllowedFileExtensions = new string[] { ".docx", ".pdf", ".pptx" };
 						if (!AllowedFileExtensions.Contains(file.FileName.Substring(file.FileName.LastIndexOf('.'))))
 						{
 							ModelState.AddModelError("File", "Please file of type: " + string.Join(", ", AllowedFileExtensions));
@@ -378,6 +378,20 @@ namespace LMS.Controllers
 				}
 			}
 			return View("Details", course);
+		}
+
+		public ActionResult ShowDocuments(int id)
+		{
+			var documents = db.Courses.Where(c => c.Id == id).First().Documents.ToList();
+			ViewBag.Id = id;
+			return PartialView(documents);
+		}
+
+		public ActionResult Download(int id)
+		{
+			string fileName = db.Documents.Where(d => d.Id == id).First().FilePath;
+			var FileVirtualPath = "~/Attach/Document/" + fileName;
+			return File(FileVirtualPath, "application/force-download", Path.GetFileName(FileVirtualPath));
 		}
 
 		// GET: Courses/Create

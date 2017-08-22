@@ -13,7 +13,7 @@ using System.Web.UI;
 
 namespace LMS.Controllers
 {
-    [Authorize]
+	[Authorize]
     public class AccountController : Controller
     {
 
@@ -570,7 +570,6 @@ namespace LMS.Controllers
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
-        private ApplicationUserManager userDeleting;
 
         private IAuthenticationManager AuthenticationManager
         {

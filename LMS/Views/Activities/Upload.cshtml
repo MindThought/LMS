@@ -1,0 +1,45 @@
+﻿
+@model LMS.Models.Activity
+@{
+	ViewBag.Title = "Upload";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+
+@using (Html.BeginForm("SaveDocument", "Courses",
+FormMethod.Post, new { enctype = "multipart/form-data", id = Model.Id, desc = Model.Name + " - Ultimate Pain & Suffering" }))
+{
+	@Html.HiddenFor(i => i.Id)
+	<div class="labelstyle">
+		<label>Files</label>
+	</div>
+	<div>
+		@Html.Label("Namn:")
+		@Html.TextBox("name")
+	</div>
+	<div>
+		@Html.Label("Beskrivning:")
+		@Html.TextBox("desc")
+	</div>
+	<div id="uploaders">
+		<input type="file" id="fileToUpload"
+			   name="fileUpload" multiple="multiple" />
+		<br />
+		<br />
+		<span id="spnFile" style="float: left; color: #FF0000"></span>
+		@Html.ValidationMessage("File")
+		@Html.Hidden("hdnFileUpload")
+		
+	</div>
+	<br />
+	<div class="col-lg-6">
+		<button class="btn btn-primary" id="btnAddIssue" type="submit">Submit</button>
+	</div>
+	<br />
+	<div class="control-section" style="padding: 0px;">
+		<div id="selectedFiles"></div>
+	</div>
+}
+
