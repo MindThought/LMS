@@ -347,7 +347,7 @@ namespace LMS.Controllers
 					{
 
 						int MaxContentLength = 1024 * 1024 * 10; //10 MB
-						string[] AllowedFileExtensions = new string[] { ".jpg", ".gif", ".png", ".docx" };
+						string[] AllowedFileExtensions = new string[] { ".docx", ".pdf", ".pptx" };
 						if (!AllowedFileExtensions.Contains(file.FileName.Substring(file.FileName.LastIndexOf('.'))))
 						{
 							ModelState.AddModelError("File", "Please file of type: " + string.Join(", ", AllowedFileExtensions));

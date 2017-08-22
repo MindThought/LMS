@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace LMS.Models
 {
-    public class Module
+	public class Module
     {
         [Key]
         public int Id { get; set; }
@@ -48,6 +48,6 @@ namespace LMS.Models
         [Required]
         public int CourseId { get; set; }
         public virtual List<Activity> Activities { get; set; }
-        //TODO public virtual Document Documents { get; set; } 
+        public virtual List<Document> Documents { get; set; }
     }
 }

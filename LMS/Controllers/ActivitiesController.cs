@@ -1,24 +1,62 @@
-﻿using System;
+﻿using LMS.Models;
+using LMS.SpecialBehaviour;
+using Microsoft.AspNet.Identity.Owin;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using LMS.Models;
-using LMS.SpecialBehaviour;
 
 namespace LMS.Controllers
 {
-    [CustomAuthorize(Roles = "Teacher")]
+	[CustomAuthorize(Roles = "Teacher")]
     public class ActivitiesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+		private ApplicationSignInManager _signInManager;
+		private ApplicationUserManager _userManager;
+		private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Activities
-        [Authorize]
+		public ActivitiesController()
+		{
+		}
+
+		public ActivitiesController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+		{
+			UserManager = userManager;
+			SignInManager = signInManager;
+		}
+
+		public ApplicationSignInManager SignInManager
+		{
+			get
+			{
+				return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+			}
+			private set
+			{
+				_signInManager = value;
+			}
+		}
+
+		public ApplicationUserManager UserManager
+		{
+			get
+			{
+				return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+			}
+			private set
+			{
+				_userManager = value;
+			}
+		}
+
+		// GET: Activities
+		[Authorize]
         public async Task<ActionResult> Index()
         {
             return View(await db.Activities.ToListAsync());
@@ -39,8 +77,86 @@ namespace LMS.Controllers
             return View(activity);
         }
 
-        // GET: Activities/Create
-        [Authorize]
+		public ActionResult Upload(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Activity activity = db.Activities.Where(c => c.Id == id).First();
+			return View(activity);
+		}
+
+		[HttpPost]
+		[Authorize(Roles = "Teacher")]
+		public ActionResult SaveDocument(List<HttpPostedFileBase> fileUpload, string name, string desc, int? id)
+		{
+			List<string> myTempPaths = new List<string>();
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Activity activity = db.Activities.Where(c => c.Id == id).First();
+
+			if (fileUpload.Count >= 1)
+			{
+
+
+				foreach (var file in fileUpload)
+				{
+					if (file != null && file.ContentLength > 0)
+					{
+
+						int MaxContentLength = 1024 * 1024 * 10; //10 MB
+						string[] AllowedFileExtensions = new string[] { ".docx", ".pdf", ".pptx" };
+						if (!AllowedFileExtensions.Contains(file.FileName.Substring(file.FileName.LastIndexOf('.'))))
+						{
+							ModelState.AddModelError("File", "Please file of type: " + string.Join(", ", AllowedFileExtensions));
+							TempData["error"] = ("Please file of type: " + string.Join(", ", AllowedFileExtensions));
+
+							// return ("TicketsEdit",TempData["error"].ToString());
+						}
+						else if (file.ContentLength > MaxContentLength)
+						{
+							ModelState.AddModelError("File", "Your file is too large, maximum allowed size is: " + MaxContentLength + " B");
+						}
+						else
+						{
+							string extension = Path.GetExtension(file.FileName);
+							string fileName = name + " - " + DateTime.Now.ToString("yyyyMMddHHmmss").ToString() + extension;
+
+							file.SaveAs(Path.Combine(Server.MapPath("~/Attach/Document"), fileName));
+							//It has to be this way!
+							var user = UserManager.FindByNameAsync(User.Identity.Name).Result;
+							var second = db.Users.Find(user.Id);
+							activity.Documents.Add(new Document { Description = desc, Name = name, FilePath = fileName, Uploader = second, Uploaded = DateTime.Now });
+							ModelState.Clear();
+							db.SaveChanges();
+							//       ViewBag.Message = "File uploaded successfully";
+							myTempPaths.Add(fileName);
+						}
+					}
+				}
+			}
+			return View("Details", activity);
+		}
+
+		public ActionResult ShowDocuments(int id)
+		{
+			var documents = db.Activities.Where(c => c.Id == id).First().Documents.ToList();
+			ViewBag.Id = id;
+			return PartialView(documents);
+		}
+
+		public ActionResult Download(int id)
+		{
+			string fileName = db.Documents.Where(d => d.Id == id).First().FilePath;
+			var FileVirtualPath = "~/Attach/Document/" + fileName;
+			return File(FileVirtualPath, "application/force-download", Path.GetFileName(FileVirtualPath));
+		}
+
+		// GET: Activities/Create
+		[Authorize]
         public ActionResult Create()
         {
             return View();

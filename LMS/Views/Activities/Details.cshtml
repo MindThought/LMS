@@ -59,6 +59,23 @@
 
     </dl>
 </div>
+
+<div class="row">
+	<button class="btn btn-default col-md-2" id="documentButton">Dokument</button>
+</div>
+
+<div id="documents" class="row"></div>
+
+<script>
+    $(document).ready(function () {
+        $('#documentButton').click(function () {
+            $('#documents').toggle(500, function () {
+                $("#documents").load("@Url.Action("ShowDocuments","Activities",new { id = Model.Id})");
+            });
+        });
+    })
+</script>
+
 <p>
     @Html.ActionLink("Tillbaka till modulen", "Details", "Module", new { id = Model.ModuleId }, null)
 
