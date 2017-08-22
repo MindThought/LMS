@@ -1,111 +1,63 @@
 ﻿@model LMS.Models.Module
 
 @{
-    
+
 }
 
 <script src="~/Scripts/jquery-3.1.1.min.js"></script>
 <div class="row">
-    <h2 class="col-md-3">@Model.Name</h2>
+	<h2 class="col-md-3">@Model.Name</h2>
 </div>
 <div class="row">
-    <h4 class="col-md-3">Modul</h4>
+	<h4 class="col-md-3">Modul</h4>
 </div>
 
+<div class="well well-lg">@Html.DisplayFor(Model => Model.Description)</div>
+<hr />
 
-<div>
-    <div class="well well-lg">@Html.DisplayFor(model => model.Description)</div>
-    <hr />
+<div class="row">
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th class="text-center">Datum</th>
-                <th class="text-center">Dag</th>
-                <th class="text-center">Aktivitet förmiddag</th>
-                <th class="text-center">Aktivitet eftermiddag</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (int i = 0; i < ViewBag.Dates.Count; i++)
-            {
-                <tr>
-
-
-                    @if (i <= ViewBag.Dates.Count)
-                    {
-                        <td class="text-center">@ViewBag.Dates[i]</td>
-                        <td class="text-center">@ViewBag.WeekDays[i]</td>
-                    }
-                    else
-                    {
-                        <td class="text-center"></td>
-                    }
-
-                    @if (i < ViewBag.FM.Count && @ViewBag.FM[i] != null)
-                    {
-                        <td class="text-center">
-                            <a href="@Url.Action("Details", "Activities", new { id = ViewBag.FM[i].Id })">@ViewBag.FM[i].Name</a>
-                        </td>
-                    }
-                    else
-                    {
-                        <td class="text-center"></td>
-                    }
-
-                    @if (i < ViewBag.EM.Count && @ViewBag.EM[i] != null)
-                    {
-                        <td class="text-center">
-                            <a href="@Url.Action("Details", "Activities", new { id = @ViewBag.EM[i].Id })">@ViewBag.EM[i].Name</a>
-                        </td>
-                    }
-                    else
-                    {
-                        <td class="text-center"></td>
-                    }
-                </tr>
-            }
-        </tbody>
-    </table>
-
-    <div class="row">
-        @if (User.IsInRole("Teacher"))
-        {
-            <a class="btn btn-default col-md-3" href="@Url.Action("Create", "Activities", new { ModuleId = Model.Id })">Skapa en ny aktivitet för denna modul</a> <!--Ändra namn för route value om det behövs-->
-        }
-    </div>
 </div>
 <div class="row">
-    <button class="btn btn-default col-md-2" id="courseModulesButton">Schema</button>
-	<button class="btn btn-default col-md-2" id="documentButton">Kursdokument</button>
+	<button class="btn btn-default col-md-2" id="courseModulesButton">Schema</button>
+	<button class="btn btn-default col-md-2 col-md-offset-1" id="documentButton">Kursdokument</button>
+	@if (User.IsInRole("Teacher"))
+	{
+		<a class="btn btn-default col-md-3 col-md-offset-1" href="@Url.Action("Create", "Activities", new { ModuleId = Model.Id })">Skapa en ny aktivitet för denna modul</a> <!--Ändra namn för route value om det behövs-->
+	}
 </div>
+<hr />
 
+<div id="ModuleActivities" class="row"></div>
 <div id="schedule" class="row"></div>
 <div id="documents" class="row"></div>
 
 @*@{
-    <a href="@Url.Action("ModuleSchedule","Module",new { id = Model.Id})">content</a>
-    Html.RenderPartial("ModuleSchedule", new { id = Model.Id}); 
-}*@
+		<a href="@Url.Action("ModuleSchedule","Module",new { id = Model.Id})">content</a>
+		Html.RenderPartial("ModuleSchedule", new { id = Model.Id});
+	}*@
 <script>
-    $(document).ready(function () {
-        $('#courseModulesButton').click(function () {
-            $('#schedule').toggle(500, function () {
-                $("#schedule").load('@Url.Action("Schedule","Module",new { id = Model.Id})');
-            });
+	$(document).ready(function () {
+		$('#ModuleActivities').load('@Url.Action("ModuleActivities","Module", new { id = Model.Id })');
 
-        });
+		$('#courseModulesButton').click(function () {
+			$('#schedule').toggle(500, function () {
+				$("#schedule").load('@Url.Action("Schedule", "Module", new { id = Model.Id })');
+			});
+
+		});
+
 		$('#documentButton').click(function () {
-            $('#documents').toggle(500, function () {
-                $("#documents").load("@Url.Action("ShowDocuments","Module",new { id = Model.Id})");
-            });
-        });
-    })
+			$('#documents').toggle(500, function () {
+				$("#documents").load("@Url.Action("ShowDocuments", "Module", new { id = Model.Id })");
+			});
+		});
+	});
 </script>
 <p>
-    @if (User.IsInRole("Teacher"))
-    {
-        @Html.ActionLink("Ändra egenskaper", "Edit", new { id = Model.Id }) <span>|</span>
-    }
-    @Html.ActionLink("Tillbaka till modulerna", "Details", "Courses", new { id = Model.CourseId }, null)
+	@if (User.IsInRole("Teacher"))
+	{
+		@Html.ActionLink("Ändra egenskaper", "Edit", new { id = Model.Id }) <span>|</span>
+	}
+	@Html.ActionLink("Tillbaka till modulerna", "Details", "Courses", new { id = Model.CourseId }, null)
 </p>

@@ -1,0 +1,53 @@
+﻿@model LMS.Models.ModuleActivities
+
+<div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="text-center">Datum</th>
+                <th class="text-center">Dag</th>
+                <th class="text-center">Aktivitet förmiddag</th>
+                <th class="text-center">Aktivitet eftermiddag</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Dates.Count; i++)
+            {
+                <tr>
+
+
+                    @if (i <= Model.Dates.Count)
+                    {
+                        <td class="text-center">@Model.Dates[i]</td>
+                        <td class="text-center">@Model.WeekDays[i]</td>
+                    }
+                    else
+                    {
+                        <td class="text-center"></td>
+                    }
+
+                    @if (i < Model.FM.Count && @Model.FM[i] != null)
+                    {
+                        <td class="text-center">
+                            <a href="@Url.Action("Details", "Activities", new { id = Model.FM[i].Id })">@Model.FM[i].Name</a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="text-center"></td>
+                    }
+
+                    @if (i < Model.EM.Count && Model.EM[i] != null)
+                    {
+                        <td class="text-center">
+                            <a href="@Url.Action("Details", "Activities", new { id = Model.EM[i].Id })">@Model.EM[i].Name</a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="text-center"></td>
+                    }
+                </tr>}
+        </tbody>
+    </table>
+</div>
