@@ -5,6 +5,7 @@
 }
 
 <h2>@Model.Name</h2>
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
 
 @if (ViewBag.Message != null)
 {
@@ -73,10 +74,14 @@
 
 <script>
     $(document).ready(function () {
-        $('#documentButton').click(function () {
-            $('#documents').toggle(500, function () {
-                $("#documents").load("@Url.Action("ShowDocuments","Activities",new { id = Model.Id})");
+    	$('#documentButton').click(function () {
+			var target = "#documents"
+            $(target).toggle(500, function () {
+                $(target).load("@Url.Action("ShowDocuments","Activities",new { id = Model.Id})");
             });
+			$('html,body').animate({
+				scrollTop: $(target).offset().top
+			});
         });
     })
 </script>
