@@ -528,7 +528,7 @@ namespace LMS.Controllers
 
         // GET: /Account/PasswordRequest
         [Authorize(Roles = "Teacher")]
-        public ActionResult PasswordRequest(int Id)
+        public ActionResult PasswordRequest(int Id, int? Id1)
         {
             ViewBag.CourseId = Id;
             return View();
@@ -538,7 +538,7 @@ namespace LMS.Controllers
         [HttpPost]
         [Authorize(Roles = "Teacher")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> PasswordRequest(PasswordRequestViewModel model, int id)
+        public async Task<ActionResult> PasswordRequest(PasswordRequestViewModel model, int id, int? Id1)
         {
             if (ModelState.IsValid)
             {
@@ -552,18 +552,16 @@ namespace LMS.Controllers
                 }
             }
 
-            //if (id1 == 12)
-            ////Moduls.Column.Contains("CourseId")) //(db.Modules.Contains(column)
-            //{
-            //    return RedirectToAction("DeleteConfirmed", "Modules", new { id });
-            //}
-            //else if (id1 == 11)
-            //{
-            //    return RedirectToAction("DeleteVerify", "Courses", new { id });
-            //}
-            //else { return View(); }
-
-            return View();
+            if (id > 200000)
+            {
+                id = id - 200000;
+                return RedirectToAction("DeleteVerify", "Module", new { id });
+            }
+            else
+            {
+                id = id - 100000;
+                return RedirectToAction("DeleteVerify", "Courses", new { id });
+            }
         }
 
 

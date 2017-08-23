@@ -52,12 +52,12 @@
 
     </dl>
 
-    @using (Html.BeginForm("Module", "Delete", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+    @using (Html.BeginForm("Module", "DeleteVerify", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color"> @*MODULE*@
             <form>
-                <a class="btn btn-warning" href="@Url.Action("PasswordRequest","Account", new { id = Model.Id, @id1 = 12 })">Verkställ</a>
+                <a class="btn btn-warning" href="@Url.Action("PasswordRequest","Account", new { id = (Model.Id + 200000) })">Verkställ</a>
                 <a class="btn btn-primary" href="@Url.Action("Details","Courses",new { id = Model.CourseId },null)">Till kursöversikt</a>
             </form>
         </div>

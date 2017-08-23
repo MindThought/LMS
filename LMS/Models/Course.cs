@@ -9,8 +9,9 @@ namespace LMS.Models
 	public class Course
 	{
 		[Key]
-		public int Id { get; set; }
-		[Required]
+        public int Id { get; set; }
+        public int Id1 { get; set; }
+        [Required]
 		[DisplayName("Kursnamn")]
 		public string Name { get; set; }
 		[DisplayName("Beskrivning")]

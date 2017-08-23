@@ -1,8 +1,10 @@
 ﻿@model IEnumerable<LMS.Models.Document>
 
-<p>
-    @Html.ActionLink("Ladda upp filer", "Upload", new { id = ViewBag.Id})
-</p>
+@if (User.IsInRole("Teacher"))
+{
+<a class="btn btn-default col-md-offset-10 col-md-2" href="@Url.Action("Upload", "Module", new { id = ViewBag.Id})">Ladda upp en fil</a>
+}
+
 
 @if (Model.Count() > 0)
 {
