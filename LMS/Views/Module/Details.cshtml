@@ -12,6 +12,11 @@
 	<h4 class="col-md-3">Modul</h4>
 </div>
 
+@if (ViewBag.Message != null)
+{
+	<span style="color:forestgreen">@ViewBag.Message</span>
+}
+
 <div class="well well-lg">@Html.DisplayFor(Model => Model.Description)</div>
 <hr />
 
