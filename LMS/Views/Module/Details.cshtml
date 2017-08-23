@@ -32,10 +32,6 @@
 <div id="schedule" class="row"></div>
 <div id="documents" class="row"></div>
 
-@*@{
-		<a href="@Url.Action("ModuleSchedule","Module",new { id = Model.Id})">content</a>
-		Html.RenderPartial("ModuleSchedule", new { id = Model.Id});
-	}*@
 <script>
 	$(document).ready(function () {
 		$('#ModuleActivities').load('@Url.Action("ModuleActivities","Module", new { id = Model.Id })');
@@ -48,11 +44,11 @@
 		});
 
 		$('#documentButton').click(function () {
-			$('#documents').toggle(500, function () {
-				$("#documents").load("@Url.Action("ShowDocuments", "Module", new { id = Model.Id })");
-			});
+            $('#documents').toggle(500, function () {
+                $("#documents").load("@Url.Action("ShowDocuments","Module",new { id = Model.Id})");
+            });
 		});
-	});
+    })
 </script>
 <p>
 	@if (User.IsInRole("Teacher"))
