@@ -481,7 +481,6 @@ namespace LMS.Controllers
 		[Authorize(Roles = "Teacher")]
 		public ActionResult SaveDocument(List<HttpPostedFileBase> fileUpload, string name, string desc, int? id)
 		{
-			List<string> myTempPaths = new List<string>();
 			if (id == null)
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -490,21 +489,15 @@ namespace LMS.Controllers
 
 			if (fileUpload.Count >= 1)
 			{
-
-
 				foreach (var file in fileUpload)
 				{
 					if (file != null && file.ContentLength > 0)
 					{
-
 						int MaxContentLength = 1024 * 1024 * 10; //10 MB
-						string[] AllowedFileExtensions = new string[] { ".docx", ".pdf", ".pptx" };
+						string[] AllowedFileExtensions = new string[] { ".docx", ".pdf", ".pptx", ".xlsx", ".txt", ".zip", ".7z" };
 						if (!AllowedFileExtensions.Contains(file.FileName.Substring(file.FileName.LastIndexOf('.'))))
 						{
-							ModelState.AddModelError("File", "Please file of type: " + string.Join(", ", AllowedFileExtensions));
-							TempData["error"] = ("Please file of type: " + string.Join(", ", AllowedFileExtensions));
-
-							// return ("TicketsEdit",TempData["error"].ToString());
+							ViewBag.Message = "Filen bör vara av en av följande typer: " + string.Join(", ", AllowedFileExtensions);
 						}
 						else if (file.ContentLength > MaxContentLength)
 						{
@@ -513,17 +506,25 @@ namespace LMS.Controllers
 						else
 						{
 							string extension = Path.GetExtension(file.FileName);
-							string fileName = name + " - " + DateTime.Now.ToString("yyyyMMddHHmmss").ToString() + extension;
+
+							DateTime time = DateTime.Now;
+							string fileName = name + " - " + time.ToString("yyyyMMddHHmmss").ToString() + extension;
+
+							var thePath = Path.Combine(Server.MapPath("~/Attach/Document"), fileName);
+							if (System.IO.File.Exists(thePath))
+							{
+								ViewBag.Message = "Kollision inträffade, testa igen och köp en lotteribiljett.";
+								return View("Details", module);
+							}
 
 							file.SaveAs(Path.Combine(Server.MapPath("~/Attach/Document"), fileName));
 							//It has to be this way!
 							var user = UserManager.FindByNameAsync(User.Identity.Name).Result;
 							var second = db.Users.Find(user.Id);
-							module.Documents.Add(new Document { Description = desc, Name = name, FilePath = fileName, Uploader = second, Uploaded = DateTime.Now });
+							module.Documents.Add(new Document { Description = desc, Name = name, FilePath = name + extension, Uploader = second, Uploaded = time });
 							ModelState.Clear();
 							db.SaveChanges();
-							//       ViewBag.Message = "File uploaded successfully";
-							myTempPaths.Add(fileName);
+							ViewBag.Message = "File uploaded successfully";
 						}
 					}
 				}
@@ -542,15 +543,17 @@ namespace LMS.Controllers
 
 		public ActionResult Download(int id)
 		{
-			string fileName = db.Documents.Where(d => d.Id == id).First().FilePath;
+			Document document = db.Documents.Where(d => d.Id == id).First();
+			string fileName = document.Name + " - " + document.Uploaded.ToString("yyyyMMddHHmmss") + document.FilePath.Substring(document.FilePath.LastIndexOf('.'));
 			var FileVirtualPath = "~/Attach/Document/" + fileName;
-			return File(FileVirtualPath, "application/force-download", Path.GetFileName(FileVirtualPath));
+			return File(FileVirtualPath, "application/octet-stream", document.Name + document.FilePath.Substring(document.FilePath.LastIndexOf('.')));
 		}
 
 		// GET: Module/Create
-		public ActionResult Create(int? CourseId)
+		public ActionResult Create(int CourseId)
 		{
-			ViewBag.CourseId = CourseId;
+			ViewBag.Course = db.Courses.Find(CourseId);
+		  
 			return View();
 		}
 

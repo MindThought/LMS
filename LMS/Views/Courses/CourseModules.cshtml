@@ -24,8 +24,8 @@
                 }
                 else
                 {
-                    <div class="row"><b>Start Datum: </b>@item.StartDate</div>
-                    <div class="row"><b>Slut Datum: </b>@item.EndDate</div>
+                    <div class="row"><b>Start Datum: </b>@item.StartDate.Value.ToShortDateString()</div>
+                    <div class="row"><b>Slut Datum: </b>@item.EndDate.Value.ToShortDateString()</div>
                 }
 
                 <div class="row"><b>Aktiviteter: </b>@Html.DisplayFor(modelItem => item.Activities.Count)</div>
