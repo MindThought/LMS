@@ -7,6 +7,11 @@
 <script src="~/Scripts/jquery-3.1.1.min.js"></script>
 <h2>@Html.DisplayFor(model => model.Name)</h2>
 
+@if (ViewBag.Message != null)
+{
+	<span style="color:forestgreen">@ViewBag.Message</span>
+}
+
 <br />
 <div class="well well-lg">@Html.DisplayFor(model => model.Description)</div>
 <div class="row">
