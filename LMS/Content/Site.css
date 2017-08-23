@@ -47,17 +47,6 @@ ul.navbar-nav {
     height: auto;
 }
 
-#Scheme {
-    display: none;
-    border-color: black;
-    border: 1px solid transparent;
-}
-
-#studentList {
-    display: none;
-    border: 1px solid transparent;
-}
-
 .navbar-inverse .navbar-nav > li > a {
     color: #8eff96;
 }
