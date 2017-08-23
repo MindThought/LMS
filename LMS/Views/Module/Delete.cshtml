@@ -52,7 +52,7 @@
 
     </dl>
 
-    @using (Html.BeginForm("Module", "DeleteConfirmed", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+    @using (Html.BeginForm("Module", "DeleteVerify", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color"> @*MODULE*@

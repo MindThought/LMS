@@ -630,6 +630,20 @@ namespace LMS.Controllers
             return RedirectToAction("Details", "Courses", new { id = module.CourseId });
         }
 
+        public ActionResult DeleteVerify(int id)
+        {
+            Module module = db.Modules.Find(id);
+
+            foreach (var item in db.Activities.Where(a => a.ModuleId == module.Id))
+            {
+                db.Activities.Remove(item);
+            }
+
+            db.Modules.Remove(module);
+            db.SaveChanges();
+            return RedirectToAction("Details", "Courses", new { id = module.CourseId });
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

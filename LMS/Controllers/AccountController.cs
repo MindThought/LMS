@@ -555,7 +555,7 @@ namespace LMS.Controllers
             if (id > 200000)
             {
                 id = id - 200000;
-                return RedirectToAction("DeleteConfirmed", "Modules", new { id });
+                return RedirectToAction("DeleteVerify", "Module", new { id });
             }
             else
             {
