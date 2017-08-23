@@ -528,7 +528,7 @@ namespace LMS.Controllers
 
         // GET: /Account/PasswordRequest
         [Authorize(Roles = "Teacher")]
-        public ActionResult PasswordRequest(int Id)
+        public ActionResult PasswordRequest(int Id, int? Id1)
         {
             ViewBag.CourseId = Id;
             return View();
@@ -538,7 +538,7 @@ namespace LMS.Controllers
         [HttpPost]
         [Authorize(Roles = "Teacher")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> PasswordRequest(PasswordRequestViewModel model, int id)
+        public async Task<ActionResult> PasswordRequest(PasswordRequestViewModel model, int id, int? Id1)
         {
             if (ModelState.IsValid)
             {

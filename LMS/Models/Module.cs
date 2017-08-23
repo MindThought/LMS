@@ -10,6 +10,7 @@ namespace LMS.Models
     {
         [Key]
         public int Id { get; set; }
+        public int Id1 { get; set; }
         [MaxLength(60)]
         [Required]
         [DisplayName("Modulnamn")]
