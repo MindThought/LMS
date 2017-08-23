@@ -13,7 +13,7 @@ using System.Web.UI;
 
 namespace LMS.Controllers
 {
-	[Authorize]
+    [Authorize]
     public class AccountController : Controller
     {
 
@@ -193,7 +193,7 @@ namespace LMS.Controllers
                     {
                         var teacherUser = UserManager.FindByName(model.Email);
                         UserManager.AddToRole(teacherUser.Id, "Teacher");
-                        return RedirectToAction("Index", "Courses");
+                        return RedirectToAction("Teachers", "Account");
                     }
                     AddErrors(result);
                 }
@@ -257,9 +257,18 @@ namespace LMS.Controllers
 
                 if (userDeleting != model.Email)
                 {
-                    var result = UserManager.Delete(userToDelete);
-                    if (result.Succeeded) { return View("AccountDeleted"); }
-                    else { return View("Failure"); }
+                    if (userToDelete.CourseId == null)
+                    {
+                        var resultt = UserManager.Delete(userToDelete);
+                        if (resultt.Succeeded) { return RedirectToAction("Teachers", "Account"); }
+                    }
+                    else
+                    {
+                        var id = userToDelete.CourseId;
+                        var result = UserManager.Delete(userToDelete);
+                        if (result.Succeeded) { return RedirectToAction("Details", "Courses", new { id }); }
+                        //if (result.Succeeded) { return View("Courses/Details/"+ id); }
+                    }
                 }
                 else { return View("NotAllowedToDeleteOwnAccount"); }
 

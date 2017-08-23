@@ -13,9 +13,12 @@ namespace LMS.Models
 		public virtual Course Course { get; set; }
 		public int? CourseId { get; set; }
 		[Required]
-		public string Name { get; set; }
+        [Display(Name = "Namn")]
+        public string Name { get; set; }
+        [Display(Name = "E-postadress")]
+        public override string Email { get; set; }
 
-		public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
 		{
 			// Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
 			var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
