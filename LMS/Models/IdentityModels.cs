@@ -49,5 +49,7 @@ namespace LMS.Models
 		}
 
 		public System.Data.Entity.DbSet<LMS.Models.Document> Documents { get; set; }
-	}
+
+        public System.Data.Entity.DbSet<LMS.Models.ModuleActivities> ModuleActivities { get; set; }
+    }
 }

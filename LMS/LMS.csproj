@@ -353,6 +353,7 @@
     <Content Include="Views\Module\ShowDocuments.cshtml" />
     <Content Include="Views\Activities\ShowDocuments.cshtml" />
     <Content Include="Views\Activities\Upload.cshtml" />
+    <Content Include="Views\Module\ModuleActivities.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
