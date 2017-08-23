@@ -548,9 +548,10 @@ namespace LMS.Controllers
 		}
 
 		// GET: Module/Create
-		public ActionResult Create(int? CourseId)
+		public ActionResult Create(int CourseId)
 		{
-			ViewBag.CourseId = CourseId;
+			ViewBag.Course = db.Courses.Find(CourseId);
+		  
 			return View();
 		}
 
