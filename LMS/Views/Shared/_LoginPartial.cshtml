@@ -8,7 +8,14 @@
     <ul class="nav navbar-nav navbar-right">
         <li>
             @{ var user = (System.Security.Claims.ClaimsIdentity)User.Identity; }
-            @Html.ActionLink("Hej " + user.FindFirstValue("Name") + "!", "Index", "Courses")
+            @if (User.IsInRole("Teacher"))
+            {
+                @Html.ActionLink("Hej " + user.FindFirstValue("Name") + "!", "Index", "Courses")
+            }
+            @if (User.IsInRole("Student"))
+                    {
+                @Html.ActionLink("Hej " + user.FindFirstValue("Name") + "!", "Details", "Courses")
+            }
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()" onclick="return confirm('Vill du verkligen logga ut?')">Logga ut</a></li>
     </ul>
