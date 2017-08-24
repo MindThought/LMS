@@ -118,7 +118,7 @@ namespace LMS.Controllers
 			ViewBag.CourseId = id;
 			return PartialView(course.Modules);
 		}
-
+		[Authorize]
 		public ActionResult Schedule(int? id)
 		{
 			if (id == null)
@@ -328,7 +328,6 @@ namespace LMS.Controllers
 		}
 
 		[HttpPost]
-		[Authorize(Roles = "Teacher")]
 		public ActionResult SaveDocument(List<HttpPostedFileBase> fileUpload, string name, string desc, int? id)
 		{
 			List<string> myTempPaths = new List<string>();
@@ -382,14 +381,14 @@ namespace LMS.Controllers
 			}
 			return View("Details", course);
 		}
-
+		[Authorize]
 		public ActionResult ShowDocuments(int id)
 		{
 			var documents = db.Courses.Where(c => c.Id == id).First().Documents.ToList();
 			ViewBag.Id = id;
 			return PartialView(documents);
 		}
-
+		[Authorize]
 		public ActionResult Download(int id)
 		{
 			Document document = db.Documents.Where(d => d.Id == id).First();

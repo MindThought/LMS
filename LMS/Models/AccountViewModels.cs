@@ -4,7 +4,7 @@ using System.Web.Security;
 
 namespace LMS.Models
 {
-    public class ExternalLoginConfirmationViewModel
+	public class ExternalLoginConfirmationViewModel
     {
         [Required(ErrorMessage = "E-postadress är obligatorisk")]
         [Display(Name = "E-postadress")]
@@ -141,6 +141,7 @@ namespace LMS.Models
     public class PasswordRequestViewModel
     {
         [Required(ErrorMessage = "Lösenord är obligatorisk")]
+        [StringLength(100, ErrorMessage = "Detta {0} måste vara minst {2} tecken långt.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Lösenord")]
         public string Password { get; set; }
