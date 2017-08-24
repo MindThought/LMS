@@ -228,7 +228,7 @@ namespace LMS.Migrations
 					Module = context.Modules.Where(m => m.Name == "MVC fördjupning").FirstOrDefault(),
 					Type = Models.ActivityType.Inlämning,
 					StartTime = new DateTime(2017, 8, 1, 8, 0, 0),
-					EndTime = new DateTime(2017, 8, 25, 20, 0, 0),
+					EndTime = new DateTime(2017, 8, 24, 20, 0, 0),
 					Description = "Individual code task. Console application: Garage 1.0"
 				}
 				);
