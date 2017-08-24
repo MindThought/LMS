@@ -112,7 +112,7 @@ namespace LMS.Controllers
 						}
 						else if (file.ContentLength > MaxContentLength)
 						{
-							ModelState.AddModelError("File", "Your file is too large, maximum allowed size is: " + MaxContentLength + " B");
+							ViewBag.Message = "Filen får inte vara längre än 10 MB";
 						}
 						else
 						{
