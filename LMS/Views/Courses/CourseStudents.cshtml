@@ -5,7 +5,7 @@
 <h3 id="P2">Elever:</h3>
 @if (User.IsInRole("Teacher"))
 {
-    <a class="btn btn-default col-md-offset-10 col-md-2" href="@Url.Action("Register", "Account", new { courseID = ViewBag.CourseId })">Registrera en ny student</a>
+    <a class="btn btn-success col-md-offset-10 col-md-2" href="@Url.Action("Register", "Account", new { courseID = ViewBag.CourseId })">Registrera en ny student</a>
 }
 <table class="table">
     <tr>

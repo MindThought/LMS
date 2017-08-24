@@ -17,18 +17,18 @@
     <span style="color:forestgreen">@ViewBag.Message</span>
 }
 
-<div class="well well-lg">@Html.DisplayFor(Model => Model.Description)</div>
+<div class="well well-lg" style="background-color:#b0aff5;">@Html.DisplayFor(Model => Model.Description)</div>
 <hr />
 
 <div class="row">
 
 </div>
 <div class="row">
-    <button class="btn btn-default col-md-2" id="courseModulesButton">Schema</button>
-    <button class="btn btn-default col-md-2 col-md-offset-1" id="documentButton">Kursdokument</button>
+    <button class="btn btn-info col-md-2" id="courseModulesButton">Schema</button>
+    <button class="btn btn-info col-md-2 col-md-offset-1" id="documentButton">Kursdokument</button>
     @if (User.IsInRole("Teacher"))
     {
-        <a class="btn btn-default col-md-3 col-md-offset-1" href="@Url.Action("Create", "Activities", new { ModuleId = Model.Id })">Skapa en ny aktivitet för denna modul</a> <!--Ändra namn för route value om det behövs-->
+        <a class="btn btn-success col-md-3 col-md-offset-1" href="@Url.Action("Create", "Activities", new { ModuleId = Model.Id })">Skapa en ny aktivitet för denna modul</a> <!--Ändra namn för route value om det behövs-->
     }
 </div>
 <hr />
