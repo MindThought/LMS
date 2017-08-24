@@ -4,12 +4,10 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.UI;
 
 namespace LMS.Controllers
 {
@@ -537,6 +535,12 @@ namespace LMS.Controllers
                 {
                     _signInManager.Dispose();
                     _signInManager = null;
+                }
+
+                if (db != null)
+                {
+                    db.Dispose();
+                    db = null;
                 }
             }
 
