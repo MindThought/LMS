@@ -63,6 +63,7 @@ namespace LMS.Controllers
 		}
 
 		// GET: Activities/Details/5
+		[Authorize]
 		public async Task<ActionResult> Details(int? id)
 		{
 			if (id == null)
@@ -88,7 +89,6 @@ namespace LMS.Controllers
 		}
 
 		[HttpPost]
-		[Authorize(Roles = "Teacher")]
 		public ActionResult SaveDocument(List<HttpPostedFileBase> fileUpload, string name, string desc, int? id)
 		{
 			List<string> myTempPaths = new List<string>();
@@ -143,6 +143,7 @@ namespace LMS.Controllers
 			return View("Details", activity);
 		}
 
+		[Authorize]
 		public ActionResult ShowDocuments(int id)
 		{
 			var documents = db.Activities.Where(c => c.Id == id).First().Documents.ToList();
@@ -150,6 +151,7 @@ namespace LMS.Controllers
 			return PartialView(documents);
 		}
 
+		[Authorize]
 		public ActionResult Download(int id)
 		{
 			Document document = db.Documents.Where(d => d.Id == id).First();
@@ -171,7 +173,6 @@ namespace LMS.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		[Authorize]
 		public async Task<ActionResult> Create([Bind(Include = "Id,Type,Name,Description,StartTime,EndTime")] Activity activity, int ModuleId)
 		{
 			var module = db.Modules.Find(ModuleId);
@@ -211,7 +212,6 @@ namespace LMS.Controllers
 		}
 
 		// GET: Activities/Edit/5
-		[Authorize]
 		public async Task<ActionResult> Edit(int? id)
 		{
 			if (id == null)
@@ -231,7 +231,6 @@ namespace LMS.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		[Authorize]
 		public async Task<ActionResult> Edit([Bind(Include = "Id,Type,Name,Description,StartTime,EndTime")] Activity activity, int? ModuleId)
 		{
 
@@ -277,7 +276,6 @@ namespace LMS.Controllers
 		}
 
 		// GET: Activities/Delete/5
-		[Authorize]
 		public async Task<ActionResult> Delete(int? id)
 		{
 			if (id == null)
@@ -295,7 +293,6 @@ namespace LMS.Controllers
 		// POST: Activities/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
-		[Authorize]
 		public async Task<ActionResult> DeleteConfirmed(int id)
 		{
 			Activity activity = await db.Activities.FindAsync(id);

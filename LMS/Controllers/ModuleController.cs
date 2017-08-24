@@ -60,6 +60,7 @@ namespace LMS.Controllers
 			return View(db.Modules.ToList());
 		}
 
+		[Authorize]
 		public ActionResult CourseModules(int? id)
 		{
 			if (id == null)
@@ -75,6 +76,7 @@ namespace LMS.Controllers
 			return View(course.Modules);
 		}
 
+		[Authorize]
 		public ActionResult Schedule(int? id)
 		{
 			if (id == null)
@@ -272,6 +274,7 @@ namespace LMS.Controllers
 			return View(module);
 		}
 
+		[Authorize]
 		public ActionResult ModuleActivities(int? id)
 		{
 			if (id == null)
@@ -478,7 +481,6 @@ namespace LMS.Controllers
 		}
 
 		[HttpPost]
-		[Authorize(Roles = "Teacher")]
 		public ActionResult SaveDocument(List<HttpPostedFileBase> fileUpload, string name, string desc, int? id)
 		{
 			if (id == null)
@@ -534,6 +536,7 @@ namespace LMS.Controllers
 			return View( "Details", module);
 		}
 
+		[Authorize]
 		public ActionResult ShowDocuments(int id)
 		{
 			var documents = db.Modules.Where(c => c.Id == id).First().Documents.ToList();
@@ -541,6 +544,7 @@ namespace LMS.Controllers
 			return PartialView(documents);
 		}
 
+		[Authorize]
 		public ActionResult Download(int id)
 		{
 			Document document = db.Documents.Where(d => d.Id == id).First();
@@ -557,6 +561,7 @@ namespace LMS.Controllers
 			return View();
 		}
 
+		[Authorize]
 		public bool SameDayActivity(Activity activity)
 		{
 			var StartActivities = activity.Module.Activities.OrderBy(a => a.StartTime).ToList();
