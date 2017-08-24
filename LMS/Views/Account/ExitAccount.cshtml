@@ -16,13 +16,11 @@
         <div class="col-md-10">
             @if (ViewBag.userEmail == null)
             {
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "E-postadress för konto att avsluta." })
-            }
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "E-postadress för konto att avsluta."})
+           }
             @if (ViewBag.userEmail != null)
             {
-                @*@Html.TextBoxFor(m => m.Email, new { @class = "form-control", @Value = ViewBag.userEmail, @type = "default" })*@
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @Value = ViewBag.userEmail, @readonly = "readonly"})
-                
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @Value = ViewBag.userEmail, @readonly = "readonly"})              
             }
         </div>
     </div>

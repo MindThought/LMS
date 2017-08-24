@@ -30,7 +30,7 @@
                         <li>@Html.ActionLink("Kursöversikt","Index","Courses")</li>
                         <li><a href="@Url.Action("Teachers", "Account",null,null)">Lärarlista</a></li>
                         <li><a href="@Url.Action("Register", "Account", new {course_id="0"})">Registrera en ny lärare</a></li>
-                        <li><a href="@Url.Action("ExitAccount", "Account")">Avsluta användarkonto</a></li>
+                        <li><a href="@Url.Action("ExitAccount", "Account", new { id = "Request from navbar" })">Avsluta användarkonto</a></li>
                     }
                     @if (User.IsInRole("Student"))
                     {

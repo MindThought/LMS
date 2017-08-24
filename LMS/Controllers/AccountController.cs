@@ -219,12 +219,12 @@ namespace LMS.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult ExitAccount(string id)
         {
+
             if (id != null)
             {
-                //ViewBag.userID = id;
-                ViewBag.userEmail = db.Users.Find(id).Email;
+                if (id == "Request from navbar") { ViewBag.userEmail = null; }
+                else { ViewBag.userEmail = db.Users.Find(id).Email; }               // id = null;
             }
-            id = null;
             return View();
         }
 
@@ -233,7 +233,7 @@ namespace LMS.Controllers
         [HttpPost]
         [Authorize(Roles = "Teacher")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExitAccount(ExitAccountViewModel model)
+        public async Task<ActionResult> ExitAccount(ExitAccountViewModel model, string id)
         {
             if (ModelState.IsValid)
             {
@@ -257,17 +257,25 @@ namespace LMS.Controllers
 
                 if (userDeleting != model.Email)
                 {
-                    if (userToDelete.CourseId == null)
+                    if (id == "Request from navbar") //Request from navbar
                     {
                         var resultt = UserManager.Delete(userToDelete);
-                        if (resultt.Succeeded) { return RedirectToAction("Teachers", "Account"); }
+                        if (resultt.Succeeded) { return RedirectToAction("Index", "Courses"); }
                     }
                     else
                     {
-                        var id = userToDelete.CourseId;
-                        var result = UserManager.Delete(userToDelete);
-                        if (result.Succeeded) { return RedirectToAction("Details", "Courses", new { id }); }
-                        //if (result.Succeeded) { return View("Courses/Details/"+ id); }
+                        if (userToDelete.CourseId == null)
+                        {
+                            var resultt = UserManager.Delete(userToDelete);
+                            if (resultt.Succeeded) { return RedirectToAction("Teachers", "Account"); }
+                        }
+                        else
+                        {
+                            var cid = userToDelete.CourseId;
+                            var result = UserManager.Delete(userToDelete);
+                            if (result.Succeeded) { return RedirectToAction("Details", "Courses", new { id = cid }); }
+                            //if (result.Succeeded) { return View("Courses/Details/"+ id); }
+                        }
                     }
                 }
                 else { return View("NotAllowedToDeleteOwnAccount"); }
@@ -537,9 +545,10 @@ namespace LMS.Controllers
 
         // GET: /Account/PasswordRequest
         [Authorize(Roles = "Teacher")]
-        public ActionResult PasswordRequest(int Id, int? Id1)
+        public ActionResult PasswordRequest(int Id, string DelString)
         {
             ViewBag.CourseId = Id;
+            ViewBag.DelString = DelString;
             return View();
         }
         //
@@ -547,7 +556,7 @@ namespace LMS.Controllers
         [HttpPost]
         [Authorize(Roles = "Teacher")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> PasswordRequest(PasswordRequestViewModel model, int id, int? Id1)
+        public async Task<ActionResult> PasswordRequest(PasswordRequestViewModel model, int id, string DelString)
         {
             if (ModelState.IsValid)
             {
@@ -559,18 +568,18 @@ namespace LMS.Controllers
                 {
                     return View("SpecifiedPasswordNotMatchLoggedInUser");
                 }
+                if (id > 200000)
+                {
+                    id = id - 200000;
+                    return RedirectToAction("DeleteVerify", "Module", new { id });
+                }
+                else
+                {
+                    id = id - 100000;
+                    return RedirectToAction("DeleteVerify", "Courses", new { id });
+                }
             }
-
-            if (id > 200000)
-            {
-                id = id - 200000;
-                return RedirectToAction("DeleteVerify", "Module", new { id });
-            }
-            else
-            {
-                id = id - 100000;
-                return RedirectToAction("DeleteVerify", "Courses", new { id });
-            }
+            else return View("Failure");
         }
 
 

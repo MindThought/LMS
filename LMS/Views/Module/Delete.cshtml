@@ -57,7 +57,7 @@
 
         <div class="form-actions no-color"> @*MODULE*@
             <form>
-                <a class="btn btn-warning" href="@Url.Action("PasswordRequest","Account", new { id = (Model.Id + 200000) })">Verkställ</a>
+                <a class="btn btn-warning" href="@Url.Action("PasswordRequest","Account", new { id = (Model.Id + 200000), DelString = (Model.Name) })">Verkställ</a>
                 <a class="btn btn-primary" href="@Url.Action("Details","Courses",new { id = Model.CourseId },null)">Till kursöversikt</a>
             </form>
         </div>

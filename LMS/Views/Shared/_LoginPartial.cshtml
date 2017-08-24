@@ -8,9 +8,9 @@
     <ul class="nav navbar-nav navbar-right">
         <li>
             @{ var user = (System.Security.Claims.ClaimsIdentity)User.Identity; }
-            @Html.ActionLink("Hej " + user.FindFirstValue("Name") + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            @Html.ActionLink("Hej " + user.FindFirstValue("Name") + "!", "Index", "Courses")
         </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Logga ut</a></li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()" onclick="return confirm('Vill du verkligen logga ut?')">Logga ut</a></li>
     </ul>
     }
 }

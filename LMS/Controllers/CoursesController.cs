@@ -459,7 +459,8 @@ namespace LMS.Controllers
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
 			Course course = db.Courses.Find(id);
-			if (course == null)
+            ViewBag.DelStr = course.Name;
+            if (course == null)
 			{
 				return HttpNotFound();
 			}

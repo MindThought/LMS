@@ -101,6 +101,7 @@ namespace LMS.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Lösenord är obligatorisk")]
+        [StringLength(100, ErrorMessage = "Detta {0} måste vara minst {2} tecken långt.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Lösenord")]
         public string Password { get; set; }
