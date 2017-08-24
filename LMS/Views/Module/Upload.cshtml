@@ -4,7 +4,7 @@
 	ViewBag.Title = "Upload";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2>Ladda upp</h2>
 
 
 
@@ -13,7 +13,7 @@ FormMethod.Post, new { enctype = "multipart/form-data", id = Model.Id, desc = Mo
 {
 	@Html.HiddenFor(i => i.Id)
 	<div class="labelstyle">
-		<label>Files</label>
+		<label></label>
 	</div>
 	<div>
 		@Html.Label("Namn:", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -34,8 +34,8 @@ FormMethod.Post, new { enctype = "multipart/form-data", id = Model.Id, desc = Mo
 		
 	</div>
 	<br />
-	<div class="col-lg-6">
-		<button class="btn btn-primary" id="btnAddIssue" type="submit">Submit</button>
+	<div class="col-lg-4">
+		<button class="btn btn-info form-control" id="btnAddIssue" type="submit">Ladda upp</button>
 	</div>
 	<br />
 	<div class="control-section" style="padding: 0px;">
