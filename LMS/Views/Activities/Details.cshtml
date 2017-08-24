@@ -1,7 +1,7 @@
 ﻿@model LMS.Models.Activity
 
 @{
-    ViewBag.Title = "Details";
+	ViewBag.Title = "Details";
 }
 
 <h2>@Model.Name</h2>
@@ -13,57 +13,49 @@
 }
 
 <div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
+	<hr />
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.Type)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Type)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.Type)
+		</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+		<dt>
+			@Html.DisplayNameFor(model => model.Name)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.Name)
+		</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+		<dt>
+			@Html.DisplayNameFor(model => model.Description)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.Description)
+		</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.StartTime)
-        </dt>
+		<dt>
+			@Html.DisplayNameFor(model => model.StartTime)
+		</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.StartTime)
-        </dd>
+		<dd>
+			@Html.DisplayFor(model => model.StartTime)
+		</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.StartTime.Hour)
-        </dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.EndTime)
+		</dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.EndTime)
-        </dt>
+		<dd>
+			@Html.DisplayFor(model => model.EndTime)
+		</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.EndTime)
-        </dd>
-
-        <dd>
-            @Html.DisplayFor(model => model.EndTime.Hour)
-        </dd>
-
-    </dl>
+	</dl>
 </div>
 
 <div class="row">
@@ -73,28 +65,28 @@
 <div id="documents" class="row" style="display:none"></div>
 
 <script>
-    $(document).ready(function () {
-    	$('#documentButton').click(function () {
+	$(document).ready(function () {
+		$('#documentButton').click(function () {
 			var target = "#documents"
-            $(target).toggle(500, function () {
-                $(target).load("@Url.Action("ShowDocuments","Activities",new { id = Model.Id})");
-            });
+			$(target).toggle(500, function () {
+				$(target).load("@Url.Action("ShowDocuments","Activities",new { id = Model.Id})");
+			});
 			$('html,body').animate({
 				scrollTop: $(target).offset().top
 			});
-        });
-    })
+		});
+	})
 </script>
 
 <p>
-    @Html.ActionLink("Tillbaka till modulen", "Details", "Module", new { id = Model.ModuleId }, null)
+	@Html.ActionLink("Tillbaka till modulen", "Details", "Module", new { id = Model.ModuleId }, null)
 
-    @if (User.IsInRole("Teacher"))
-    {
-        <span>|</span>
-        @Html.ActionLink("Ändra egenskaper", "Edit", new { id = Model.Id, ModuleId = Model.Module.Id });
-        <span>|</span>
-        @Html.ActionLink("Radera", "Delete", new { id = Model.Id });
-    }
+	@if (User.IsInRole("Teacher"))
+	{
+		<span>|</span>
+		@Html.ActionLink("Ändra egenskaper", "Edit", new { id = Model.Id, ModuleId = Model.Module.Id });
+		<span>|</span>
+		@Html.ActionLink("Radera", "Delete", new { id = Model.Id });
+	}
 
 </p>

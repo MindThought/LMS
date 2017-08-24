@@ -63,6 +63,7 @@ namespace LMS.Controllers
 		}
 
 		// GET: Activities/Details/5
+		[Authorize]
 		public async Task<ActionResult> Details(int? id)
 		{
 			if (id == null)
@@ -142,7 +143,7 @@ namespace LMS.Controllers
 			}
 			return View("Details", activity);
 		}
-
+		[Authorize]
 		public ActionResult ShowDocuments(int id)
 		{
 			var documents = db.Activities.Where(c => c.Id == id).First().Documents.ToList();
@@ -174,6 +175,7 @@ namespace LMS.Controllers
 		[Authorize]
 		public async Task<ActionResult> Create([Bind(Include = "Id,Type,Name,Description,StartTime,EndTime")] Activity activity, int ModuleId)
 		{
+			ViewBag.Module = db.Modules.Find(ModuleId);
 			var module = db.Modules.Find(ModuleId);
 			var course = module.Course;
 			if (activity.StartTime >= activity.EndTime)
