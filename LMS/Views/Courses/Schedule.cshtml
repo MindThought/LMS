@@ -5,22 +5,26 @@
 <link href="~/Scripts/jquery.schedule.css" rel="stylesheet" />
 
 @{ 
-	string periodString = "";
-	if (Model != null && Model.Count() > 0)
-	{
-		for (int i = 0; i <= 4; i++)
-		{
-			periodString += "{\"day\": " + i + ",\"periods\": [";
-			foreach (var period in Model.Where(p => p.Day == i))
-			{
-				periodString += "[\"" + period.StartHour + ":" + period.StartMinute + "\", \"" + period.EndHour + ":" + period.EndMinute + "\"],";
-			}
-			periodString = periodString.TrimEnd(',');
-			periodString += "]},";
-		}
-		periodString = periodString.TrimEnd(',');
-	}
-	
+    string periodString = "";
+    if (Model != null && Model.Count() > 0)
+    {
+        for (int i = 0; i <= 4; i++)
+        {
+            periodString += "{\"day\": " + i + ",\"periods\": [";
+            foreach (var period in Model.Where(p => p.Day == i))
+            {
+                periodString += "[\"" + period.StartHour + ":" + period.StartMinute + "\", \"" + period.EndHour + ":" + period.EndMinute + "\"],";
+            }
+            periodString = periodString.TrimEnd(',');
+            periodString += "]},";
+        }
+        periodString = periodString.TrimEnd(',');
+    }
+    else
+    {
+        <span>Det finns inga schemalagda aktiviteter den här veckan.</span>
+    }
+    
 }
 
 <h3 id="P3">Schema</h3>
@@ -28,11 +32,11 @@
 <div id="schedule" class="row"></div>
 
 <script>
-	$("#schedule").jqs({
-		mode: "read",
-		data: 
-		[
-			@Html.Raw(periodString)	
-		]
-	});
+    $("#schedule").jqs({
+        mode: "read",
+        data: 
+        [
+            @Html.Raw(periodString)	
+        ]
+    });
 </script>
