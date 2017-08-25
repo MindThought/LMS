@@ -330,12 +330,17 @@ namespace LMS.Controllers
         [HttpPost]
         public ActionResult SaveDocument(List<HttpPostedFileBase> fileUpload, string name, string desc, int? id)
         {
-            List<string> myTempPaths = new List<string>();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Course course = db.Courses.Where(c => c.Id == id).First(); 
+
+            Course course = db.Courses.Where(c => c.Id == id).First();
+
+			if (course == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
 
             if (fileUpload.Count >= 1)
             {
@@ -345,20 +350,19 @@ namespace LMS.Controllers
                     {
                         int MaxContentLength = 1024 * 1024 * 10; //10 MB
                         string[] AllowedFileExtensions = new string[] { ".docx", ".pdf", ".pptx", ".xlsx", ".txt", ".zip", ".7z" };
-                        if (!AllowedFileExtensions.Contains(file.FileName.Substring(file.FileName.LastIndexOf('.'))))
+						string extension = Path.GetExtension(file.FileName);
+						if (!AllowedFileExtensions.Contains(extension))
                         {
-                            ViewBag.Message = "Filen bör vara av en av följande typer: " + string.Join(", ", AllowedFileExtensions);
+                            ViewBag.Message = "Filen ska vara av en av följande typer: " + string.Join(", ", AllowedFileExtensions) + ".";
                         }
                         else if (file.ContentLength > MaxContentLength)
                         {
-                            ModelState.AddModelError("File", "Your file is too large, maximum allowed size is: " + MaxContentLength + " B");
-                        }
+							ViewBag.Message = "Filen får inte vara större än 10 MB";
+						}
                         else
                         {
-                            string extension = Path.GetExtension(file.FileName);
-                            
                             DateTime time = DateTime.Now;
-                            string fileName = name + " - " + time.ToString("yyyyMMddHHmmss").ToString() + extension;
+                            string fileName = name + " - " + time.ToString("yyyyMMddHHmmss") + extension;
 
                             var thePath = Path.Combine(Server.MapPath("~/Attach/Document"), fileName);
                             if (System.IO.File.Exists(thePath))
@@ -374,7 +378,7 @@ namespace LMS.Controllers
                             course.Documents.Add(new Document { Description = desc, Name = name, FilePath = name + extension, Uploader = second, Uploaded = time });
                             ModelState.Clear();
                             db.SaveChanges();
-                            ViewBag.Message = "File uploaded successfully";
+                            ViewBag.Message = "Filuppladdningen lyckades";
                         }
                     }
                 }
