@@ -6,13 +6,13 @@
 
 @if (ViewBag.Reason == "InvalidLogin")
 {<font size="66" color="#3ed3d3">Ogiltigt användarnamn eller lösenord!</font><br />
-    <a class="btn btn-primary" href="@Url.Action("Login", "Account")">Till inlogning</a>}
+    <a class="btn btn-info" href="@Url.Action("Login", "Account")">Till inlogning</a>}
 
 @if (ViewBag.Reason == "NotExistingUser")
 {<font size="66" color="#3ed3d3">Konto med angiven E-postadress finns inte!</font>
     <div>
-        <a class="btn btn-primary" href="@Url.Action("Index","Courses")">Till kursöversikt</a>
-        <a class="btn btn-primary" href="@Url.Action("ExitAccount","Account")">Till kontoborttagning</a>
+        <a class="btn btn-info" href="@Url.Action("Index","Courses")">Till kursöversikt</a>
+        <a class="btn btn-info" href="@Url.Action("ExitAccount","Account")">Till kontoborttagning</a>
     </div>}
 
 
